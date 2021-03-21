@@ -28,7 +28,7 @@ class FormcomponentsController extends Controller
       //  return   Thecomponent::with(['userRole','userBranch'])->latest('id')
       return   Formcomponent::latest('id')
        // ->where('del', 0)
-       ->paginate(13);
+       ->paginate(30);
 
 
 
@@ -47,7 +47,7 @@ class FormcomponentsController extends Controller
         //
        // return ['message' => 'i have data'];
        $this->validate($request,[
-    'name'   => 'required | String |max:191',
+    'featurename'   => 'required | String |max:191',
      'sysname'   => 'required',
   
     'description'   => 'required'
@@ -57,7 +57,7 @@ class FormcomponentsController extends Controller
      
      
      return Formcomponent::Create([
-      'name' => $request['name'],
+      'featurename' => $request['featurename'],
       'sysname' => $request['sysname'],
      
       'description' => $request['description'],
@@ -94,7 +94,7 @@ class FormcomponentsController extends Controller
         $user = Formcomponent::findOrfail($id);
 
 $this->validate($request,[
-    'name'   => 'required | String |max:191',
+    'featurename'   => 'required | String |max:191',
     'sysname'   => 'required',
     'description'   => 'sometimes |min:2'
 

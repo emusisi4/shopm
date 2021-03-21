@@ -43,7 +43,7 @@ class SubmenusController extends Controller
       
          return   Submheader::with(['maincomponentSubmenus'])->latest('id')
         ->where('del', 0)
-       ->paginate(13);
+       ->paginate(30);
 
        //  return Submheader::latest()
          //  -> where('ucret', $userid)
@@ -81,9 +81,11 @@ class SubmenusController extends Controller
 
 
        $this->validate($request,[
-        'name'   => 'required | String |max:191'
-       // 'iconclass'   => 'required',
-       // 'dorder'   => 'sometimes |min:0'
+       'submenuname'   => 'required | String |max:191',
+       'mainheadercategory'   => 'required',
+       'linkrouterre'   => 'required | String |max:191',
+       'description'   => 'required',
+       'dorder'   => 'sometimes |min:0'
      ]);
 
 
@@ -131,7 +133,7 @@ class SubmenusController extends Controller
         $user = Submheader::findOrfail($id);
 
 $this->validate($request,[
-    'name'   => 'required | String |max:191',
+    'submenuname'   => 'required | String |max:191',
     'mainheadercategory'   => 'required',
     'linkrouterre'   => 'required'
 

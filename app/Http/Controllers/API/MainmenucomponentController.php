@@ -29,7 +29,7 @@ class MainmenucomponentController extends Controller
         {
         return Mainmenucomponent::latest()
       //  -> where('ucret', $userid)
-        ->paginate(13);
+        ->paginate(25);
         }
 
       
@@ -49,9 +49,9 @@ class MainmenucomponentController extends Controller
 
 
        $this->validate($request,[
-        'mainmenuname'   => 'required'
-       // 'iconclass'   => 'required',
-       // 'dorder'   => 'sometimes |min:0'
+        'mainmenuname'   => 'required',
+       'iconclass'   => 'required',
+        'dorder'   => 'sometimes |min:0'
      ]);
 
 

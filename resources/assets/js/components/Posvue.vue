@@ -18,7 +18,7 @@
 
   <div class="card"  v-if="allowedtoaccesscomponent > 0 ">
               <div class="card-header">
-                <h3 class="card-title"><b> POINT OF SALE </b></h3>
+                <h3 class="card-title"><b> My POINT OF SALE </b></h3>
 
 
                 <div class="card-tools">
@@ -603,7 +603,7 @@ $('#addNew').modal('show');
                   
    axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObject = data));
  
-axios.get("api/getproducts").then(({ data }) => (this.brancheslist = data));
+axios.get("api/getproductsactive").then(({ data }) => (this.brancheslist = data));
 
 
 

@@ -10,7 +10,7 @@
 .bethapa-component-header {
       font-weight: bold;
     color: #343a40;
-    font-size: 3.1em;
+    font-size: 2.1em;
     border-bottom: 1px solid rgb(3, 46, 10);
     margin-bottom: 20px;
     width: 100%;
@@ -25,12 +25,20 @@ button.add-newm {
     /* border: 1px solid black; */
     box-shadow: 0px 0px 0.5px black;
 }
+.mysalessect {
+    padding: 0rem;
+    float: right;
+}
+
 </style>
 
 <template>
 <div>
 
   <div  v-if="allowedtoaccesscomponent > 0 ">
+
+
+    
 <div class="row">
          
         
@@ -38,9 +46,9 @@ button.add-newm {
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h5>PAYOUTS</h5>
+                <h5>MY WALLET </h5>
 
-                <h5>200,000</h5> 
+                <h5>{{currencydetails}} {{formatPrice(userwalletbalance)}}</h5> 
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -48,7 +56,7 @@ button.add-newm {
               <a href="#" class="small-box-footer">View Details <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-
+    
           <!-- ./col -->
           <div class="col-lg-2 col-2">
             <!-- small box -->
@@ -125,38 +133,29 @@ button.add-newm {
           </div>
           
         </div>
-<div class="bethapa-component-header" >System Components </div>
 
 
-
+<div class="bethapa-component-header" >COMPANY SALES </div>
     
-                     <div class="card-body table-responsive p-0">
+             <!-- Startp of the component  -->
+
+<div class="card-body table-responsive p-0">
                 
                
-<div class="col-12 col-sm-12">
+           <div class="col-12 col-sm-12">
             <div class="card card-primary card-outline card-tabs">
               <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                   <li class="nav-item">
                   <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab"  @click="loadDatarecords()"
-                   aria-cont rols="custom-tabs-three-home" aria-selected="true">Main Menus</a>
+                   aria-controls="custom-tabs-three-home" aria-selected="true">Point Of Sale</a>
                   </li>
-                  <li class="nav-item" v-if="allowedtoaccesscategoriescomponent > 0 ">
-                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" @click="loadDatarecordsCategories()" aria-controls="custom-tabs-three-profile" aria-selected="false">CATEGORIES</a>
-                  </li> 
+                 
             
-                  <li class="nav-item" v-if="allowedtoaccessexpensetypescomponent > 0 ">
-                     <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab"  @click="loadDatarecordsExpensetypes()" aria-controls="custom-tabs-three-messages" aria-selected="false">Types</a>
+                 
+                  <li class="nav-item" v-if="allowedtoaccessbrandscomponent > 0 ">
+                    <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" @click="loadDatarecordsProductbrands()" aria-controls="custom-tabs-three-settings" aria-selected="false">SALES RECEIPTS</a>
                   </li>
-                  <li class="nav-item" v-if="allowedtoaccessbranchexpensescomponent > 0 ">
-                    <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" @click="loadDatarecordsbranchexpenses()" aria-controls="custom-tabs-three-settings" aria-selected="false">BRANCH EXpenses</a>
-                  </li>
-                  
-                  
-                   <li class="nav-item" v-if="allowedtoaccessofficeexpensescomponent > 0 ">
-                     <a class="nav-link" id="custom-tabs-three-xx1-tab" data-toggle="pill" href="#custom-tabs-three-xx1" role="tab"  @click="loadDatarecordsofficeexpenses()" aria-controls="custom-tabs-three-xx1" aria-selected="false">Office Expenses</a>
-                  </li>
-                  
                 </ul>
               </div>
               <div class="card-body">
@@ -164,525 +163,350 @@ button.add-newm {
                   <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
          
                      <div class="bethapa-table-header">
-                        
-                     Authorised Expenses Details <button v-if="addnewgeneralexpense > 0" type="button" class="add-newm" @click="newModal" >Add New </button>
+                     PENDING RECEIPT  <button v-if="info > 0" type="button" class="add-newm" @click="newModal" >Add New </button>
                      </div>
          
-            
-              <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                     <th>#</th>
-                      <th>EXPENSE NAME</th>
-                      <th>CATEGORY</th>
-                      <th>TYPE</th>
-                      <th>DESCRIPTION</th>
-                    
-                      <th>CREATED</th>
-                       
-                     
-                     
-                        <th ></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <tr v-for="mydataObjectinfo in mydataObject.data" :key="mydataObjectinfo.id">
-                 <td>{{mydataObjectinfo.id}}</td>
-                    <td>{{mydataObjectinfo.expensename}}</td>
-                
-                           <td>    <template v-if="mydataObjectinfo.expense_category">	{{mydataObjectinfo.expense_category.expcatcatname}}</template></td>
-                           <td>    <template v-if="mydataObjectinfo.expense_typeconnect">	{{mydataObjectinfo.expense_typeconnect.typename}}</template></td>
-                       
-                               <td>{{mydataObjectinfo.description}}</td>
-                               <td>{{mydataObjectinfo.created_at}}</td>
-                                         
-                   
-                       <td >
-                    
-                      <button type="button" v-if="editgeneralexpense > 0" class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModal(mydataObjectinfo)"> 
+           <div class="card-body table-responsive p-0">
+                  <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+         
 
-                      </button>
-                      <button type="button"  v-if="deletegeneralexpense > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecord(mydataObjectinfo.id)">
-                      </button>
-                      <button type="button" v-if="viewrecordgeneralexpense > 0" class="btn  bg-gradient-info btn-xs fas fa-eye" @focus="checkAccess()"  @click="editModal(mydataObjectinfo)"> </button>
-                                      </td>
-                     
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot>
-                   <td colspan="8">
-                <div class="">
-                <ul class="pagination pagination-sm m-0 float-right">
-                    <pagination :data="mydataObject" @pagination-change-page="getResults"></pagination>
-                </ul>
-              </div>    
-              </td>
-                 </tfoot>
-                                   </table>
-       
-                  </div>
-                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                    <div class="bethapa-table-header">
 
-                   Expense Categories <button v-if="infoaddnewcategory > 0" type="button" class="add-newm" @click="newModalcategory" >Add New </button>
-                      </div>
-              <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                        <th>CATEGORY NAME</th>
-                       <th>DESCRIPTION</th>
-                       <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <tr v-for="mydataObjectprodcat in mydataObjectProductcategories.data" :key="mydataObjectprodcat.id">
-                    <td>{{mydataObjectprodcat.id}}</td>
-                 
-                 
-                     <td> {{ (mydataObjectprodcat.expcatcatname)}}</td>
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+           
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-12 table-responsive">
+
+
+
+   <div class="mysalessect">              
+
+                </div>
+   <div class="mysalessect">              
+<form @submit.prevent="editmode ? updateRecordshopingcart():createNewrecordsale()">
+
+          
+  
+ 
+
+
                   
-                    
-                   <td> {{ (mydataObjectprodcat.description)}}</td>
-                  
-                  
-                                         
+                  <label>Product Name / Code</label>
+                    <select name ="productcode" v-model="form.productcode" tabindex="1" id ="select2"   :class="{'is-invalid': form.errors.has('productcode')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in companyproducts' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
+
+                    </select>
              
-                   
-                    
-                       <td>
-                     
-                     <button type="button"  v-if="infoeditcategory > 0"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      <button type="button"  v-if="infodeletecategory > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecordproductcategory(mydataObjectprodcat.id)">  </button>
-            <button type="button" v-if="infoviewrecordcategory > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      </td>
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot></tfoot>
-                                   </table>
-                  </div>
-              <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
-                <div class="bethapa-table-header">
-                  
-                  
-                   EXPENSE TYPES <button v-if="infoaddexpensetype > 0" type="button" class="add-newm" @click="newModalexpensetype" >Add New </button>
-                      </div>
-                <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                        <th> NAME</th>
-                       <th>DESCRIPTION</th>
-                       <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <tr v-for="mydataObjectunit in mydataObjectProductunitsofmeasurekk.data" :key="mydataObjectunit.id">
-                    <td>{{mydataObjectunit.id}}</td>
-                 
-                 
-                     <td> {{ (mydataObjectunit.typename)}}</td>
-                  
-                    
-                   <td> {{ (mydataObjectunit.description)}}</td>
-                  
-                  
-                                         
-                   
-                    
-                       <td>
-               
-                     <button type="button"  v-if="infoeditexpensetype > 0"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"   @click="editModalexpensetype(mydataObjectunit)">   </button>
-                      <button type="button"  v-if="infodeleteexpensetype > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteExpensetype(mydataObjectunit.id)">  </button>
-                 <button type="button" v-if="infoviewrecordexpensetype > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="editModalexpensetype(mydataObjectunit)">   </button>
-                      </td>
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot></tfoot>
-                                   </table>
-                  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                    <div class="bethapa-table-header">
-
-                   COMPANY EXPENSES <button v-if="infoaddnewcategory > 0" type="button" class="add-newm" @click="newModalcategory" >Add New </button>
-                      </div>
-              <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                        <th>CATEGORY NAME</th>
-                       <th>DESCRIPTION</th>
-                       <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <tr v-for="mydataObjectprodcat in mydataObjectProductcategories.data" :key="mydataObjectprodcat.id">
-                    <td>{{mydataObjectprodcat.id}}</td>
-                 
-                 
-                     <td> {{ (mydataObjectprodcat.expcatcatname)}}</td>
-                  
-                    
-                   <td> {{ (mydataObjectprodcat.description)}}</td>
-                  
-                  
-                                         
-             
-                   
-                    
-                       <td>
-                     
-                     <button type="button"  v-if="infoeditcategory > 0"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      <button type="button"  v-if="infodeletecategory > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecordproductcategory(mydataObjectprodcat.id)">  </button>
-            <button type="button" v-if="infoviewrecordcategory > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      </td>
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot></tfoot>
-                                   </table>
-                  </div>
-              <div class="tab-pane fade" id="custom-tabs-three-xx1" role="tabpanel" aria-labelledby="custom-tabs-three-xx1-tab">
-                <div class="bethapa-table-header">
-                     
-                   
-                   Expense Details office <button v-if="infoaddnewofficeexpense > 0" type="button" class="add-newm" @click="newModalofficeexpense" >Make Expense </button>
-                      </div>
-           <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th> DATE</th>
-                      <th>BRANCH</th>
-                      <th>EXPENSE</th>
-                       <th>DESCRIPTION</th>
-                      <th>AMOUNT</th>
-                     
-                    <th> STATION </th>
-                       <th> EXPENSE WALLET </th>
-                   
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                           <tr>
-                           <tr v-for="mydataObjectinfo in mydataObjectofficeexpenses.data" :key="mydataObjectinfo.id">
-                         
-                           <td>{{mydataObjectinfo.id}}</td>
-                           <td>{{mydataObjectinfo.datemade}}</td>
-                           <td>    <template v-if="mydataObjectinfo.branch_name">	{{mydataObjectinfo.branch_name.branchname}}</template></td>
-                           <td>    <template v-if="mydataObjectinfo.expense_name">	{{mydataObjectinfo.expense_name.expensename}}</template></td>
-                           <td>{{mydataObjectinfo.description}}</td>
-                       
-                          <td> {{ currencydetails }} {{formatPrice((mydataObjectinfo.amount))}}</td>
-                          <td>   <div v-if="((mydataObjectinfo.explevel)) == 1">
-                          <span class="cell" style="color:#dc3545 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Branch </span></span>
-                              </div>
-                               <div v-if="((mydataObjectinfo.explevel)) == 2">
-                                <span class="cell" style="color:#1591a5 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Office </span></span>
-                              </div> 
-                              
-                              </td>
-
-   <td>   <div v-if="((mydataObjectinfo.walletexpense)) == 1">
-                                <span class="cell" style="color:green ;">  
-   
-                    <span style="font-size:1.0em;" center >  Collections </span></span>
-                              </div>
-                               <div v-if="((mydataObjectinfo.walletexpense)) == 2">
-                                <span class="cell" style="color:#1591a5 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Investment </span></span>
-                              </div>
-                              
-                                 <div v-if="((mydataObjectinfo.walletexpense)) == 4">
-                                <span class="cell" style="color:#1578a5 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Branch </span></span>
-                              </div>
-                              
-                               </td>
-
                                
+<label>Qty</label>
+                     <input v-model="form.quantity" type="number" name="quantity" v-on:keyenter="myClickEvent" on:keyenter="focus.productcode"
+                      :class="{ 'is-invalid': form.errors.has('quantity') }">
                   
-                          <td>    
-                              <a href="#" v-if="infoviewrecordofficeexpense > 0">
-                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-eye"  @click="editModalofficemadeexpense(mydataObjectofficemadeexpenses)"> </button>
-                              </a> 
-                            <a href="#" v-if="infoeditofficeexpense > 0">
-                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModalofficemadeexpense(mydataObjectofficemadeexpenses)"> </button>
-                              </a>
-                               <a href="#" v-if="infodeleteofficeexpense > 0">
-                                   <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteRecordofficemadeexpense(mydataObjectofficemadeexpenses.id)">  </button></a>
-                      </td>
+
+
+                                
+                               
+
+          
+          
+
+    
+  <button v-show="!editmode" type="submit" hidden="" ref="myBtn"  id="submit" class="btn btn-primary btn-sm">Add</button>
+
+            <button v-show="editmode" hidden="" type="submit" class="btn btn-success btn-sm">Update</button>
+
+   
+  </form>
+                </div>
+
+
+     <table class="table table-striped">
+                    <thead>
+                    <tr>
+                     <th>ITEM CODE #</th> 
+                      <th>ITEM NAME</th>
+                      <th>Qty</th>
+                      <th>UNIT PRICE</th>
+                      <th>LINE TOTAL</th>
+                       <th> 
+                            <button type="button" v-if="info > 0" class="btn btn-info btn-xs" @click="newModalproductdsale" >Add Sale </button>
+                            
+                            <button type="button" class="btn btn-danger btn-xs" @click="emptycart" >Empty Cart </button></th>
                     </tr>
-              
+                    </thead>
+                    <tbody>
+                  <tr v-for="mydataObjectinfo in mydataObjectordermaking.data" :key="mydataObjectinfo.id">
+                      <td>{{mydataObjectinfo.productcode}}</td>
+                        <td> <template v-if="mydataObjectinfo.product_name">	{{mydataObjectinfo.product_name.name}}</template></td>
+
+                      <td>{{mydataObjectinfo.quantity}} </td>
+                     
+                  <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitprice)}}</td>
+                 
+                 <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitprice*mydataObjectinfo.quantity)}}</td>
+                 
+                 
                     
-                  </tbody>
-                 <tfoot>   
-                     <th colspan='5'>  
-                    <span class="cell" style="color:maroon ;">  
-   
-                    <span style="font-size:1.5em;" center > TOTAL EXPENSES </span></span></th>
-                 <th>    
-                    <span class="cell" style="color:maroon ;">  
-   
-                    <span style="font-size:1.5em;" center > {{ currencydetails }} {{ formatPrice(dailyexpensestotal) }}  </span></span>    </th>  
-                     <th colspan='3'>  </th>    </tfoot>
-                                   </table>
+                                        
+                   
+                       <!-- <td v-if="infoedit > 0"> -->
+                  <td>
+                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @focus="checkAccess()"   @click="editModashopingcart(mydataObjectinfo)">  </button>
+                   
+                    
+                      
+                  
+                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecordfromcart(mydataObjectinfo.id)">  </button>
+                 
+                      </td>
+                    
+                    </tr>
+                   
+                    </tbody>
+                  </table>
+                              
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+  <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                 
+                 
+                </div>
+                <!-- /.col -->
+                <div class="col-6">
+                 
+
+                  <div class="table-resiponsve">
+                    <table class="table">
+                      <tbody><tr>
+                        <th style="width:50%">Subtotal:</th>
+                            <td>{{ (currencydetails) }} {{formatPrice(carttotal)}}</td>
+                      
+                      </tr>
+                      <tr>
+                        <th>Tax Vat </th>
+                        <td> {{ (currencydetails) }} 0</td>
+                      </tr>
+                     
+                      <tr>
+                        <th>Total:</th>
+                         <td>{{ (currencydetails) }} {{formatPrice(carttotal)}}</td>
+                      </tr>
+                    </tbody>
+                    
+                    </table>
+                    
+                  </div>
+                  
+                </div>
+                
+                <!-- /.col -->
+              </div>
+
+              <!-- this row will not appear when printing -->
+              <div class="row no-print">
+                <div class="col-12">
+                  <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+               <!-- {{   <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                    Payment
+                  </button>}} -->
+                  
+                 <form @submit.prevent="ConfirmSlip()">
+                                          
+                               
+                 
+                     <button type="submit" id="submit" name= "submit" v-on:click="myClickEvent" ref="myBtn" class="btn btn-primary btn-sm float-right">Confirm Order</button>
+                  
+                  </form>
+                
+                </div>
+                 
+              </div>
+             
+            </div>
+            
+            <!-- /.invoice -->
+
+
+
+
+
+
+
+
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+           
+                
+              </div> 
+           
+
+
 
                   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                  
-                 
-                 
-                  <div class="tab-pane fade" id="custom-tabs-three-settings"  v-if="allowedtoaccessbranchexpensescomponent > 0 " role="tabpanel"  aria-labelledby="custom-tabs-three-settings-tab">
+              
+                  <div class="tab-pane fade" id="custom-tabs-three-settings"  v-if="allowedtoaccessbrandscomponent > 0 " role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
                  
                   <div class="bethapa-table-header">
-                    Branch Expenses <button v-if="infoaddproductbrand > 0" type="button" class="add-newm" @click="newModalbranchexpenses" >Add New </button>
+                   SALES RECEIPTS <button hidden="" v-if="infoaddproductbrand > 0" type="button" class="add-newm" @click="newModalBrand" >Add New </button>
                       </div>
-                    <table class="table table-bordered table-striped">
+              <table class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th> DATE</th>
-                      <th>BRANCH</th>
-                      <th>EXPENSE</th>
-                       <th>DESCRIPTION</th>
+                      <th>DATE</th>
+                      <th>RECEIPT NUMBER</th>
                       <th>AMOUNT</th>
-                     
-                   
-                    
+                       
+
+                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                       <tr v-for="mydataObjectinfo in mydataObjectbranchexpenses.data" :key="mydataObjectinfo.id">
-                    <td>{{mydataObjectinfo.id}}</td>
+                    
+                    <tr v-for="mydataObjectbrand in mydataObjectProductbrandskk.data" :key="mydataObjectbrand.id">
+                    <td>{{mydataObjectbrand.id}}</td>
+                    <td> {{ (mydataObjectbrand.invoicedate)}}</td>
+                    <td> {{ (mydataObjectbrand.invoiceno)}}</td>
+                    
+                    <td>{{(currencydetails)}} {{formatPrice((mydataObjectbrand.invoiceamount))}}</td>
+                                                   
                   
-                    <td>{{mydataObjectinfo.datemade}}</td>
-                           <td>    <template v-if="mydataObjectinfo.branch_name">	{{mydataObjectinfo.branch_name.branchname}}</template></td>
-                            <td>    <template v-if="mydataObjectinfo.expense_name">	{{mydataObjectinfo.expense_name.expensename}}</template></td>
-                          <td>{{mydataObjectinfo.description}}</td>
-                       
-                               <td> {{ currencydetails }} {{formatPrice((mydataObjectinfo.amount))}}</td>
-                              
 
+                    
+                       <td>
+                    <button type="button"  v-if="infodeleteproductbrand > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteSales(mydataObjectbrand.id)">  </button>
+                   
 
-
-                              
-                        
+                 <button type="button" v-if="infoeditproductbrand > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="saveordertoview(mydataObjectbrand)">   </button>
+              
+              
+              
+                      </td>
                     </tr>
               
                     
                   </tbody>
-               
+                 <tfoot></tfoot>
                                    </table>
                   </div>
                 </div>
               </div>
               <!-- /.card -->
+
+
+
+
             </div>
           </div>
+ </div>
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-                
-              </div>
+              <!-- end of the component  -->
               
-              <!-- /.card-header -->
-              
-       
+    
 
-    <div class="modal fade" id="addNewbranchexpense">
-        <div class="modal-dialog">
+
+<!-- start of POS MODAL -->
+<div class="modal fade"  id="addsalem">
+        <div class="modal-dialog modal-ml">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
+              <h4 class="modal-title"  v-show="!editmode">NEW SALES</h4>
                    <h4 class="modal-title" v-show="editmode">Update Record</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
                       
-<form @submit.prevent="editmode ? updateRecordbranchexpense():createNewrecordmakebranchexpense()">
+<form @submit.prevent="editmode ? updateRecordshopingcart():createNewrecordsale()">
 
             <div class="modal-body">
-           
-
-
-
-
-<div class="form-group">
-                  <label>Expense Name</label>
-<select name ="expense" v-model="form.expense" id ="expense" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('expense')}">
-<option value=" ">  </option>
-<option v-for='data in expenseslist' v-bind:value='data.expenseno'>{{ data.expenseno }} - {{ data.expensename }}</option>
-
-</select>
-            <has-error :form="form" field="expense"></has-error>
-            </div>
-
-
-<div class="form-group">
-                  <label>Branch</label>
-<select name ="branch" v-model="form.branch" id ="branch" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('branch')}">
-<option value=" ">  </option>
-<option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
-
-</select>
-            <has-error :form="form" field="branch"></has-error>
-            </div>
-
-
-
-
-   <div class="form-group">
-
-     <label>Amount</label>
-                     <input v-model="form.amount" type="number" name="amount"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('amount') }">
-      <has-error :form="form" field="amount"></has-error>
+ 
  
 
-     </div>        
-      <div class="form-group">
 
-     <label>Date of Expense</label>
-                     <input v-model="form.datemade" type="date" name="datemade"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('datemade') }">
-      <has-error :form="form" field="datemade"></has-error>
- 
+                  <div class="form-group">
+                  <label>Product Name / Code</label>
+                    <select name ="productcode" v-model="form.productcode" id ="productcode"  class="form-control" :class="{'is-invalid': form.errors.has('productcode')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in companyproducts' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
 
-     </div>          
+                    </select>
+                
 
-
-
+                                <has-error :form="form" field="productcode"></has-error>
 
 
-   <div class="form-group">
-                       <label>Description</label>
-                <textarea v-model="form.description" name="description" rows="5" cols="30" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-                 
-                <has-error :form="form" field="description"></has-error>
-                </div>
+
+                                
+                                </div>
+
   
+                   
+  <div class="form-group" v-show="editmode">
+               
+                    <label>UNit Selling Price</label>
+                     <input v-model="form.unitprice" type="number" name="unitprice"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('unitprice') }">
+                       <has-error :form="form" field="unitprice"></has-error>
+                                </div>
+  
+               
+                   
+                   
+                   
+                   <div class="form-group">
+               
+                    <label>Quantity Sold</label>
+                     <input v-model="form.quantity" type="number" name="quantity" v-on:keyenter="myClickEvent"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('quantity') }">
+                       <has-error :form="form" field="quantity"></has-error>
+                                </div>
+  
+  
+      
+  
+ 
+
+
+
+
+                
+                 
+
+               
+
+
+
+
+
+
+
+
             </div>
             <div class="modal-footer">
 
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
+    
+  <button v-show="!editmode" type="submit" ref="myBtn"  id="submit" class="btn btn-primary btn-sm">Add</button>
+
             <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
 
 
@@ -697,9 +521,9 @@ button.add-newm {
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-      </div>           
-              
+      </div>
 
+      <!-- End of Pos Modal -->
 
 
 
@@ -707,47 +531,151 @@ button.add-newm {
 
  <!-- start of categories modal  -->
 
-      <div class="modal fade" id="addNew">
-        <div class="modal-dialog">
+<div class="modal fade"  id="addNeworder1">
+        <div class="modal-dialog modal-ml">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
+              <h4 class="modal-title"  v-show="!editmode">NEW ORDER RECORD</h4>
                    <h4 class="modal-title" v-show="editmode">Update Record</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
                       
-<form @submit.prevent="editmode ? updateRecord():createNewrecord()">
+<form @submit.prevent="editmode ? updateRecordorder():createNeworder()">
 
             <div class="modal-body">
-            <div class="form-group">
-                    <label for="exampleInputEmail1">Menu Name</label>
-                     <input v-model="form.mainmenuname" type="text" name="mainmenuname"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('mainmenuname') }">
-      <has-error :form="form" field="mainmenuname"></has-error>
-      
-                  </div>
-                     <div class="form-group">
-                    <label for="exampleInputEmail1">Icon Class </label>
-                     <input v-model="form.iconclass" type="text" name="iconclass"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('iconclass') }">
-      <has-error :form="form" field="iconclass"></has-error>
-      
-                  </div>
-               
+ 
+  
+  <div class ="bethapa-table-header">Product And Supplier Details</div>
+
+
+                  <div class="form-group">
+                  <label>Product Name</label>
+                    <select name ="productname" v-model="form.productname" id ="productname"  class="form-control" :class="{'is-invalid': form.errors.has('productname')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in productslist' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
+
+                    </select>
                 
-                     <div class="form-group">
-                    <label for="exampleInputEmail1">Order</label>
-                     <input v-model="form.dorder" type="number" name="dorder"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('dorder') }">
-      <has-error :form="form" field="dorder"></has-error>
+
+                                <has-error :form="form" field="productname"></has-error>
+                                
+ </div>
+
+         
+                  <div class="form-group">
+                  <label>Brand</label>
+                    <select name ="brand" v-model="form.brand" id ="brand"  class="form-control" :class="{'is-invalid': form.errors.has('brand')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.id'>{{ data.id }} - {{ data.brandname }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="brand"></has-error>
+                             </div>
+                
+                
+                 <div class="form-group">
+                  <label>Supplier </label>
+                    <select name ="supplier" v-model="form.supplier" id ="supplier"  class="form-control" :class="{'is-invalid': form.errors.has('supplier')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in supplierslistactuoa' v-bind:value='data.id'>{{ data.id }} - {{ data.suppname }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="supplier"></has-error>
+                                </div>
+
+             <div class ="bethapa-table-header">Measurements && Quantities</div>
+                                  <div class="form-group">
+                  <label>Main Unit</label>
+                    <select name ="unitofmeasure" v-model="form.unitofmeasure" id ="unitofmeasure" class="form-control" :class="{'is-invalid': form.errors.has('unitofmeasure')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in unitslistmain' v-bind:value='data.id'>{{ data.id }} - {{ data.unitname }} ({{ data.shotcode }})</option>
+
+                    </select>
+                      <has-error :form="form" field="unitofmeasure"></has-error>
+                               
+                                </div>
+
+
+
+                      <div class="form-group">
+               
+                    <label>Total Number of Main units</label>
+                     <input v-model="form.quantity" type="number" name="quantity" 
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('quantity') }">
+                       <has-error :form="form" field="quantity"></has-error>
+                                </div>
+                    <div class="form-group">
+               
+                    <label>Quantity Per Main Unit</label>
+                     <input v-model="form.qtyperunit" type="number" name="qtyperunit" 
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('qtyperunit') }">
+                       <has-error :form="form" field="qtyperunit"></has-error>
+                                </div>
+                   
+                   
+                   
+                    <div class="form-group">
+               
+                    <label>Unit Cost of the Main Unit </label>
+                     <input v-model="form.unitcost" type="number" name="unitcost"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('unitcost') }">
+                       <has-error :form="form" field="unitcost"></has-error>
+                                </div>
+
+
+
+                            <div class="form-group">
+                  <label>Small  Unit of Measure</label>
+                    <select name ="smallunitmeasure" v-model="form.smallunitmeasure" id ="smallunitmeasure"  class="form-control" :class="{'is-invalid': form.errors.has('smallunitmeasure')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in unitslistminor' v-bind:value='data.id'>{{ data.id }} - {{ data.unitname }} ({{ data.shotcode }})</option>
+
+                    </select>
+                   
+
+                                <has-error :form="form" field="smallunitmeasure"></has-error>
+                               
+                                </div>
+                
+  
+               
+                   
+                   
+                   
+                  
+  
+  
       
-                  </div>
+  
+ 
+
+
+
+
+                
+                 
+
+               
+
+
+
+
+
+
+
+
             </div>
             <div class="modal-footer">
 
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
+    
+  <button v-show="!editmode" type="submit" ref="myBtn"  id="submit" class="btn btn-primary btn-sm">Add</button>
+
             <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
 
 
@@ -763,40 +691,473 @@ button.add-newm {
         </div>
         <!-- /.modal-dialog -->
       </div>
+    
+    <!-- closure of modal  -->
+<!-- modalllsn -->
+
                
- <div class="modal fade" id="addNewUnitm">
-        <div class="modal-dialog modal-ml">
+ <div class="modal fade" id="confirmordertoview">
+        <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">NEW EXPENSE TYPE</h4>
-                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
+              <h4 class="modal-title" v-show="!editmode">NEW PRODUCT BRAND</h4>
+                   <h4 class="modal-title" v-show="editmode">SELECTED ORDER TO VIEW</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
                       
-<form @submit.prevent="editmode ? updateExpensetype():createNewrecordExpensetypename()">
 
+<form @submit.prevent="choosetoview()">
             <div class="modal-body">
  
   
   
  <div class="form-group">
-                <div class ="bethapa-table-header">TYPE DETAILS</div>
-                    <label> Name</label>
-                     <input v-model="form.typename" type="text" name="typename"
-                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('typename') }">
-                       <has-error :form="form" field="typename"></has-error>
+              
+                    <label>Order Number to View</label>
+                    
+                       <has-error :form="form" field="invoiceno"></has-error>
+                        <select name ="invoiceno" class="form-control form-control-sm" v-model="form.invoiceno" tabindex="1" id ="select2"   :class="{'is-invalid': form.errors.has('invoiceno')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in thelistoforderssummary'  v-on:change="myClickEvent"  v-bind:value='data.invoiceno'>[ Date :  {{ data.invoicedate }}  Order Number :  {{ data.invoiceno }}  Amount : {{ formatPrice(data.invoiceamount) }} ]</option>
+
+                    </select>
+
                                 </div>
 
-        <div class="form-group">
-                    <label for="exampleInputEmail1">Description</label>
-                     <textarea v-model="form.description" type="text" name="description"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-      <has-error :form="form" field="description"></has-error>
-      
-                  </div>
+<button type="submit" id="submit"  name= "submit" ref="myBtn" class="btn btn-info btn-sm">View Details</button>
+<br>
+<div class="bethapa-table-header"></div>
+
+  <div  v-if="existsordertoview > 0 ">
+       <div class="bethapa-table-header">
+      Receipt Details <button hidden="" v-if="infoaddproductbrand > 0" type="button" class="add-newm" @click="newModalBrand" >Add New </button>
+                      </div>
+    <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>DATE</th>
+                      <th>ITEM</th>
+                      <th>QTY</th>
+                      <th>UNIT PRICE</th>
+                      <th>TOTAL PRICE</th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                  <tr v-for="mydataObjectinfo in theselectedorderdetails.data" :key="mydataObjectinfo.id">
+                     
+  <td>{{(mydataObjectinfo.datesold)}}</td>                   
+
+ <td> <template v-if="mydataObjectinfo.product_name">	{{mydataObjectinfo.product_name.name}}</template></td>
+
+ <td>{{mydataObjectinfo.quantity}} </td>
+  <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitcost)}}</td>
   
+ <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.linetotal)}}</td>
+                
+                    
+  <button type="button" v-if="infoviewrecordproductbrand > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="editModalBrand(mydataObjectbrand)">   </button>
+    
+                                                     
+                   
+                       <!-- <td v-if="infoedit > 0"> -->
+               
+                    
+                    </tr>
+                   
+                    </tbody>
+                    
+                    <tfoot> 
+
+                     <th>
+                          <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.2em;" center > TOTAL </span></span></th>  
+                     <th></th>  
+                   <th></th>
+                     <th>  
+                   
+                    
+                    </th>
+                
+                
+                 <th>    
+                    <span class="cell" style="color:maroon ;">  
+   
+                    <span style="font-size:1.2em;" center > {{currencydetails}} {{ formatPrice(selectedordertotalzz) }}  </span></span>    </th>  
+                     <th colspan='100'>  </th>
+                   
+                        </tfoot>
+                       
+   
+                  </table>
+  </div>
+  <!-- closing to view div -->
+       
+
+            </div>
+            <div class="modal-footer">
+
+    
+ 
+ 
+          
+ 
+                    
+
+
+                
+        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+
+      </div>
+  </form>
+          </div>
+        
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+<!-- closure of modal -->
+
+   <!-- start of categories modal  -->
+
+
+               
+ <div class="modal fade" id="confirmOrderdelivery">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" v-show="!editmode">NEW PRODUCT BRAND</h4>
+                   <h4 class="modal-title" v-show="editmode">Confirm Delivery</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                      
+<form @submit.prevent="editmode ? createNewconfirmdelivery():createNewconfirmdelivery()">
+
+            <div class="modal-body">
+ 
+  
+   <div class ="bethapa-table-header">ORDER DETAILS</div>
+
+
+
+
+     <div class="row">
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                  <label>Item</label>
+                 
+                    <select name ="productname" readonly="" disabled="" v-model="form.productname" id ="productname"  class="form-control" :class="{'is-invalid': form.errors.has('productname')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in productslist' v-bind:value='data.id'> {{ data.name }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="productname"></has-error>
+                                
+ </div>
+                    </div>
+
+
+                    <div class="col-sm-3">
+                         <div class="form-group">
+                  <label>Brand</label>
+                    <select name ="brand" disabled readonly v-model="form.brand" id ="brand"  class="form-control" :class="{'is-invalid': form.errors.has('brand')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.id'>{{ data.brandname }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="brand"></has-error>
+                             </div>
+                    </div>
+
+                
+                
+                <div class="col-sm-3">
+                         
+                 <div class="form-group">
+                  <label>Supplier </label>
+                    <select name ="supplier" v-model="form.supplier" disabled id ="supplier"  class="form-control" :class="{'is-invalid': form.errors.has('supplier')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in supplierslistactuoa' v-bind:value='data.id'> {{ data.suppname }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="supplier"></has-error>
+                                </div>
+
+
+                    </div>
+
+                         <div class="col-sm-3">
+                         <div class="form-group">
+                         <label>Main Unit</label>
+                         <select name ="unitofmeasure"  disabled v-model="form.unitofmeasure" id ="unitofmeasure" class="form-control" :class="{'is-invalid': form.errors.has('unitofmeasure')}">
+                         <option value=" ">  </option>
+                         <option v-for='data in unitslistmain' v-bind:value='data.id'> {{ data.unitname }} </option>
+
+                    </select>
+                      <has-error :form="form" field="unitofmeasure"></has-error>
+                               
+                                </div> 
+                        
+                    </div>
+
+
+
+                       <div class="col-sm-3">
+                         <div class="form-group">
+               
+                    <label>QTY of units </label>
+                     <input v-model="form.quantity" type="number" readonly name="quantity" 
+                     class="form-control form-control" :class="{ 'is-invalid': form.errors.has('quantity') }">
+                       <has-error :form="form" field="quantity"></has-error>
+                                </div>
+                        
+                    </div>
+
+                    
+
+                      <div class="col-sm-3">
+                         <div class="form-group">
+               
+                    <label>Qty Per Unit</label>
+                     <input v-model="form.qtyperunit" readonly type="number" name="qtyperunit" 
+                     class="form-control form-control" :class="{ 'is-invalid': form.errors.has('qtyperunit') }">
+                       <has-error :form="form" field="qtyperunit"></has-error>
+                                </div>
+                        
+                    </div>
+
+
+
+                      <input v-model="form.id" hidden readonly  type="id" name="recordto">
+                      <input v-model="form.datemade" hidden readonly type="text" name="datemade">
+
+                      <input v-model="form.invoiceno" hidden readonly type="text" name="invoiceno">
+
+
+
+
+
+
+
+                     <div class="col-sm-3">
+                          <div class="form-group">
+               
+                    <label>Cost of each Unit </label>
+                     <input v-model="form.unitcost" type="number" readonly name="unitcost"
+                     class="form-control form-control" :class="{ 'is-invalid': form.errors.has('unitcost') }">
+                       <has-error :form="form" field="unitcost"></has-error>
+                                </div>
+                        
+                    </div>
+                     <div class="col-sm-3">
+                        
+                          <div class="form-group">
+                  <label>Small  Unit of Measure</label>
+                    <select name ="smallunitmeasure" disabled v-model="form.smallunitmeasure" id ="smallunitmeasure"  class="form-control" :class="{'is-invalid': form.errors.has('smallunitmeasure')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in unitslistminor' v-bind:value='data.id'> {{ data.unitname }} ({{ data.shotcode }})</option>
+
+                    </select>
+                   
+
+                                <has-error :form="form" field="smallunitmeasure"></has-error>
+                               
+                                </div>
+                    </div>
+                     <div class="col-sm-4">
+                        
+                        
+                    </div>
+                     <div class="col-sm-4">
+                        
+                        
+                    </div>
+
+
+ <div class ="bethapa-table-header"></div>
+
+ <div class ="bethapa-table-header">DELIVERY DETAILS</div>                   
+
+
+
+ <div class="row">
+                    <div class="col-sm-3">
+                    <div class="form-group">
+                  <label>Item</label>
+                 
+                    <select name ="productname" readonly="" disabled="" v-model="form.productname" id ="productname"  class="form-control" :class="{'is-invalid': form.errors.has('productname')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in productslist' v-bind:value='data.id'> {{ data.name }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="productname"></has-error>
+                                
+ </div>
+                    </div>
+
+
+                    <div class="col-sm-3">
+                         <div class="form-group">
+                  <label>Brand</label>
+                    <select name ="brand" disabled readonly v-model="form.brand" id ="brand"  class="form-control" :class="{'is-invalid': form.errors.has('brand')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.id'>{{ data.brandname }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="brand"></has-error>
+                             </div>
+                    </div>
+
+   <div class="col-sm-3">
+                         
+                 <div class="form-group">
+                  <label>Supplier </label>
+                    <select name ="deliveringsupplier" v-model="form.deliveringsupplier"  id ="deliveringsupplier"  class="form-control" :class="{'is-invalid': form.errors.has('deliveringsupplier')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in supplierslistactuoa' v-bind:value='data.id'> {{ data.suppname }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="deliveringsupplier"></has-error>
+                                </div>
+
+
+                    </div>
+
+   <div class="col-sm-3">
+                        <div class="form-group">
+                  <label>Main Unit</label>
+                    <select name ="deliveringunitofmeasure"   v-model="form.deliveringunitofmeasure" id ="deliveringunitofmeasure" class="form-control" :class="{'is-invalid': form.errors.has('deliveringunitofmeasure')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in unitslistmain' v-bind:value='data.id'> {{ data.unitname }} </option>
+
+                    </select>
+                      <has-error :form="form" field="deliveringunitofmeasure"></has-error>
+                               
+                                </div> 
+                        
+                    </div>
+
+
+
+                       <div class="col-sm-3">
+                         <div class="form-group">
+               
+                    <label>Qty of units Delivered </label>
+                     <input v-model="form.deliveringquantity" type="number"  name="deliveringquantity" 
+                     class="form-control form-control" :class="{ 'is-invalid': form.errors.has('deliveringquantity') }">
+                       <has-error :form="form" field="deliveringquantity"></has-error>
+                                </div>
+                        
+                    </div>
+
+                    
+
+                      <div class="col-sm-3">
+                         <div class="form-group">
+               
+                    <label>Qty Per Unit delivered</label>
+                     <input v-model="form.deliveringqtyperunit"  type="number" name="deliveringqtyperunit" 
+                     class="form-control form-control" :class="{ 'is-invalid': form.errors.has('deliveringqtyperunit') }">
+                       <has-error :form="form" field="deliveringqtyperunit"></has-error>
+                                </div>
+                        
+                    </div>
+                     <div class="col-sm-3">
+                        
+                          <div class="form-group">
+                  <label>Mini  Unit measure</label>
+                    <select name ="deliveringsmallunitmeasure"  v-model="form.deliveringsmallunitmeasure" id ="deliveringsmallunitmeasure"  class="form-control" :class="{'is-invalid': form.errors.has('deliveringsmallunitmeasure')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in unitslistminor' v-bind:value='data.id'> {{ data.unitname }} ({{ data.shotcode }})</option>
+
+                    </select>
+                   
+
+                                <has-error :form="form" field="deliveringsmallunitmeasure"></has-error>
+                               
+                                </div>
+                    </div>
+                   
+                 
+                   
+                   <div class ="bethapa-table-header"></div>
+
+ <div class ="bethapa-table-header">COSTINGS</div>
+                     <div class="col-sm-4">
+                       <div class="form-group">
+               
+                    <label>Line Unit Cost</label>
+                     <input v-model="form.lineunitcost" readonly type="text" name="lineunitcost" 
+                     class="form-control form-control" :class="{ 'is-invalid': form.errors.has('lineunitcost') }">
+                       <has-error :form="form" field="lineunitcost"></has-error>
+                                </div>    
+                        
+                    </div>
+                     <div class="col-sm-4">
+                            <div class="form-group">
+               
+                    <label>Selling Price per unit</label>
+                     <input v-model="form.sellingprice" type="number" name="sellingprice" 
+                     class="form-control form-control" :class="{ 'is-invalid': form.errors.has('sellingprice') }">
+                       <has-error :form="form" field="sellingprice"></has-error>
+                                </div>    
+                        
+                        
+                    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+                
+
+            
+
+              
+                  
+        
+
+
+
+
+
+    
+    
+
             </div>
             <div class="modal-footer">
 
@@ -804,7 +1165,7 @@ button.add-newm {
   <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Submit Data</button>
 
 
-            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
+            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Confirm</button>
 
 
 
@@ -819,14 +1180,14 @@ button.add-newm {
         </div>
         <!-- /.modal-dialog -->
       </div>
-    <!-- closure of modal  -->
+
+
+<!---- closure modal -->
 
 
 
-   <!-- start of categories modal  -->
 
 
-               
  <div class="modal fade" id="addNewbrand">
         <div class="modal-dialog modal-ml">
           <div class="modal-content">
@@ -902,112 +1263,7 @@ button.add-newm {
       </div>
     <!-- closure of modal  -->
 
-    
-      <div class="modal fade" id="addNewofficemadeexpense">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
-                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-                      
-<form @submit.prevent="editmode ? updateRecordofficemadeexpense():createNewrecordofficemadeexpense()">
 
-            <div class="modal-body">
-           
-
-
-
-
-<div class="form-group">
-                  <label>Expense Name</label>
-<select name ="expense" v-model="form.expense" id ="expense" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('expense')}">
-<option value=" ">  </option>
-<option v-for='data in expenseslist' v-bind:value='data.expenseno'>{{ data.expenseno }} - {{ data.expensename }}</option>
-
-</select>
-            <has-error :form="form" field="expense"></has-error>
-            </div>
-
-
-<div class="form-group">
-                  <label>Branch</label>
-<select name ="branch" v-model="form.branch" id ="branch" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('branch')}">
-<option value=" ">  </option>
-<option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
-
-</select>
-            <has-error :form="form" field="branch"></has-error>
-            </div>
-
-
-
-
-   <div class="form-group">
-
-     <label>Amount</label>
-                     <input v-model="form.amount" type="number" name="amount"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('amount') }">
-      <has-error :form="form" field="amount"></has-error>
- 
-
-     </div>  
-
-
-
-
-
-      <div class="form-group">
-
-     <label>Date of Expense</label>
-                     <input v-model="form.datemade" type="date" name="datemade"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('datemade') }">
-      <has-error :form="form" field="datemade"></has-error>
- 
-
-     </div>          
-            <div class="form-group">
-                  <label>Expense Wallet</label>
-                  <select name ="walletexpense" v-model="form.walletexpense" id ="walletexpense" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('walletexpense')}">
-                  <option value=" ">  </option>
-                  <option v-for='data in walletlist' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
-
-                  </select>
-            <has-error :form="form" field="walletexpense"></has-error>
-            </div>
-
-
-
-
-   <div class="form-group">
-                       <label>Description</label>
-                <textarea v-model="form.description" name="description" rows="5" cols="30" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-                 
-                <has-error :form="form" field="description"></has-error>
-                </div>
-  
-            </div>
-            <div class="modal-footer">
-
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
-            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
-
-
-
-                
-        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-
-      </div>
-  </form>
-          </div>
-        
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
 
 
          <!-- start of categories modal  -->
@@ -1018,7 +1274,7 @@ button.add-newm {
         <div class="modal-dialog modal-ml">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">NEW  CATEGORY</h4>
+              <h4 class="modal-title" v-show="!editmode">NEW CUSTOMER</h4>
                    <h4 class="modal-title" v-show="editmode">Update Record</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -1032,18 +1288,26 @@ button.add-newm {
   
   
  <div class="form-group">
-                <div class ="bethapa-table-header">EXPENSE CATEGORIES</div>
-                    <label>Category Name</label>
-                     <input v-model="form.expcatcatname" type="text" name="expcatcatname"
-                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('expcatcatname') }">
-                       <has-error :form="form" field="expcatcatname"></has-error>
+                <div class ="bethapa-table-header">CUSTOMER DETAILS</div>
+                    <label>Customer Name</label>
+                     <input v-model="form.customername" type="text" name="customername"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('customername') }">
+                       <has-error :form="form" field="customername"></has-error>
+                                </div>
+
+                                <div class="form-group">
+             
+                    <label>Contact</label>
+                     <input v-model="form.contact" type="text" name="contact"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('contact') }">
+                       <has-error :form="form" field="contact"></has-error>
                                 </div>
 
         <div class="form-group">
-                    <label for="exampleInputEmail1">Description</label>
-                     <textarea v-model="form.description" type="text" name="description"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-      <has-error :form="form" field="description"></has-error>
+                    <label for="exampleInputEmail1">Residence</label>
+                     <textarea v-model="form.residence" type="text" name="residence"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('residence') }"></textarea>
+      <has-error :form="form" field="residence"></has-error>
       
                   </div>
   
@@ -1088,10 +1352,111 @@ button.add-newm {
         <!-- /.modal-dialog -->
       </div>
     <!-- closure of modal  -->
-        
+            
+ <div class="modal fade" id="addNew">
+        <div class="modal-dialog modal-ml">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" v-show="!editmode">NEW SUPPLIER</h4>
+                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                      
+<form @submit.prevent="editmode ? updateRecord():createNewrecord()">
+
+            <div class="modal-body">
+ 
+  
+  
+ <div class="form-group">
+                <div class ="bethapa-table-header">SUPPLIER DETAILS</div>
+                    <label>Supplier's  Name</label>
+                     <input v-model="form.suppname" type="text" name="suppname"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('suppname') }">
+                       <has-error :form="form" field="suppname"></has-error>
+                                </div>
+  <div class="form-group">
+                    <label>Contact Number</label>
+                     <input v-model="form.contact" type="text" name="contact"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('contact') }">
+                       <has-error :form="form" field="contact"></has-error>
+                                </div>
+
+  <div class="form-group">
+                    <label>Location</label>
+                     <input v-model="form.location" type="text" name="location"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('location') }">
+                       <has-error :form="form" field="location"></has-error>
+                                </div>
+ <div class ="bethapa-table-header">COMPANY DETAILS</div>
+                  <div class="form-group">
+                  <label>Company  Name</label>
+                    <select name ="company" v-model="form.company" id ="company" v-on:change="myClickEvent" class="form-control" :class="{'is-invalid': form.errors.has('company')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in supplierslist' v-bind:value='data.id'>{{ data.id }} - {{ data.companyname }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="company"></has-error>
+
+
+
+                                
+                                </div>
+  
+     <div class="form-group">
+                    <label>Contact Number</label>
+                     <input v-model="form.companycontact" type="text" name="companycontact"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('companycontact') }">
+                       <has-error :form="form" field="companycontact"></has-error>
+                                </div>  
+                 
+                 <div class="form-group">
+                    <label>Contact Person</label>
+                     <input v-model="form.companycontactperson" type="text" name="companycontactperson"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('companycontactperson') }">
+                       <has-error :form="form" field="companycontactperson"></has-error>
+                                </div>
+    
+                 
+
+               
+
+
+
+
+
+
+
+
+            </div>
+            <div class="modal-footer">
+
+    
+  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Submit Data</button>
+
+
+            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
+
+
+
+                
+        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+
+      </div>
+  </form>
           </div>
+        
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+  </div>
 
-
+ 
 
 <!--   if not authorised -->
    <div class="container" v-if="allowedtoaccesscomponent < 1 ">
@@ -1104,7 +1469,7 @@ button.add-newm {
     </div>
 
 
-<!----   End of not Authorised --->
+
 
 
 
@@ -1117,38 +1482,72 @@ button.add-newm {
         return {
             editmode: false,
             mydataObject:{},
-            mydataObjectofficemadeexpenses:{},
+            mydataObjectordermaking:{},
+            theselectedorderdetails:{},
                         mydataObjectProductcategories:{},
                         mydataObjectProductunitsofmeasurekk:{},
-                        mydataObjectbranchexpenses:{},
-              mydataObjectofficeexpenses:{},
-                
-                 allowedtoaccessbranchexpensescomponent : null,
-                 allowedtoaccessofficeexpensescomponent:null,
+             mydataObjectProductbrandskk:{},
+            carttotal:null,
+            selectedordertotalzz:null,
+            branchbalancedforthisdate : null,
+            currencydetails:null,
+            allowedtoaccessbrandscomponent : null,
                  allowedtoaccesscomponent : null,
-                 allowedtoaccessofficecomponent : null,
-                currencydetails:null,
+                 existsordertoview: null,
                 brancheslist:{},
+                  companyproducts:{},
+                thelistoforderssummary:{},
+                productslist:{},
 ///dropdown
    
 
 
-              form: new Form({
+                form: new Form({
                                     id:'',
-                                    expensename : '',
-                                    mainmenuname:'',
-                                    iconclass:'',
-                                    expensecategory : '',
-                                      expcatcatname : '',
-                                    expensetype : '',
-                                    typename:'',
-                                     description : '',
-                                    type : '',
-                                     expense : '',
+                                        userid:'',
+                                        suppname:'',
+                                        contact:'',
+                                        location:'',
+                                        company:'',
+                                        companycontact:'',
+                                        companycontactperson:'',
+                                        productcode:'',
+lineunitcost:'',
+invoiceno:'',
+invoicedate:'',
+                                        customername:'',
+                                        contact:'',
+                                        residence:'',
+ productname:'',
+ quantity:'',
+qtyperunit:'',
+linetotalcost:'',
+unitcost:'',
+lineunitcost:'',
+supplier:'',
+brand:'',
+unitofmeasure:'',
+smallunitmeasure:'',
+datemade:'',
+                        invoiceno:'',
+
+
+
+                                    name : '',
+                                    category : '',
+                                    unitname : '',
+                                    shotcode : '',   
+                                    unitprice : '',
+                                    brand : '',
+                                    rol : '',
                                     description : '',
-                                    amount : '',
-                                    datemade : '',
-                                    branch : ''
+                                    catname : '',
+                                    brandname : '',
+                                    unitmeasure : '',
+                                             
+                                             
+                                           
+                                              
 
             })
         }
@@ -1156,14 +1555,28 @@ button.add-newm {
         },
          
         methods:{
-                 formatPrice(value) {
+             formatPrice(value) {
         let val = (value/1).toFixed(0).replace('.', ',')
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    },
+    	onBlurNumber(e) {
+    	this.visible = false;
+        this.temp = this.amount;
+        this.amount = this.thousandSeprator(this.amount);
+    },
+        thousandSeprator(amount) {
+    	if (amount !== '' || amount !== undefined || amount !== 0 || amount !== '0' || amount !== null) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+        return amount;
+    }
     },
     /// submiting the balancing record date and branch
   myClickEvent($event) { const elem = this.$refs.myBtn
             elem.click()
         },
+
+     
 
           ////// drpdown
           
@@ -1171,47 +1584,19 @@ button.add-newm {
           /////////////////////////////////////////
 // Our method to GET results from a Laravel endpoint
       getResults(page = 1) {
-                        axios.get('api/expenses?page=' + page)
+                        axios.get('api/companyproducts?page=' + page)
                           .then(response => {
                             this.mydataObject = response.data;
                           });
                       },
-                        updateRecord(){
-    this.$Progress.start();
-            /// viewing from the sonsole
-            ///console.log('Edidint data');
-/// calling the function to update the data
-this.form.put('api/expenses/'+this.form.id)
-  .then(()=> {
-    // on success
-   $('#addNew').modal('hide');
-    swal.fire(
-        'Update!',
-        'Your file has been updated.',
-        'success'
-      )
-      this.$Progress.finish();
-    Fire.$emit('AfterAction');
-
-  })
-
-
-  .catch(()=>{
- this.$Progress.fail();
-  });
-
-            },
-         
-        
 
 // /////
-
- updateExpensetype(){
+ updateUnit(){
     this.$Progress.start();
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/expensetypesdata/'+this.form.id)
+this.form.put('api/productunits/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNewUnitm').modal('hide');
@@ -1222,7 +1607,6 @@ this.form.put('api/expensetypesdata/'+this.form.id)
       )
       this.$Progress.finish();
     Fire.$emit('AfterAction');
-    axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));
 
   })
 
@@ -1232,7 +1616,13 @@ this.form.put('api/expensetypesdata/'+this.form.id)
   });
 
             },
-
+  newModalproductdsale(){
+                      this.editmode = false;
+                 this.form.clear();
+        this.form.reset();
+$('#addsalem').modal('show');
+  this.form.reset();
+            },
 
 
 // llkk
@@ -1241,10 +1631,10 @@ this.form.put('api/expensetypesdata/'+this.form.id)
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/makeexpense/'+this.form.id)
+this.form.put('api/produpdateBranductbrands/'+this.form.id)
   .then(()=> {
     // on success
-   $('#addNewbranchexpense').modal('hide');
+   $('#addNewbrand').modal('hide');
     swal.fire(
         'Update!',
         'Your file has been updated.',
@@ -1270,7 +1660,7 @@ this.form.put('api/makeexpense/'+this.form.id)
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/expensecategories/'+this.form.id)
+this.form.put('api/customerdetails/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNewproductcategory').modal('hide');
@@ -1280,9 +1670,9 @@ this.form.put('api/expensecategories/'+this.form.id)
         'success'
       )
       this.$Progress.finish();
-    Fire.$emit('AfterAction');
-     axios.get("api/expensecategories").then(({ data }) => (this.mydataObjectProductcategories = data));
 
+    Fire.$emit('AfterAction');
+axios.get("api/customerdetails").then(({ data }) => (this.mydataObjectProductcategories = data)); 
   })
 
 
@@ -1302,7 +1692,7 @@ this.form.put('api/expensecategories/'+this.form.id)
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/companyproducts/'+this.form.id)
+this.form.put('api/supplierdetails/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNew').modal('hide');
@@ -1323,56 +1713,6 @@ this.form.put('api/companyproducts/'+this.form.id)
 
             },
 
-////////////////////////////////////////////////////
-
-
-     newModalofficeexpense(){
-                      this.editmode = false;
-                 this.form.clear();
-        this.form.reset();
-$('#addNewofficemadeexpense').modal('show');
-            },
-
-                 editModalofficemadeexpense(mydataObjectofficemadeexpenses){
-                this.editmode = true;
-                this.form.clear();
-                this.form.reset();
-              this.form.fill(mydataObjectofficemadeexpenses);
-              $('#addNewofficemadeexpense').modal('show');
-                          },
-
-
-                                      deleteRecordofficemadeexpense(id){
-                                                      swal.fire({
-                                        title: 'Are you sure?',
-                                        text: "You won't be able to revert this!",
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Yes, delete it!'
-                                                              }).then((result) => {
-                                          if(result.value){
-                                                                        this.form.delete('api/expensetypesdata/'+id).then(()=>{
-
-                                                                                                                      swal.fire(
-                                                                                                                        'Deleted!',
-                                                                                                                        'Your file has been deleted.',
-                                                                                                                        'success'
-                                                                                                                      )
-                                                                                                Fire.$emit('AfterAction');
-                                                                                          axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));                                                                                         
-                                                                                                
-                                                                                            }).cathch(()=>{
-                                                                                              
-                                                                        swal.fire("Failed!", "There was Something Wrong.", "Warning");
-                                                                                            });
-                                          }
-                                                          
-                                      })
-
-                                              
-                                                },
 
 
 
@@ -1382,15 +1722,21 @@ $('#addNewofficemadeexpense').modal('show');
 
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  newModalorder(){
+                      this.editmode = false;
+                 this.form.clear();
+        this.form.reset();
+$('#addNeworder1').modal('show');
+  this.form.reset();
+            },
 
-
-     newModalexpensetype(){
+     newModalUnitmeasure(){
                       this.editmode = false;
                  this.form.clear();
         this.form.reset();
 $('#addNewUnitm').modal('show');
             },
-                 editModalexpensetype(mydataObjectProductunitsofmeasurekk){
+                 editModalUnitmeasure(mydataObjectProductunitsofmeasurekk){
                 this.editmode = true;
                 this.form.clear();
                 this.form.reset();
@@ -1399,7 +1745,7 @@ $('#addNewUnitm').modal('show');
                           },
 
 
-                                      deleteExpensetype(id){
+                                      deleteUnitmeasure(id){
                                                       swal.fire({
                                         title: 'Are you sure?',
                                         text: "You won't be able to revert this!",
@@ -1410,7 +1756,7 @@ $('#addNewUnitm').modal('show');
                                         confirmButtonText: 'Yes, delete it!'
                                                               }).then((result) => {
                                           if(result.value){
-                                                                        this.form.delete('api/expensetypesdata/'+id).then(()=>{
+                                                                        this.form.delete('api/productunits/'+id).then(()=>{
 
                                                                                                                       swal.fire(
                                                                                                                         'Deleted!',
@@ -1418,8 +1764,6 @@ $('#addNewUnitm').modal('show');
                                                                                                                         'success'
                                                                                                                       )
                                                                                                 Fire.$emit('AfterAction');
-                                                                                          axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));                                                                                         
-                                                                                                
                                                                                             }).cathch(()=>{
                                                                                               
                                                                         swal.fire("Failed!", "There was Something Wrong.", "Warning");
@@ -1439,22 +1783,30 @@ $('#addNewUnitm').modal('show');
 
 
 
-               newModalbranchexpenses(){
+               newModalBrand(){
                       this.editmode = false;
                  this.form.clear();
         this.form.reset();
-$('#addNewbranchexpense').modal('show');
+$('#addNewbrand').modal('show');
             },
-                 editModalbranchexpenses(mydataObjectbranchexpenses){
+                 editModalBrand(mydataObjectProductbrandskk){
                 this.editmode = true;
                 this.form.clear();
                 this.form.reset();
-              this.form.fill(mydataObjectbranchexpenses);
-              $('#addNewbranchexpense').modal('show');
+              this.form.fill(mydataObjectProductbrandskk);
+              $('#addNewbrand').modal('show');
+                          },
+
+                           itemconfirmdelivery(mydataObjectProductbrandskk){
+                this.editmode = true;
+                this.form.clear();
+                this.form.reset();
+              this.form.fill(mydataObjectProductbrandskk);
+              $('#confirmOrderdelivery').modal('show');
                           },
 
 
-                                      deleteBranchexpenses(id){
+                                      deleteSales(id){
                                                       swal.fire({
                                         title: 'Are you sure?',
                                         text: "You won't be able to revert this!",
@@ -1465,7 +1817,7 @@ $('#addNewbranchexpense').modal('show');
                                         confirmButtonText: 'Yes, delete it!'
                                                               }).then((result) => {
                                           if(result.value){
-                                                                        this.form.delete('api/makeexpense/'+id).then(()=>{
+                                                                        this.form.delete('api/salessummary/'+id).then(()=>{
 
                                                                                                                       swal.fire(
                                                                                                                         'Deleted!',
@@ -1473,6 +1825,8 @@ $('#addNewbranchexpense').modal('show');
                                                                                                                         'success'
                                                                                                                       )
                                                                                                 Fire.$emit('AfterAction');
+                                                              
+                   axios.get("api/salessummary").then(({ data }) => (this.mydataObjectProductbrandskk = data));
                                                                                             }).cathch(()=>{
                                                                                               
                                                                         swal.fire("Failed!", "There was Something Wrong.", "Warning");
@@ -1513,7 +1867,7 @@ $('#addNewproductcategory').modal('show');
                                         confirmButtonText: 'Yes, delete it!'
                                                               }).then((result) => {
                                           if(result.value){
-                                                                        this.form.delete('api/expensecategories/'+id).then(()=>{
+                                                                        this.form.delete('api/customerdetails/'+id).then(()=>{
 
                                                                                                                       swal.fire(
                                                                                                                         'Deleted!',
@@ -1521,7 +1875,7 @@ $('#addNewproductcategory').modal('show');
                                                                                                                         'success'
                                                                                                                       )
                                                                                                 Fire.$emit('AfterAction');
-                                                                                                 axios.get("api/expensecategories").then(({ data }) => (this.mydataObjectProductcategories = data));
+                                                                                                axios.get("api/customerdetails").then(({ data }) => (this.mydataObjectProductcategories = data)); 
                                                                                             }).cathch(()=>{
                                                                                               
                                                                         swal.fire("Failed!", "There was Something Wrong.", "Warning");
@@ -1535,191 +1889,84 @@ $('#addNewproductcategory').modal('show');
 
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            loadDatarecords(){
-                    axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                    axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                    axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                    
-                    axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                    axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                  
-            //   axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-               
-               
-               /// General components Access
-                     axios.get("api/getAddgeneralexpense").then(({ data }) => (this.addnewgeneralexpense = data));
-                     axios.get("api/getviewgeneralexpense").then(({ data }) => (this.viewrecordgeneralexpense = data));
-                     axios.get("api/geteditgeneralexpense").then(({ data }) => (this.editgeneralexpense = data));
-                     axios.get("api/getdeletegeneralexpense").then(({ data }) => (this.deletegeneralexpense = data));
-                  
+
+            newModal(){
+                      this.editmode = false;
+                      this.form.clear();
+                      this.form.reset();
+                      $('#addNew').modal('show');
+                                                                       },
 
 
-                     ///// 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 axios.get("api/getExpensetypes").then(({ data }) => (this.expensetypes = data));
-                    axios.get("api/getExpensecategories").then(({ data }) => (this.expensecategory = data));
-
-                      axios.get("api/mainmenucomponents").then(({ data }) => (this.mydataObject = data));
-                   
-                      axios.get("api/getcategories").then(({ data }) => (this.categorieslist = data));
-                      axios.get("api/getunits").then(({ data }) => (this.unitslist = data));
+                                      editModal(mydataObject){
+                                                    this.editmode = true;
+                                                    this.form.clear();
+                                            this.form.reset();
+                                            this.form.fill(mydataObject);
+                                    $('#addNew').modal('show');
+                                                                              },
 
 
 
+            deleteRecord(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/supplierdetails/'+id).then(()=>{
 
-            },
-            
-           
-   loadDatarecordsCategories(){
-                  axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                  axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                  axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  
-                 axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                 axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-               
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+ },
+//////////////////////////////////////// submitting thr form by click
 
-                    axios.get("api/getAddnewexpensecategory").then(({ data }) => (this.infoaddnewcategory = data));
-                    axios.get("api/getviewexpensecategory").then(({ data }) => (this.infoviewrecordcategory = data));
-                    axios.get("api/geteditexpensecategory").then(({ data }) => (this.infoeditcategory = data));
-                    axios.get("api/getdeleteexpensecategory").then(({ data }) => (this.infodeletecategory = data));
-                    axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-                    // getting the categories
-
-                    axios.get("api/expensecategories").then(({ data }) => (this.mydataObjectProductcategories = data));
-                  
-            },
-           
-             loadDatarecordsExpensetypes(){
-                  axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                  axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                  axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  
-                  axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                  axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                              // /// expense types
-                      axios.get("api/getAddnewexpensetype").then(({ data }) => (this.infoaddexpensetype = data));
-                    axios.get("api/getviewexpensetype").then(({ data }) => (this.infoviewrecordexpensetype= data));
-                    axios.get("api/geteditexpensetype").then(({ data }) => (this.infoeditexpensetype= data));
-                    axios.get("api/getdeleteexpensetype").then(({ data }) => (this.infodeleteexpensetype = data));
-
-                
-                     axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));
-
-
-            },
-              
-            loadDatarecordsbranchexpenses(){
-                   axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                  axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                  axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-                 axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                 axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                /////
-
-                 axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
-                 axios.get("api/getExpensestomake").then(({ data }) => (this.expenseslist = data));
-                       // /// Product brand
-                    axios.get("api/getAddnewproductbrand").then(({ data }) => (this.infoaddproductbrand = data));
-                    axios.get("api/getviewproductbrand").then(({ data }) => (this.infoviewrecordproductbrand= data));
-                    axios.get("api/geteditproductbrand").then(({ data }) => (this.infoeditproductbrand= data));
-                    axios.get("api/getdeleteproductbrand").then(({ data }) => (this.infodeleteproductbrand = data));
- 
-                    axios.get("api/makeexpense").then(({ data }) => (this.mydataObjectbranchexpenses = data));
-
-
-
-
-            },
-               loadDatarecordsofficeexpenses(){
-                   axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                   axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                   axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  
-                 axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                 axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                /////
-                               axios.get("api/getExpensestomake").then(({ data }) => (this.expenseslist = data));
-                               
-                               axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
-           
-                ////
-axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-                 axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
-                 axios.get("api/getExpensestomake").then(({ data }) => (this.expenseslist = data));
-                       // /// Product brand
-                    axios.get("api/getAddnewofficeexpense").then(({ data }) => (this.infoaddnewofficeexpense = data));
-                    axios.get("api/getviewofficeexpense").then(({ data }) => (this.infoviewrecordofficeexpense= data));
-                    axios.get("api/geteditofficeexpense").then(({ data }) => (this.infoeditofficeexpense= data));
-                    axios.get("api/getdeleteofficeexpense").then(({ data }) => (this.infodeleteofficeexpense = data));
- 
-  axios.get("api/getWalletlist").then(({ data }) => (this.walletlist = data));
-                    axios.get("api/getdailytotalexpenses").then(({ data }) => (this.dailyexpensestotal = data));
-                    axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.mydataObjectofficeexpenses = data));
-
-
-
-
-            },
-
-              
-            ///////////////////////////////////Working on the General Expense
-             createNewrecordmakebranchexpense(){
-
-                                this.$Progress.start();
-                                this.form.post('api/makeexpense')
-                                .then(()=>{
-
-
-                                Fire.$emit('AfterAction');
-                                axios.get("api/makeexpense").then(({ data }) => (this.mydataObjectbranchexpenses = data));
-
-                               // $('#addNew').modal('hide');
-
-                                Toast.fire({
-                                icon: 'success',
-                                title: 'Record Added Successfully'
-                                });
-
-                                this.$Progress.finish();
-                                  this.form.clear();
+  saveordertoview(mydataObject){
+                this.editmode = true;
+                 this.form.clear();
         this.form.reset();
-                                })
-                                .catch(()=>{
-
-                                })
-
-
-
-
+        this.form.fill(mydataObject);
+$('#confirmordertoview').modal('show');
+  axios.get("api/getselectedreceipttotals").then(({ data }) => (this. selectedordertotalzz = data));
             },
 
-      updateRecordbranchexpense(){
+////// Select the record to view
+choosetoview(){
     this.$Progress.start();
-            /// viewing from the sonsole
-            ///console.log('Edidint data');
-/// calling the function to update the data
-this.form.put('api/makeexpense/'+this.form.id)
+    this.form.post('api/savesaletoviewdetails') 
+        
+//this.form.post('api/saveordertoviedetails/'+this.form.id)
   .then(()=> {
     // on success
-   $('#addNew').modal('hide');
-    swal.fire(
-        'Update!',
-        'Your file has been updated.',
-        'success'
-      )
-      this.$Progress.finish();
-    Fire.$emit('AfterAction');
-     axios.get("api/makeexpense").then(({ data }) => (this.mydataObjectbranchexpenses = data));
+   $('#confirmordertoview').modal('show');
+   
+  //  Fire.$emit('AfterAction');
+  /// getting the count for existance
+   
+ axios.get("api/checkifarecordexistastovieworderdetails").then(({ data }) => (this.existsordertoview = data));
+ axios.get("api/selectedreceiptsalesdetails").then(({ data }) => (this.theselectedorderdetails = data));
+ axios.get("api/getselectedreceipttotals").then(({ data }) => (this. selectedordertotalzz = data));
+  
+  
+  
+  // axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+  // axios.get("api/getordertotal").then(({ data }) => (this. carttotal = data));
 
   })
 
@@ -1729,36 +1976,78 @@ this.form.put('api/makeexpense/'+this.form.id)
   });
 
             },
- 
- 
- createNewrecordofficemadeexpense(){
-
-                                this.$Progress.start();
-                                this.form.post('api/makeexpenseofficeuser')
-                                .then(()=>{
-
-
-                                Fire.$emit('AfterAction');
-                                this.loadDatarecordsofficeexpenses();
-           // axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.mydataObjectofficeexpenses = data));
-           // axios.get("api/getdailytotalexpenses").then(({ data }) => (this.dailyexpensestotal = data));
-                               // $('#addNew').modal('hide');
-
-                                Toast.fire({
-                                icon: 'success',
-                                title: 'Record Added Successfully'
-                                });
-
-                                this.$Progress.finish();
-                                  this.form.clear();
+            editModalorder(mydataObject){
+                this.editmode = true;
+                 this.form.clear();
         this.form.reset();
-                                })
-                                .catch(()=>{
+        this.form.fill(mydataObject);
+$('#addNeworder1').modal('show');
+            },
+              
+        
+          removeitemfromOrder(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Remove Item'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/selectedorderdetailstoview/'+id).then(()=>{
 
-                                })
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Item has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+axios.get("api/selectedreceiptsalesdetails").then(({ data }) => (this.theselectedorderdetails = data));
+axios.get("api/getselectedordertotal").then(({ data }) => (this. carttotal = data));
+  axios.get("api/getselectedordertotal").then(({ data }) => (this. selectedordertotalzz = data));
 
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
 
+            },  
+        
+        
+        
+        deletethisOrder(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/insertintoorders/'+id).then(()=>{
 
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
 
             },
 
@@ -1766,12 +2055,563 @@ this.form.put('api/makeexpense/'+this.form.id)
 
 
 
-        
 
-             createNewrecord(){
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+// order making //////////////////////////////////////////////////////
+updateRecordorder(){
+    this.$Progress.start();
+            /// viewing from the sonsole
+            ///console.log('Edidint data');
+/// calling the function to update the data
+this.form.put('api/insertintoorders/'+this.form.id)
+  .then(()=> {
+    // on success
+   $('#addNeworder1').modal('hide');
+    swal.fire(
+        'Update!',
+        'Your file has been updated.',
+        'success'
+      )
+      this.$Progress.finish();
+    Fire.$emit('AfterAction');
+    axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
+
+  })
+
+
+  .catch(()=>{
+ this.$Progress.fail();
+  });
+
+            },
+            editModalorder(mydataObject){
+                this.editmode = true;
+                 this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObject);
+$('#addNeworder1').modal('show');
+            },
+              
+            deletethisOrder(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/insertintoorders/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+
+
+
+
+
+
+
+
+
+
+emptycart(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You are about to delete all Records of this Cart. Proceed??!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/makesalepur/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your Cart  has been Emptied.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                                           axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+                                                          axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+
+
+  ConfirmSlip(){
+
+   swal.fire({
+  title: 'SALES CONFIRMATION',
+  text: "You are about to confirm the Sales on the Shopping Cart. Do you wasnt to proceed??",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Confirm Sale'
+}).then((result) => {
+    if(result.value){
+     // this.form.post('api/confirmordersales');
+                                  this.form.post('api/makesalepur').then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Confirmed!',
+                                                                                  'Your   Sale has Been Confirmed',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                             axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+});
+
+      axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+      axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObject = data));    
+
+
+
+        }, 
+
+
+
+
+
+   updateRecordshopingcart(){
+    this.$Progress.start();
+            /// viewing from the sonsole
+            ///console.log('Edidint data');
+/// calling the function to update the data
+this.form.put('api/shopingcartdetails/'+this.form.id)
+  .then(()=> {
+    // on success
+   $('#addsalem').modal('hide');
+    swal.fire(
+        'Update!',
+        'Your file has been updated.',
+        'success'
+      )
+      this.$Progress.finish();
+    Fire.$emit('AfterAction');
+     axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+     axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+
+  })
+
+
+  .catch(()=>{
+ this.$Progress.fail();
+  });
+
+            },
+            editModashopingcart(mydataObjectordermaking){
+                this.editmode = true;
+                 this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObjectordermaking);
+$('#addsalem').modal('show');
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  emptyorderdetails(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You are about to delete all Records of this Order. Proceed??!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+
+
+
+this.form.delete('api/confirmordersales/'+id).then(()=>{
+                                            swal.fire(
+                                                'Deleted!',
+                                                'Your Order List  has been Emptied.',
+                                                'success'
+                                            )
+                        Fire.$emit('AfterAction');
+                                                          
+//axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
+
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+              checkAccess(){
+                /// Product
+                 axios.get("api/getAddnewproduct").then(({ data }) => (this.info = data));
+                  axios.get("api/getviewproduct").then(({ data }) => (this.infoviewrecord = data));
+
+                   axios.get("api/geteditproduct").then(({ data }) => (this.infoedit = data));
+                    axios.get("api/getdeleteproduct").then(({ data }) => (this.infodelete = data));
+                    /// product categories
+                     axios.get("api/getAddnewcustomer").then(({ data }) => (this.infoaddnewcategory = data));
+                    axios.get("api/getviewcustomer").then(({ data }) => (this.infoviewrecordcategory = data));
+                    axios.get("api/geteditcustomer").then(({ data }) => (this.infoeditcategory = data));
+                    axios.get("api/getdeletecustomer").then(({ data }) => (this.infodeletecategory = data));
+
+                    // /// Product units of measure
+                      axios.get("api/getAddnewproductunitmeasure").then(({ data }) => (this.infoaddnewunitmeasure = data));
+                    axios.get("api/getviewproductunitmeasure").then(({ data }) => (this.infoviewrecordunitmeasure= data));
+                    axios.get("api/geteditproductunitmeasure").then(({ data }) => (this.infoeditunitmeasure= data));
+                    axios.get("api/getdeleteproductunitmeasure").then(({ data }) => (this.infodeleteunitmeasure = data));
+
+                    
+                    // /// Product brand
+                      axios.get("api/getAddnewproductbrand").then(({ data }) => (this.infoaddproductbrand = data));
+                    axios.get("api/getviewproductbrand").then(({ data }) => (this.infoviewrecordproductbrand= data));
+                    axios.get("api/geteditproductbrand").then(({ data }) => (this.infoeditproductbrand= data));
+                    axios.get("api/getdeleteproductbrand").then(({ data }) => (this.infodeleteproductbrand = data));
+                  
+           },
+            loadDatarecords(){
+                   axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                    axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data)); 
+              //  axios.get("api/selectedreceiptsalesdetails").then(({ data }) => (this.theselectedorderdetails = data));
+               
+               
+ axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+               
+               
+               
+               /// Product supplier Access
+                     axios.get("api/getAddnewsupplier").then(({ data }) => (this.info = data));
+                     axios.get("api/getviewsupplier").then(({ data }) => (this.infoviewrecord = data));
+                     axios.get("api/geteditsupplier").then(({ data }) => (this.infoedit = data));
+                     axios.get("api/getdeletesupplier").then(({ data }) => (this.infodelete = data));
+                     ///// 
+                     axios.get("api/supplierdetails").then(({ data }) => (this.mydataObject = data));
+
+
+
+   axios.get("api/getAddnewcustomer").then(({ data }) => (this.infoaddnewcategory = data));
+                    axios.get("api/getviewcustomer").then(({ data }) => (this.infoviewrecordcategory = data));
+                    axios.get("api/geteditcustomer").then(({ data }) => (this.infoeditcategory = data));
+                    axios.get("api/getdeletecustomer").then(({ data }) => (this.infodeletecategory = data));
+
+
+
+
+
+              //      axios.get("api/productbrands").then(({ data }) => (this.mydataObjectProductbrandskk = data));
+                    // axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
+                      axios.get("api/getbrands").then(({ data }) => (this.brancheslist = data));
+ 
+                       axios.get("api/getproductsactive").then(({ data }) => (this.companyproducts = data));
+ 
+ 
+                        axios.get("api/getthesales").then(({ data }) => (this.thelistoforderssummary = data));
+                      
+                        axios.get("api/getproducts").then(({ data }) => (this.productslist = data));
+                      axios.get("api/getcategories").then(({ data }) => (this.categorieslist = data));
+                      axios.get("api/getsuppliers").then(({ data }) => (this.supplierslistactuoa = data));
+                      axios.get("api/companiesd").then(({ data }) => (this.supplierslist = data));
+                      axios.get("api/getmainunits").then(({ data }) => (this.unitslistmain = data));
+                      axios.get("api/getminorunits").then(({ data }) => (this.unitslistminor = data));
+
+
+
+
+            },
+            
+           
+   loadDatarecordsCategories(){
+                   axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                   axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data));
+
+
+                    axios.get("api/getAddnewcustomer").then(({ data }) => (this.infoaddnewcategory = data));
+                    axios.get("api/getviewcustomer").then(({ data }) => (this.infoviewrecordcategory = data));
+                    axios.get("api/geteditcustomer").then(({ data }) => (this.infoeditcategory = data));
+                    axios.get("api/getdeletecustomer").then(({ data }) => (this.infodeletecategory = data));
+               
+ axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+                    // getting the categories
+                    axios.get("api/customerdetails").then(({ data }) => (this.mydataObjectProductcategories = data));
+                  
+            },
+           
+             loadDatarecordsProductunits(){
+                   axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                   axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data));
+                             // /// Product units of measure
+                      axios.get("api/getAddnewproductunitmeasure").then(({ data }) => (this.infoaddnewunitmeasure = data));
+                  axios.get("api/getviewproductunitmeasure").then(({ data }) => (this.infoviewrecordunitmeasure= data));
+                  axios.get("api/geteditproductunitmeasure").then(({ data }) => (this.infoeditunitmeasure= data));
+                  axios.get("api/getdeleteproductunitmeasure").then(({ data }) => (this.infodeleteunitmeasure = data));
+                  axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
+                  axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
+                  axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+                //     axios.get("api/productunits").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));
+ 
+            },
+            
+            loadDatarecordsProductbrands(){
+                    axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                   axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data));
+                     axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
+                       // /// Product brand
+                    axios.get("api/getAddnewproductbrand").then(({ data }) => (this.infoaddproductbrand = data));
+                    axios.get("api/getviewproductbrand").then(({ data }) => (this.infoviewrecordproductbrand= data));
+                    axios.get("api/geteditproductbrand").then(({ data }) => (this.infoeditproductbrand= data));
+                    axios.get("api/getdeleteproductbrand").then(({ data }) => (this.infodeleteproductbrand = data));
+ 
+                   axios.get("api/salessummary").then(({ data }) => (this.mydataObjectProductbrandskk = data));
+                    axios.get("api/checkifarecordexistastovieworderdetails").then(({ data }) => (this.existsordertoview = data));
+                    axios.get("api/selectedreceiptsalesdetails").then(({ data }) => (this.theselectedorderdetails = data));
+
+ axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+
+            },
+           
+      
+  createNewrecordsale(){
 
   this.$Progress.start();
-this.form.post('api/mainmenucomponents')
+this.form.post('api/inserintocart')
+.then(()=>{
+
+
+Fire.$emit('AfterAction');
+ axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+ axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+$('#addsalem').modal('hide');
+  this.form.reset();
+  this.form.restfocus();
+Toast.fire({
+  icon: 'success',
+  title: 'Product  Added to Cart'
+});
+                   
+  this.$Progress.finish();
+})
+.catch(()=>{
+
+})
+
+
+
+
+            },
+      
+
+ deleteRecordfromcart(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/shopingcartdetails/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                                          axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              createNewrecordUnitm(){
+
+  this.$Progress.start();
+this.form.post('api/productunits')
+.then(()=>{
+
+
+Fire.$emit('AfterAction');
+
+$('#addNewUnitm').modal('show');
+
+Toast.fire({
+  icon: 'success',
+  title: 'Record Added Successfully'
+});
+
+  this.$Progress.finish();
+    this.form.reset();
+})
+.catch(()=>{
+
+})
+
+
+
+
+            },
+
+// ///////////////////////////////////// Product Brand 
+
+
+              createNewconfirmdelivery(){
+
+  this.$Progress.start();
+this.form.post('api/itemdelivery')
+.then(()=>{
+
+
+Fire.$emit('AfterAction');
+
+$('#confirmOrderdelivery').modal('hide');
+
+Toast.fire({
+  icon: 'success',
+  title: 'Record Added Successfully'
+});
+axios.get("api/selectedreceiptsalesdetails").then(({ data }) => (this.theselectedorderdetails = data));
+  this.$Progress.finish();
+    this.form.reset();
+})
+
+.catch(()=>{
+
+})
+
+
+
+
+            },
+
+// /////////////// closure of brand
+
+
+
+              createNewrecordproductcat(){
+
+  this.$Progress.start();
+this.form.post('api/customerdetails')
+.then(()=>{
+
+
+Fire.$emit('AfterAction');
+axios.get("api/customerdetails").then(({ data }) => (this.mydataObjectProductcategories = data));
+$('#addNewproductcategory').modal('show');
+
+Toast.fire({
+  icon: 'success',
+  title: 'Added Successfully'
+});
+
+  this.$Progress.finish();
+    this.form.reset();
+})
+.catch(()=>{
+
+})
+
+
+
+
+            },
+
+            createNewrecord(){
+
+  this.$Progress.start();
+this.form.post('api/supplierdetails')
 .then(()=>{
 
 
@@ -1789,206 +2629,117 @@ Toast.fire({
 .catch(()=>{
 
 })
- },
-
-    updateRecord(){
-    this.$Progress.start();
-            /// viewing from the sonsole
-            ///console.log('Edidint data');
-/// calling the function to update the data
-this.form.put('api/expenses/'+this.form.id)
-  .then(()=> {
-    // on success
-   $('#addNew').modal('hide');
-    swal.fire(
-        'Update!',
-        'Your file has been updated.',
-        'success'
-      )
-      this.$Progress.finish();
-    Fire.$emit('AfterAction');
-
-  })
 
 
-  .catch(()=>{
- this.$Progress.fail();
-  });
+
 
             },
-            editModal(mydataObject){
-                this.editmode = true;
-                 this.form.clear();
-        this.form.reset();
-        this.form.fill(mydataObject);
-$('#addNew').modal('show');
+/////////////////////////////////
+ 
+
+
+
+             
+/////////////////////////////////////////////////
+
+            createNeworder(){
+
+this.$Progress.start();
+this.form.post('api/insertintoorders')
+.then(()=>{
+
+
+Fire.$emit('AfterAction');
+
+axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
+
+
+$('#addNeworder1').modal('show');
+  this.form.reset();
+  this.form.restfocus();
+
+
+
+Toast.fire({
+  icon: 'success',
+  title: 'Record Added Successfully'
+});
+
+  this.$Progress.finish();
+})
+.catch(()=>{
+
+})
+
+
+
+
             },
-               newModal(){
-                      this.editmode = false;
-                 this.form.clear();
-        this.form.reset();
-$('#addNew').modal('show');
-            },
-            deleteRecord(id){
-                swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
+////////////////////////////////////////////////////////////////////////////////
+  ConfirmOrdxxxer(){
+
+   swal.fire({
+  title: 'ORDER CONFIRMATION',
+  text: "You are about to confirm the order being placed Do you wasnt to proceed??",
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
   cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
+  confirmButtonText: 'Yes, Confirm Sale'
 }).then((result) => {
     if(result.value){
-                                  this.form.delete('api/expenses/'+id).then(()=>{
+     // this.form.post('api/confirmordersales');
+                                  this.form.post('api/confirmordersales').then(()=>{
 
                                                                                 swal.fire(
-                                                                                  'Deleted!',
-                                                                                  'Your file has been deleted.',
+                                                                                  'Confirmed!',
+                                                                                  'Your Order has Been Confirmed',
                                                                                   'success'
                                                                                 )
                                                           Fire.$emit('AfterAction');
+axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
                                                       }).cathch(()=>{
                                                         
                                    swal.fire("Failed!", "There was Something Wrong.", "Warning");
                                                       });
     }
                      
-})
-
-            },
-
-
-            //////////////////////////////////// Closure of the General Expense
-
-
-              createNewrecordExpensetypename(){
-
-  this.$Progress.start();
-this.form.post('api/expensetypesdata')
-.then(()=>{
-
-
-Fire.$emit('AfterAction');
-
-$('#addNewUnitm').modal('show');
-
-Toast.fire({
-  icon: 'success',
-  title: 'Record Added Successfully'
-});
- 
-                     axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));
-  this.$Progress.finish();
-    this.form.reset();
-})
-.catch(()=>{
-
-})
-
-
-
-
-            },
-
-// ///////////////////////////////////// Product Brand 
-
-
-              createNewrecordbrand(){
-
-   this.$Progress.start();
-                                this.form.post('api/expenses')
-                                .then(()=>{
-
-
-                                Fire.$emit('AfterAction');
-
-                                $('#addNew').modal('hide');
-
-                                Toast.fire({
-                                icon: 'success',
-                                title: 'Record Added Successfully'
-                                });
-
-                                this.$Progress.finish();
-                                })
-                                .catch(()=>{
-
-                                })
-
-
-
-
-            },
-// /////////////// closure of brand
-
-
-
-              createNewrecordproductcat(){
-
-  this.$Progress.start();
-this.form.post('api/expensecategories')
-.then(()=>{
-
-
-Fire.$emit('AfterAction');
-
-$('#addNewproductcategory').modal('show');
-
-Toast.fire({
-  icon: 'success',
-  title: 'Category Added Successfully'
 });
 
-  this.$Progress.finish();
-    this.form.reset();
-})
-.catch(()=>{
-
-})
-
-
-
-
-            },
-
-           
-
-
-  SaveRecordbranch (){
-
-  
-//this.form.post('api/branchtobalance');
-       //   axios.get("api/branchtobalance").then(({ data }) => (this.clcash = data));
-         // axios.get("api/branchalreadybalanced").then(({ data }) => (this.branchbalancedforthisdate = data));
-       //   axios.get("api/pendingcashin").then(({ data }) => (this.pendingtransfer = data));
-        //  axios.get("api/getbranchopenningb").then(({ data }) => (this.shopopenningbalance = data));
-         // axios.get("api/getbranchnamebalancing").then(({ data }) => (this.shopbalancngname = data));
-        //  axios.get("api/getbranchopenningb").then(({ data }) => (this.shopopenningbalance = data));
-        //  axios.get("api/getdaycashoutbranch").then(({ data }) => (this.totalcashout = data));
-        //  axios.get("api/getdayexpensesbranch").then(({ data }) => (this.totalexpenses = data));
-        //  axios.get("api/getdaypayoutbranch").then(({ data }) => (this.totalpayout = data));
-       //   axios.get("api/getdaycashinbranch").then(({ data }) => (this.totaldayscashin = data));
+      axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
+  //    axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObject = data));    
 
 
             }
 
 
 
+        
+
+
+
         }, 
 
            
-
-      
+   
         created() {
           this.loadDatarecords();
                           //      axios.get("api/getbranchnamebalancing").then(({ data }) => (this.shopbalancngname = data));
                                 Fire.$on('AfterAction', () =>{
+                                  
         this.loadDatarecords();
-      });
-        //  setInterval(() =>this.loadDatarecords(),3000);
-//          setInterval(() =>this.checkAccess(),3000);
-          
-        }
+      }
+      
+      
+            
+      
+      
+      );
+     
+        },
+        
+        
     }
 </script>

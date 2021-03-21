@@ -16,7 +16,7 @@ class Thecomponent extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name','sysname','description',
+    protected $fillable = ['componentname','sysname','description',
         'ucret',
     ];
     //public function maincomponentSubmenus(){

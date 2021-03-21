@@ -11,6 +11,7 @@ window.Vue = require('vue');
 import { Form, HasError, AlertError } from 'vform';
 import Gate from "./Gate";
 Vue.prototype.$gate = new Gate(window.user);
+import VueHtmlToPaper from "vue-html-to-paper";
 
 import VueNumeric from 'vue-numeric';
 import Vuex from 'vuex';
@@ -96,14 +97,14 @@ let routes = [
 
 
   { path: '/fgfdsssdsdsdebts', component: require('./components/ShopCashout.vue')}, /// admin collection center
-  { path: '/settings', component: require('./components/Settingsvue.vue')},
+  { path: '/componentsandfeatures', component: require('./components/Componentandformfeatures.vue')},
   { path: '/resctrostravsetorics', component: require('./components/Systemsettings.vue')},
   { path: '/resctrostravsetoricsmainmenu', component: require('./components/Systemsettingsmainmenu.vue')},
   { path: '/resctrostravsetoricssubmenu', component: require('./components/Systemsettingssubmenu.vue')},
 
   { path: '/desgrantosrevuecoponents', component: require('./components/componentforvues.vue')},
 
-  { path: '/vcvccvcacfdrfaddformcomponentsbbfffg', component: require('./components/formcomponents.vue')},
+  { path: '/settings', component: require('./components/settings.vue')},
   { path: '/bbdhujaytykjdsjyeyhk', component: require('./components/formcomponentaccess.vue')},
 
   { path: '/hhdgbbsgrtywbscolectiosn', component: require('./components/ShopCash.vue')},
@@ -121,14 +122,23 @@ let routes = [
     { path: '/profile', component: require('./components/Profile.vue') },
     { path: '/dropdown', component: require('./components/DropdownComponent.vue') },
 { path: '/dashboard', component: require('./components/Dashboard.vue')}, 
-
+{ path: '/sales', component: require('./components/Sales.vue')},
 { path: '/desdeproducts', component: require('./components/Productsvue.vue')},
 { path: '/uryhpos', component: require('./components/Posvue.vue')},
 { path: '/destradopurchases', component: require('./components/Purchasesvue.vue')},
 
 
 ]
-  
+const options = {
+  name: "_blank",
+  specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
+  styles: [
+    // "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+    // "https://unpkg.com/kidlat-css/css/kidlat.css"
+  ]
+};
+
+Vue.use(VueHtmlToPaper, options);
 
 const router = new VueRouter({
     mode: 'history',

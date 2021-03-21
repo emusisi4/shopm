@@ -7,6 +7,14 @@
     margin-bottom: 20px;
     width: 100%;
 }
+.bethapa-component-header {
+      font-weight: bold;
+    color: #343a40;
+    font-size: 3.1em;
+    border-bottom: 1px solid rgb(3, 46, 10);
+    margin-bottom: 20px;
+    width: 100%;
+}
 button.add-newm {
     display: inline-block;
     float: right;
@@ -17,60 +25,63 @@ button.add-newm {
     /* border: 1px solid black; */
     box-shadow: 0px 0px 0.5px black;
 }
+.mysalessect {
+    padding: 0rem;
+    float: right;
+}
+
 </style>
 
 <template>
 <div>
 
-  <div class="card"  v-if="allowedtoaccesscomponent > 0 ">
+  <div  v-if="allowedtoaccesscomponent > 0 ">
 
 
 
 
-
+<div class="bethapa-component-header" >Settings </div>
     
-              <div class="card-header">
-                <h3 class="card-title"><b> EXPENSES </b></h3>
+             <!-- Startp of the component  -->
 
-                <div class="card-tools">
-                     <div v-if="branchbalancedforthisdate < 1 "  >
-                   
-                 </div>
-                   
-                
-                      </div>
-               
-              </div>
-              <!-- /.card-header -->
-              <hr>
-              
-              <div class="card-body table-responsive p-0">
+<div class="card-body table-responsive p-0">
                 
                
-<div class="col-12 col-sm-12">
+           <div class="col-12 col-sm-12">
             <div class="card card-primary card-outline card-tabs">
               <div class="card-header p-0 pt-1 border-bottom-0">
                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                   <li class="nav-item">
                   <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab"  @click="loadDatarecords()"
-                   aria-controls="custom-tabs-three-home" aria-selected="true">Authorised Expenses</a>
+                   aria-controls="custom-tabs-three-home" aria-selected="true">Users</a>
                   </li>
                   <li class="nav-item" v-if="allowedtoaccesscategoriescomponent > 0 ">
-                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" @click="loadDatarecordsCategories()" aria-controls="custom-tabs-three-profile" aria-selected="false">CATEGORIES</a>
+                    <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab"
+                     @click="loadDatarecordsSubmenus()" aria-controls="custom-tabs-three-profile" aria-selected="false">Roles</a>
                   </li> 
             
-                  <li class="nav-item" v-if="allowedtoaccessexpensetypescomponent > 0 ">
-                     <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab"  @click="loadDatarecordsExpensetypes()" aria-controls="custom-tabs-three-messages" aria-selected="false">Types</a>
+                  <li class="nav-item" v-if="allowedtoaccessproductunitscomponent > 0 ">
+                   <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab"  @click="loadDatarecordsVuecomponents()" aria-controls="custom-tabs-three-messages" aria-selected="false">Main Menu Access</a>
                   </li>
-                  <li class="nav-item" v-if="allowedtoaccessbranchexpensescomponent > 0 ">
-                    <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" @click="loadDatarecordsbranchexpenses()" aria-controls="custom-tabs-three-settings" aria-selected="false">BRANCH EXpenses</a>
+                
+                
+                
+                
+                  <li class="nav-item" v-if="allowedtoaccessbrandscomponent > 0 ">
+                    <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" @click="loadDatarecordsforformfeatures()" aria-controls="custom-tabs-three-settings" aria-selected="false">Sub-Menu Access</a>
                   </li>
-                  
-                  
-                   <li class="nav-item" v-if="allowedtoaccessofficeexpensescomponent > 0 ">
-                     <a class="nav-link" id="custom-tabs-three-xx1-tab" data-toggle="pill" href="#custom-tabs-three-xx1" role="tab"  @click="loadDatarecordsofficeexpenses()" aria-controls="custom-tabs-three-xx1" aria-selected="false">Office Expenses</a>
+
+
+
+ <li class="nav-item" v-if="allowedtoaccessbrandscomponent > 0 ">
+                    <a class="nav-link" id="custom-tabs-three-componentaccess-tab" data-toggle="pill" href="#custom-tabs-three-componentaccess" role="tab" @click="loadDatarecordsforformfeatures()" aria-controls="custom-tabs-three-componentaccess" aria-selected="false">Components Access</a>
                   </li>
-                  
+
+ <li class="nav-item" v-if="allowedtoaccessbrandscomponent > 0 ">
+                    <a class="nav-link" id="custom-tabs-three-featuresaccess-tab" data-toggle="pill" href="#custom-tabs-three-featuresaccess" role="tab" @click="loadDatarecordsforformfeatures()" aria-controls="custom-tabs-three-featuresaccess" aria-selected="false"> FORM FEATURES ACCESS</a>
+                  </li>
+
+
                 </ul>
               </div>
               <div class="card-body">
@@ -78,547 +89,47 @@ button.add-newm {
                   <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
          
                      <div class="bethapa-table-header">
-                        
-                     Authorised Expenses Details <button v-if="addnewgeneralexpense > 0" type="button" class="add-newm" @click="newModal" >Add New </button>
+                     SYSTEM USERS <button v-if="info > 0" type="button" class="add-newm" @click="newModal" >Add New </button>
                      </div>
          
             
               <table class="table table-bordered table-striped">
-                  <thead>
+                   <thead>
                     <tr>
-                     <th>#</th>
-                      <th>EXPENSE NAME</th>
-                      <th>CATEGORY</th>
-                      <th>TYPE</th>
-                      <th>DESCRIPTION</th>
-                    
+                      <th>ID</th>
+                      <th>NAME</th>
+                      <th>USERNAME</th>
+                      <th>ROLE</th>
+                      <th>BRANCH</th>
                       <th>CREATED</th>
-                       
-                     
-                     
-                        <th ></th>
+                      <th>MODIFY</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                        <tr v-for="mydataObjectinfo in mydataObject.data" :key="mydataObjectinfo.id">
-                 <td>{{mydataObjectinfo.id}}</td>
-                    <td>{{mydataObjectinfo.expensename}}</td>
-                
-                           <td>    <template v-if="mydataObjectinfo.expense_category">	{{mydataObjectinfo.expense_category.expcatcatname}}</template></td>
-                           <td>    <template v-if="mydataObjectinfo.expense_typeconnect">	{{mydataObjectinfo.expense_typeconnect.typename}}</template></td>
-                       
-                               <td>{{mydataObjectinfo.description}}</td>
-                               <td>{{mydataObjectinfo.created_at}}</td>
-                                         
-                   
-                       <td >
-                    
-                      <button type="button" v-if="editgeneralexpense > 0" class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModal(mydataObjectinfo)"> 
-
-                      </button>
-                      <button type="button"  v-if="deletegeneralexpense > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecord(mydataObjectinfo.id)">
-                      </button>
-                      <button type="button" v-if="viewrecordgeneralexpense > 0" class="btn  bg-gradient-info btn-xs fas fa-eye" @focus="checkAccess()"  @click="editModal(mydataObjectinfo)"> </button>
-                                      </td>
-                     
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot>
-                   <td colspan="8">
-                <div class="">
-                <ul class="pagination pagination-sm m-0 float-right">
-                    <pagination :data="mydataObject" @pagination-change-page="getResults"></pagination>
-                </ul>
-              </div>    
-              </td>
-                 </tfoot>
-                                   </table>
-       
-                  </div>
-                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                    <div class="bethapa-table-header">
-
-                   Expense Categories <button v-if="infoaddnewcategory > 0" type="button" class="add-newm" @click="newModalcategory" >Add New </button>
-                      </div>
-              <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                        <th>CATEGORY NAME</th>
-                       <th>DESCRIPTION</th>
-                       <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <tr v-for="mydataObjectprodcat in mydataObjectProductcategories.data" :key="mydataObjectprodcat.id">
-                    <td>{{mydataObjectprodcat.id}}</td>
-                 
-                 
-                     <td> {{ (mydataObjectprodcat.expcatcatname)}}</td>
-                  
-                    
-                   <td> {{ (mydataObjectprodcat.description)}}</td>
-                  
-                  
-                                         
-             
-                   
-                    
-                       <td>
-                     
-                     <button type="button"  v-if="infoeditcategory > 0"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      <button type="button"  v-if="infodeletecategory > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecordproductcategory(mydataObjectprodcat.id)">  </button>
-            <button type="button" v-if="infoviewrecordcategory > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      </td>
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot></tfoot>
-                                   </table>
-                  </div>
-              <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
-                <div class="bethapa-table-header">
-                  
-                  
-                   EXPENSE TYPES <button v-if="infoaddexpensetype > 0" type="button" class="add-newm" @click="newModalexpensetype" >Add New </button>
-                      </div>
-                <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                        <th> NAME</th>
-                       <th>DESCRIPTION</th>
-                       <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <tr v-for="mydataObjectunit in mydataObjectProductunitsofmeasurekk.data" :key="mydataObjectunit.id">
-                    <td>{{mydataObjectunit.id}}</td>
-                 
-                 
-                     <td> {{ (mydataObjectunit.typename)}}</td>
-                  
-                    
-                   <td> {{ (mydataObjectunit.description)}}</td>
-                  
-                  
-                                         
-                   
-                    
-                       <td>
-               
-                     <button type="button"  v-if="infoeditexpensetype > 0"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"   @click="editModalexpensetype(mydataObjectunit)">   </button>
-                      <button type="button"  v-if="infodeleteexpensetype > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteExpensetype(mydataObjectunit.id)">  </button>
-                 <button type="button" v-if="infoviewrecordexpensetype > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="editModalexpensetype(mydataObjectunit)">   </button>
-                      </td>
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot></tfoot>
-                                   </table>
-                  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                    <div class="bethapa-table-header">
-
-                   COMPANY EXPENSES <button v-if="infoaddnewcategory > 0" type="button" class="add-newm" @click="newModalcategory" >Add New </button>
-                      </div>
-              <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                        <th>CATEGORY NAME</th>
-                       <th>DESCRIPTION</th>
-                       <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <tr v-for="mydataObjectprodcat in mydataObjectProductcategories.data" :key="mydataObjectprodcat.id">
-                    <td>{{mydataObjectprodcat.id}}</td>
-                 
-                 
-                     <td> {{ (mydataObjectprodcat.expcatcatname)}}</td>
-                  
-                    
-                   <td> {{ (mydataObjectprodcat.description)}}</td>
-                  
-                  
-                                         
-             
-                   
-                    
-                       <td>
-                     
-                     <button type="button"  v-if="infoeditcategory > 0"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      <button type="button"  v-if="infodeletecategory > 0" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecordproductcategory(mydataObjectprodcat.id)">  </button>
-            <button type="button" v-if="infoviewrecordcategory > 0"   class="btn  bg-gradient-info btn-xs fas fa-eye"   @click="editModalproductcategory(mydataObjectprodcat)">   </button>
-                      </td>
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot></tfoot>
-                                   </table>
-                  </div>
-              <div class="tab-pane fade" id="custom-tabs-three-xx1" role="tabpanel" aria-labelledby="custom-tabs-three-xx1-tab">
-                <div class="bethapa-table-header">
-                     
-                   
-                   Expense Details office <button v-if="infoaddnewofficeexpense > 0" type="button" class="add-newm" @click="newModalofficeexpense" >Make Expense </button>
-                      </div>
-           <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th> DATE</th>
-                      <th>BRANCH</th>
-                      <th>EXPENSE</th>
-                       <th>DESCRIPTION</th>
-                      <th>AMOUNT</th>
-                     
-                    <th> STATION </th>
-                       <th> EXPENSE WALLET </th>
-                   
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                           <tr>
-                           <tr v-for="mydataObjectinfo in mydataObjectofficeexpenses.data" :key="mydataObjectinfo.id">
-                         
-                           <td>{{mydataObjectinfo.id}}</td>
-                           <td>{{mydataObjectinfo.datemade}}</td>
-                           <td>    <template v-if="mydataObjectinfo.branch_name">	{{mydataObjectinfo.branch_name.branchname}}</template></td>
-                           <td>    <template v-if="mydataObjectinfo.expense_name">	{{mydataObjectinfo.expense_name.expensename}}</template></td>
-                           <td>{{mydataObjectinfo.description}}</td>
-                       
-                          <td> {{ currencydetails }} {{formatPrice((mydataObjectinfo.amount))}}</td>
-                          <td>   <div v-if="((mydataObjectinfo.explevel)) == 1">
-                          <span class="cell" style="color:#dc3545 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Branch </span></span>
-                              </div>
-                               <div v-if="((mydataObjectinfo.explevel)) == 2">
-                                <span class="cell" style="color:#1591a5 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Office </span></span>
-                              </div> 
-                              
-                              </td>
-
-   <td>   <div v-if="((mydataObjectinfo.walletexpense)) == 1">
-                                <span class="cell" style="color:green ;">  
-   
-                    <span style="font-size:1.0em;" center >  Collections </span></span>
-                              </div>
-                               <div v-if="((mydataObjectinfo.walletexpense)) == 2">
-                                <span class="cell" style="color:#1591a5 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Investment </span></span>
-                              </div>
-                              
-                                 <div v-if="((mydataObjectinfo.walletexpense)) == 4">
-                                <span class="cell" style="color:#1578a5 ;">  
-   
-                    <span style="font-size:1.0em;" center >  Branch </span></span>
-                              </div>
-                              
-                               </td>
-
-                               
-                  
-                          <td>    
-                              <a href="#" v-if="infoviewrecordofficeexpense > 0">
-                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-eye"  @click="editModalofficemadeexpense(mydataObjectofficemadeexpenses)"> </button>
-                              </a> 
-                            <a href="#" v-if="infoeditofficeexpense > 0">
-                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModalofficemadeexpense(mydataObjectofficemadeexpenses)"> </button>
-                              </a>
-                               <a href="#" v-if="infodeleteofficeexpense > 0">
-                                   <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteRecordofficemadeexpense(mydataObjectofficemadeexpenses.id)">  </button></a>
-                      </td>
-                    </tr>
-              
-                    
-                  </tbody>
-                 <tfoot>   
-                     <th colspan='5'>  
-                    <span class="cell" style="color:maroon ;">  
-   
-                    <span style="font-size:1.5em;" center > TOTAL EXPENSES </span></span></th>
-                 <th>    
-                    <span class="cell" style="color:maroon ;">  
-   
-                    <span style="font-size:1.5em;" center > {{ currencydetails }} {{ formatPrice(dailyexpensestotal) }}  </span></span>    </th>  
-                     <th colspan='3'>  </th>    </tfoot>
-                                   </table>
-
-                  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                 
-                 
-                 
-                  <div class="tab-pane fade" id="custom-tabs-three-settings"  v-if="allowedtoaccessbranchexpensescomponent > 0 " role="tabpanel"  aria-labelledby="custom-tabs-three-settings-tab">
-                 
-                  <div class="bethapa-table-header">
-                    Branch Expenses <button v-if="infoaddproductbrand > 0" type="button" class="add-newm" @click="newModalbranchexpenses" >Add New </button>
-                      </div>
-                    <table class="table table-bordered table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th> DATE</th>
-                      <th>BRANCH</th>
-                      <th>EXPENSE</th>
-                       <th>DESCRIPTION</th>
-                      <th>AMOUNT</th>
-                     
-                   
-                    
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                       <tr v-for="mydataObjectinfo in mydataObjectbranchexpenses.data" :key="mydataObjectinfo.id">
+                       <tr v-for="mydataObjectinfo in mydataObject.data" :key="mydataObjectinfo.id">
                     <td>{{mydataObjectinfo.id}}</td>
-                  
-                    <td>{{mydataObjectinfo.datemade}}</td>
-                           <td>    <template v-if="mydataObjectinfo.branch_name">	{{mydataObjectinfo.branch_name.branchname}}</template></td>
-                            <td>    <template v-if="mydataObjectinfo.expense_name">	{{mydataObjectinfo.expense_name.expensename}}</template></td>
-                          <td>{{mydataObjectinfo.description}}</td>
-                       
-                               <td> {{ currencydetails }} {{formatPrice((mydataObjectinfo.amount))}}</td>
-                              
-
-
-
-                              
-                        
+                     <td>{{mydataObjectinfo.name}}</td>
+                     <td>{{mydataObjectinfo.email}}</td>
+                       <td>    <template v-if="mydataObjectinfo.user_role">	{{mydataObjectinfo.user_role.rolename}}</template></td>
+                          <td>    <template v-if="mydataObjectinfo.user_branch">	{{mydataObjectinfo.user_branch.branchname}}</template></td>
+                               <td>{{mydataObjectinfo.updated_at}}</td>
+                          <td>     
+                            <a href="#">
+                              <i class="btn fas fa-edit"  @click="editModal(mydataObjectinfo)"></i>
+                              </a>
+                               <a href="#" @click="deleteRecord(mydataObjectinfo.id)"> <i class="btn  fas fa-trash-alt"> </i></a>
+                      </td>
                     </tr>
               
                     
                   </tbody>
-               
+                 <tfoot></tfoot>
                                    </table>
-                  </div>
-                </div>
-              </div>
-              <!-- /.card -->
-            </div>
-          </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-                
-              </div>
-              
-
-    <div class="modal fade" id="addNewbranchexpense">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
-                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-                      
-<form @submit.prevent="editmode ? updateRecordbranchexpense():createNewrecordmakebranchexpense()">
-
-            <div class="modal-body">
-           
-
-
-
-
-<div class="form-group">
-                  <label>Expense Name</label>
-<select name ="expense" v-model="form.expense" id ="expense" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('expense')}">
-<option value=" ">  </option>
-<option v-for='data in expenseslist' v-bind:value='data.expenseno'>{{ data.expenseno }} - {{ data.expensename }}</option>
-
-</select>
-            <has-error :form="form" field="expense"></has-error>
-            </div>
-
-
-<div class="form-group">
-                  <label>Branch</label>
-<select name ="branch" v-model="form.branch" id ="branch" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('branch')}">
-<option value=" ">  </option>
-<option v-for='data in brancheslist' v-bind:value='data.branchno'>{{ data.branchno }} - {{ data.branchname }}</option>
-
-</select>
-            <has-error :form="form" field="branch"></has-error>
-            </div>
-
-
-
-
-   <div class="form-group">
-
-     <label>Amount</label>
-                     <input v-model="form.amount" type="number" name="amount"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('amount') }">
-      <has-error :form="form" field="amount"></has-error>
- 
-
-     </div>        
-      <div class="form-group">
-
-     <label>Date of Expense</label>
-                     <input v-model="form.datemade" type="date" name="datemade"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('datemade') }">
-      <has-error :form="form" field="datemade"></has-error>
- 
-
-     </div>          
-
-
-
-
-
-   <div class="form-group">
-                       <label>Description</label>
-                <textarea v-model="form.description" name="description" rows="5" cols="30" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-                 
-                <has-error :form="form" field="description"></has-error>
-                </div>
-  
-            </div>
-            <div class="modal-footer">
-
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
-            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
-
-
-
-                
-        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-
-      </div>
-  </form>
-          </div>
-        
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>           
-              
-
-
-
-
-
-
- <!-- start of categories modal  -->
-
-      <div class="modal fade" id="addNew">
+<!-- Users Modal Start -->
+<div class="modal fade" id="addNew">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -633,238 +144,27 @@ button.add-newm {
 
             <div class="modal-body">
             <div class="form-group">
-                    <label for="exampleInputEmail1">Expense Name</label>
-                     <input v-model="form.expensename" type="text" name="expensename"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('expensename') }">
-      <has-error :form="form" field="expensename"></has-error>
+                    <label for="exampleInputEmail1">Name</label>
+                     <input v-model="form.name" type="text" name="name"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('name') }">
+      <has-error :form="form" field="name"></has-error>
       
                   </div>
-
-
-
-
-<div class="form-group">
-                  <label>Category</label>
-<select name ="expensecategory" v-model="form.expensecategory" id ="expensecategory" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('expensecategory')}">
-<option value=" "> Select Category </option>
-<option v-for='data in expensecategory' v-bind:value='data.id'>{{ data.name }}</option>
-
-</select>
-            <has-error :form="form" field="expensecategory"></has-error>
-            </div>
-
-
-
-               
-
-<div class="form-group">
-                  <label>Expense type</label>
-<select name ="expensetype" v-model="form.expensetype" id ="expensetype" v-on:click="loadUsers()" class="form-control" :class="{'is-invalid': form.errors.has('expensetype')}">
-<option value=""> Select Expense type </option>
-<option v-for='data in expensetypes' v-bind:value='data.id'>{{ data.typename }}</option>
-
-</select>
-            <has-error :form="form" field="expensetype"></has-error>
-            </div>
-
-
-
-
-
-   <div class="form-group">
-                       <label>Description</label>
-                <textarea v-model="form.description" name="description" rows="5" cols="30" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-                 
-                <has-error :form="form" field="description"></has-error>
-                </div>
-  
-            </div>
-            <div class="modal-footer">
-
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
-            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
-
-
-
-                
-        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-
-      </div>
-  </form>
-          </div>
-        
-          <!-- /.modal-content -->
-        </div>
-      </div>
-
-               
- <div class="modal fade" id="addNewUnitm">
-        <div class="modal-dialog modal-ml">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">NEW EXPENSE TYPE</h4>
-                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-                      
-<form @submit.prevent="editmode ? updateExpensetype():createNewrecordExpensetypename()">
-
-            <div class="modal-body">
- 
-  
-  
- <div class="form-group">
-                <div class ="bethapa-table-header">TYPE DETAILS</div>
-                    <label> Name</label>
-                     <input v-model="form.typename" type="text" name="typename"
-                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('typename') }">
-                       <has-error :form="form" field="typename"></has-error>
-                                </div>
-
-        <div class="form-group">
-                    <label for="exampleInputEmail1">Description</label>
-                     <textarea v-model="form.description" type="text" name="description"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-      <has-error :form="form" field="description"></has-error>
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">Email Address </label>
+                     <input v-model="form.email" type="email" name="email"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('email') }">
+      <has-error :form="form" field="email"></has-error>
       
                   </div>
-  
-            </div>
-            <div class="modal-footer">
-
-    
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Submit Data</button>
-
-
-            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
-
-
-
-                
-        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-
-      </div>
-  </form>
-          </div>
-        
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-    <!-- closure of modal  -->
-
-
-
-   <!-- start of categories modal  -->
-
-
-               
- <div class="modal fade" id="addNewbrand">
-        <div class="modal-dialog modal-ml">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">NEW PRODUCT BRAND</h4>
-                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-                      
-<form @submit.prevent="editmode ? updateBrand():createNewrecordbrand()">
-
-            <div class="modal-body">
- 
-  
-  
- <div class="form-group">
-                <div class ="bethapa-table-header">BRAND DETAILS</div>
-                    <label>Brand Name</label>
-                     <input v-model="form.brandname" type="text" name="brandname"
-                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('brandname') }">
-                       <has-error :form="form" field="brandname"></has-error>
-                                </div>
-
-        <div class="form-group">
-                    <label for="exampleInputEmail1">DEscription</label>
-                     <textarea v-model="form.description" type="text" name="description"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-      <has-error :form="form" field="description"></has-error>
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">Bio Data</label>
+                     <textarea v-model="form.bio" type="text" name="bio"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
+      <has-error :form="form" field="bio"></has-error>
       
                   </div>
-
-                
-
-  
-
-
-
-                
-                 
-
-               
-
-
-
-
-
-
-
-
-            </div>
-            <div class="modal-footer">
-
-    
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Submit Data</button>
-
-
-            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
-
-
-
-                
-        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-
-      </div>
-  </form>
-          </div>
-        
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-    <!-- closure of modal  -->
-
-    
-      <div class="modal fade" id="addNewofficemadeexpense">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
-                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-                      
-<form @submit.prevent="editmode ? updateRecordofficemadeexpense():createNewrecordofficemadeexpense()">
-
-            <div class="modal-body">
-           
-
-
-
-
-<div class="form-group">
-                  <label>Expense Name</label>
-<select name ="expense" v-model="form.expense" id ="expense" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('expense')}">
-<option value=" ">  </option>
-<option v-for='data in expenseslist' v-bind:value='data.expenseno'>{{ data.expenseno }} - {{ data.expensename }}</option>
-
-</select>
-            <has-error :form="form" field="expense"></has-error>
-            </div>
+              
 
 
 <div class="form-group">
@@ -879,50 +179,399 @@ button.add-newm {
 
 
 
+<div class="form-group">
+                  <label>Role</label>
+<select name ="type" v-model="form.type" id ="type" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('type')}">
+<option value=" ">  </option>
+<option v-for='data in roleslist' v-bind:value='data.roleid'>{{ data.roleid }} - {{ data.rolename }}</option>
 
-   <div class="form-group">
-
-     <label>Amount</label>
-                     <input v-model="form.amount" type="number" name="amount"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('amount') }">
-      <has-error :form="form" field="amount"></has-error>
- 
-
-     </div>  
-
-
-
-
-
-      <div class="form-group">
-
-     <label>Date of Expense</label>
-                     <input v-model="form.datemade" type="date" name="datemade"
-       class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('datemade') }">
-      <has-error :form="form" field="datemade"></has-error>
- 
-
-     </div>          
-            <div class="form-group">
-                  <label>Expense Wallet</label>
-                  <select name ="walletexpense" v-model="form.walletexpense" id ="walletexpense" v-on:click="loadDatarecords()" class="form-control" :class="{'is-invalid': form.errors.has('walletexpense')}">
-                  <option value=" ">  </option>
-                  <option v-for='data in walletlist' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
-
-                  </select>
-            <has-error :form="form" field="walletexpense"></has-error>
+</select>
+            <has-error :form="form" field="type"></has-error>
             </div>
 
 
 
 
-   <div class="form-group">
-                       <label>Description</label>
-                <textarea v-model="form.description" name="description" rows="5" cols="30" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">Password</label>
+                     <input v-model="form.password" type="password" name="password"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('password') }">
+      <has-error :form="form" field="password"></has-error>
+      
+                  </div>
+            </div>
+            <div class="modal-footer">
+
+  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
+            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
+
+
+
+                
+        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+
+      </div>
+  </form>
+          </div>
+        
+         
+        </div>
+       
+      </div>
+
+
+
+<!-- USers Modal End -->
+
+
+
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                    <div class="bethapa-table-header">
+                Sub-Menu Details <button v-if="infoaddnewcategory > 0" type="button" class="add-newm" @click="newModalsubmenu" >Add New </button>
+                      </div>
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr> 
+                      <th>#</th>
+                      <th>SUB MENU NAME</th>
+                      <th>MAIN MENU</th>
+                      <th>ORDER</th>
+                      <th>ROUTE</th>
+                          <th>DESCRIPTION</th>
+                      <th>CREATED</th>
+                      <th>MODIFIED</th>
+                      <th></th>
+                    </tr>
+                    
+                  </thead>
                  
-                <has-error :form="form" field="description"></has-error>
+                  <tbody>
+                    <tr>
+                       <tr v-for="mydataObjectinfo in mydataObjectSubmenus.data" :key="mydataObjectinfo.id">
+                                                  
+                    <td>{{mydataObjectinfo.shid}}</td>
+                    
+                     <td>{{mydataObjectinfo.submenuname}}</td>
+                     <td>
+                         <template v-if="mydataObjectinfo.maincomponent_submenus">	{{mydataObjectinfo.maincomponent_submenus.mainmenuname}}</template>
+
+                       
+                      </td>
+
+                        <td>{{mydataObjectinfo.dorder}}</td>
+                             <td>{{mydataObjectinfo.linkrouterre  }}</td>
+                             <td>{{mydataObjectinfo.description  }}</td>
+                             <td>{{mydataObjectinfo.created_at  }}</td>
+                             <td>{{mydataObjectinfo.updated_at}}</td>
+                        
+                          <td>     
+                            <a href="#">
+                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editsubmenu(mydataObjectinfo)">Edit</button>
+                              </a>
+                               <a href="#">
+                                     <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletesubmenu(mydataObjectinfo.id)"> Del</button></a>
+                      </td>
+                    </tr>
+              
+                    
+                  </tbody>
+                  <tfoot>
+                        <tr>
+                      
+                    </tr>
+                  </tfoot>
+                </table>
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                <div class="bethapa-table-header">
+                  
+                  
+                   VUE-COMPONENT DETAILS   <button  type="button" class="add-newm" @click="newModalvuecomponent" >Add New </button> </div>
+
+
+<table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Component NAME</th>
+
+                        <th>SYSTEM NAME</th>
+                       <th>Description</th>
+                         <th></th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                       <tr v-for="mydataObjectinfo in mydataObjectforvuecomponents.data" :key="mydataObjectinfo.id">
+                    <td>{{mydataObjectinfo.id}}</td>
+                     <td>{{mydataObjectinfo.componentname}}</td>
+                     <td>{{mydataObjectinfo.sysname}}</td>
+                      <td>{{mydataObjectinfo.description}}</td>
+                         <td>     
+                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editvuecomponent(mydataObjectinfo)"> Edit  </button>
+                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletevuecomponent(mydataObjectinfo.id)"> DEl </button>
+                      </td>
+                    </tr>
+              
+                    
+                  </tbody>
+                  
+                 <tfoot>
+
+                 </tfoot>
+                                   </table>
+
+
+
+                  </div>
+                  <div class="tab-pane fade" id="custom-tabs-three-settings"  v-if="allowedtoaccessbrandscomponent > 0 " role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+                 
+                  <div class="bethapa-table-header">
+                   FORM FEATURES <button  type="button" class="add-newm" @click="newModalformfeatures" >Add New </button>
+                      </div>
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>FORM COMPONENT</th>
+
+                        <th>SYSTEM NAME</th>
+                       <th>Description</th>
+                         <th></th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                       <tr v-for="mydataObjectinfo in mydataObjectFormfeature.data" :key="mydataObjectinfo.id">
+                    <td>{{mydataObjectinfo.id}}</td>
+                     <td>{{mydataObjectinfo.featurename}}</td>
+                     <td>{{mydataObjectinfo.sysname}}</td>
+                      <td>{{mydataObjectinfo.description}}</td>
+                         <td>     
+                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editformfeature(mydataObjectinfo)"> Edit  </button>
+                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteformfeature(mydataObjectinfo.id)"> DEl </button>
+                      </td>
+                    </tr>
+              
+                    
+                  </tbody>
+                  
+                 <tfoot>
+
+                 </tfoot>
+                                   </table>
+
+                  </div>
+
+ <div class="tab-pane fade" id="custom-tabs-three-componentaccess"  v-if="allowedtoaccessbrandscomponent > 0 " role="tabpanel" aria-labelledby="custom-tabs-three-componentaccess-tab">
+                 
+                  <div class="bethapa-table-header">
+                   Compjjj <button  type="button" class="add-newm" @click="newModalformfeatures" >Add New </button>
+                      </div>
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>FORM COMPONENT</th>
+
+                        <th>SYSTEM NAME</th>
+                       <th>Description</th>
+                         <th></th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                       <tr v-for="mydataObjectinfo in mydataObjectFormfeature.data" :key="mydataObjectinfo.id">
+                    <td>{{mydataObjectinfo.id}}</td>
+                     <td>{{mydataObjectinfo.featurename}}</td>
+                     <td>{{mydataObjectinfo.sysname}}</td>
+                      <td>{{mydataObjectinfo.description}}</td>
+                         <td>     
+                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editformfeature(mydataObjectinfo)"> Edit  </button>
+                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteformfeature(mydataObjectinfo.id)"> DEl </button>
+                      </td>
+                    </tr>
+              
+                    
+                  </tbody>
+                  
+                 <tfoot>
+
+                 </tfoot>
+                                   </table>
+
+                  </div>
+
+
+ <div class="tab-pane fade" id="custom-tabs-three-featuresaccess"  v-if="allowedtoaccessbrandscomponent > 0 " role="tabpanel" aria-labelledby="custom-tabs-three-featuresaccess-tab">
+                 
+                  <div class="bethapa-table-header">
+                   Form features Access <button  type="button" class="add-newm" @click="newModalformfeatures" >Add New </button>
+                      </div>
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>FORM COMPONENT</th>
+
+                        <th>SYSTEM NAME</th>
+                       <th>Description</th>
+                         <th></th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                       <tr v-for="mydataObjectinfo in mydataObjectFormfeature.data" :key="mydataObjectinfo.id">
+                    <td>{{mydataObjectinfo.id}}</td>
+                     <td>{{mydataObjectinfo.featurename}}</td>
+                     <td>{{mydataObjectinfo.sysname}}</td>
+                      <td>{{mydataObjectinfo.description}}</td>
+                         <td>     
+                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editformfeature(mydataObjectinfo)"> Edit  </button>
+                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteformfeature(mydataObjectinfo.id)"> DEl </button>
+                      </td>
+                    </tr>
+              
+                    
+                  </tbody>
+                  
+                 <tfoot>
+
+                 </tfoot>
+                                   </table>
+
+                  </div>
+
+
+
                 </div>
-  
+              </div>
+              <!-- /.card -->
+
+
+
+
+            </div>
+          </div>
+ </div>
+
+
+
+
+
+
+              <!-- end of the component  -->
+             <div class="modal fade" id="addnewformfeaturesModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" v-show="!editmode">Add New</h4>
+                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                      
+<form @submit.prevent="editmode ? updateformfeature():createnewformfeature()">
+
+            <div class="modal-body">
+            <div class="form-group">
+                    <label for="exampleInputEmail1">Component Name</label>
+                     <input v-model="form.featurename" type="text" name="featurename"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('featurename') }">
+      <has-error :form="form" field="featurename"></has-error>
+      
+                  </div>
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">System Name </label>
+                     <input v-model="form.sysname" type="text" name="sysname"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('sysname') }">
+      <has-error :form="form" field="sysname"></has-error>
+      
+                  </div>
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">Description</label>
+                     <textarea v-model="form.description" type="text" name="description"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+      <has-error :form="form" field="description"></has-error>
+      
+                  </div>
+              
+            </div>
+            <div class="modal-footer">
+
+  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
+            <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
+
+
+
+                
+        <button  type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+
+      </div>
+  </form>
+          </div>
+        
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div> 
+    
+<div class="modal fade" id="adnewvuecomponent">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
+                   <h4 class="modal-title" v-show="editmode">Update Record</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+                      
+<form @submit.prevent="editmode ? updatevuecomponent():createnewsvuecomponent()">
+
+            <div class="modal-body">
+            <div class="form-group">
+                    <label for="exampleInputEmail1">Component Name</label>
+                     <input v-model="form.componentname" type="text" name="componentname"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('componentname') }">
+      <has-error :form="form" field="componentname"></has-error>
+      
+                  </div>
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">System Name </label>
+                     <input v-model="form.sysname" type="text" name="sysname"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('sysname') }">
+      <has-error :form="form" field="sysname"></has-error>
+      
+                  </div>
+                     <div class="form-group">
+                    <label for="exampleInputEmail1">Description</label>
+                     <textarea v-model="form.description" type="text" name="description"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+      <has-error :form="form" field="description"></has-error>
+      
+                  </div>
+              
             </div>
             <div class="modal-footer">
 
@@ -944,56 +593,79 @@ button.add-newm {
       </div>
 
 
-         <!-- start of categories modal  -->
 
 
-               
- <div class="modal fade" id="addNewproductcategory">
-        <div class="modal-dialog modal-ml">
+
+
+
+
+ <!-- start of categories modal  -->
+
+    
+    <!-- closure of modal  -->
+<!-- modalllsn -->
+<!--  -->
+
+<div class="modal fade" id="addnewsubmenuModal">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">NEW  CATEGORY</h4>
+              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
                    <h4 class="modal-title" v-show="editmode">Update Record</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
                       
-<form @submit.prevent="editmode ? updateRecordproductcategory():createNewrecordproductcat()">
+<form @submit.prevent="editmode ? updatesubmenu():createnewsubmenu()">
 
             <div class="modal-body">
+            <div class="form-group">
+                    <label for="exampleInputEmail1">Sub-Menu Name</label>
+                     <input v-model="form.submenuname" type="text" name="submenuname"
+                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('submenuname') }">
+                    <has-error :form="form" field="submenuname"></has-error>
+      
+                  </div>
+                
+                
+                
  
-  
-  
- <div class="form-group">
-                <div class ="bethapa-table-header">EXPENSE CATEGORIES</div>
-                    <label>Category Name</label>
-                     <input v-model="form.expcatcatname" type="text" name="expcatcatname"
-                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('expcatcatname') }">
-                       <has-error :form="form" field="expcatcatname"></has-error>
-                                </div>
+<div class="form-group">
+                  <label>Main Menu</label>
+<select name ="mainheadercategory" v-model="form.mainheadercategory" id ="mainheadercategory" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('mainheadercategory')}">
+<option value="">  </option>
+<option v-for='data in studentclasses' v-bind:value='data.id'>{{ data.id }}. {{ data.mainmenuname }}</option>
 
-        <div class="form-group">
+</select>
+            <has-error :form="form" field="mainheadercategory"></has-error>
+            </div>
+                
+                
+                
+                   <div class="form-group">
+                    <label>Route</label>
+                     <input v-model="form.linkrouterre" type="text" name="linkrouterre"
+                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('linkrouterre') }">
+                    <has-error :form="form" field="linkrouterre"></has-error>
+      
+                  </div>
+                
+                     <div class="form-group">
+                    <label>Order</label>
+                     <input v-model="form.dorder" type="number" name="dorder"
+        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('dorder') }">
+      <has-error :form="form" field="dorder"></has-error>
+      
+                  </div>
+
+   <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
                      <textarea v-model="form.description" type="text" name="description"
         class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
       <has-error :form="form" field="description"></has-error>
       
                   </div>
-  
-               
- 
-
-
-
-
-                
-                 
-
-               
-
-
-
 
 
 
@@ -1002,10 +674,7 @@ button.add-newm {
             </div>
             <div class="modal-footer">
 
-    
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Submit Data</button>
-
-
+  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
             <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
 
 
@@ -1021,11 +690,38 @@ button.add-newm {
         </div>
         <!-- /.modal-dialog -->
       </div>
+
+
+
+
+<!--  -->
+ 
+<!-- closure of modal -->
+
+   <!-- start of categories modal  -->
+
+
+ 
+
+<!---- closure modal -->
+
+
+
+
     <!-- closure of modal  -->
-        
-          </div>
 
 
+
+
+         <!-- start of categories modal  -->
+
+
+    <!-- closure of modal  -->
+            
+
+  </div>
+
+ 
 
 <!--   if not authorised -->
    <div class="container" v-if="allowedtoaccesscomponent < 1 ">
@@ -1038,7 +734,7 @@ button.add-newm {
     </div>
 
 
-<!----   End of not Authorised --->
+
 
 
 
@@ -1051,36 +747,83 @@ button.add-newm {
         return {
             editmode: false,
             mydataObject:{},
-            mydataObjectofficemadeexpenses:{},
-                        mydataObjectProductcategories:{},
+            mydataObjectforvuecomponents:{},
+            mydataObjectordermaking:{},
+            theselectedorderdetails:{},
+                        mydataObjectSubmenus:{},
                         mydataObjectProductunitsofmeasurekk:{},
-                        mydataObjectbranchexpenses:{},
-              mydataObjectofficeexpenses:{},
-                
-                 allowedtoaccessbranchexpensescomponent : null,
-                 allowedtoaccessofficeexpensescomponent:null,
+             mydataObjectProductbrandskk:{},
+            carttotal:null,
+            selectedordertotalzz:null,
+            branchbalancedforthisdate : null,
+            currencydetails:null,
+            allowedtoaccessbrandscomponent : null,
                  allowedtoaccesscomponent : null,
-                 allowedtoaccessofficecomponent : null,
-                currencydetails:null,
+                 existsordertoview: null,
                 brancheslist:{},
+                mydataObjectFormfeature:{},
+                thelistoforderssummary:{},
+                productslist:{},
 ///dropdown
    
 
 
-              form: new Form({
+                form: new Form({
                                     id:'',
-                                    expensename : '',
-                                    expensecategory : '',
-                                      expcatcatname : '',
-                                    expensetype : '',
-                                    typename:'',
-                                     description : '',
-                                    type : '',
-                                     expense : '',
+
+mainmenuname:'',
+iconclass:'',
+dorder:'',
+featurename:'',
+submenuname:'',
+mainheadercategory:'',
+linkrouterre:'',
+sysname:'',
+componentname:'',
+featurename:'',
+                                        userid:'',
+                                        suppname:'',
+                                        contact:'',
+                                        location:'',
+                                        company:'',
+                                        companycontact:'',
+                                        companycontactperson:'',
+lineunitcost:'',
+invoiceno:'',
+invoicedate:'',
+                                        customername:'',
+                                        contact:'',
+                                        residence:'',
+ productname:'',
+ quantity:'',
+qtyperunit:'',
+linetotalcost:'',
+unitcost:'',
+lineunitcost:'',
+supplier:'',
+brand:'',
+unitofmeasure:'',
+smallunitmeasure:'',
+datemade:'',
+                        invoiceno:'',
+
+
+
+                                    name : '',
+                                    category : '',
+                                    unitname : '',
+                                    shotcode : '',   
+                                    unitprice : '',
+                                    brand : '',
+                                    rol : '',
                                     description : '',
-                                    amount : '',
-                                    datemade : '',
-                                    branch : ''
+                                    catname : '',
+                                    brandname : '',
+                                    unitmeasure : '',
+                                             
+                                             
+                                           
+                                              
 
             })
         }
@@ -1088,14 +831,28 @@ button.add-newm {
         },
          
         methods:{
-                 formatPrice(value) {
+             formatPrice(value) {
         let val = (value/1).toFixed(0).replace('.', ',')
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    },
+    	onBlurNumber(e) {
+    	this.visible = false;
+        this.temp = this.amount;
+        this.amount = this.thousandSeprator(this.amount);
+    },
+        thousandSeprator(amount) {
+    	if (amount !== '' || amount !== undefined || amount !== 0 || amount !== '0' || amount !== null) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+        return amount;
+    }
     },
     /// submiting the balancing record date and branch
   myClickEvent($event) { const elem = this.$refs.myBtn
             elem.click()
         },
+
+     
 
           ////// drpdown
           
@@ -1103,47 +860,19 @@ button.add-newm {
           /////////////////////////////////////////
 // Our method to GET results from a Laravel endpoint
       getResults(page = 1) {
-                        axios.get('api/expenses?page=' + page)
+                        axios.get('api/companyproducts?page=' + page)
                           .then(response => {
                             this.mydataObject = response.data;
                           });
                       },
-                        updateRecord(){
-    this.$Progress.start();
-            /// viewing from the sonsole
-            ///console.log('Edidint data');
-/// calling the function to update the data
-this.form.put('api/expenses/'+this.form.id)
-  .then(()=> {
-    // on success
-   $('#addNew').modal('hide');
-    swal.fire(
-        'Update!',
-        'Your file has been updated.',
-        'success'
-      )
-      this.$Progress.finish();
-    Fire.$emit('AfterAction');
-
-  })
-
-
-  .catch(()=>{
- this.$Progress.fail();
-  });
-
-            },
-         
-        
 
 // /////
-
- updateExpensetype(){
+ updateUnit(){
     this.$Progress.start();
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/expensetypesdata/'+this.form.id)
+this.form.put('api/productunits/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNewUnitm').modal('hide');
@@ -1154,7 +883,6 @@ this.form.put('api/expensetypesdata/'+this.form.id)
       )
       this.$Progress.finish();
     Fire.$emit('AfterAction');
-    axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));
 
   })
 
@@ -1173,10 +901,10 @@ this.form.put('api/expensetypesdata/'+this.form.id)
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/makeexpense/'+this.form.id)
+this.form.put('api/produpdateBranductbrands/'+this.form.id)
   .then(()=> {
     // on success
-   $('#addNewbranchexpense').modal('hide');
+   $('#addNewbrand').modal('hide');
     swal.fire(
         'Update!',
         'Your file has been updated.',
@@ -1202,7 +930,7 @@ this.form.put('api/makeexpense/'+this.form.id)
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/expensecategories/'+this.form.id)
+this.form.put('api/customerdetails/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNewproductcategory').modal('hide');
@@ -1212,9 +940,9 @@ this.form.put('api/expensecategories/'+this.form.id)
         'success'
       )
       this.$Progress.finish();
-    Fire.$emit('AfterAction');
-     axios.get("api/expensecategories").then(({ data }) => (this.mydataObjectProductcategories = data));
 
+    Fire.$emit('AfterAction');
+axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data)); 
   })
 
 
@@ -1227,102 +955,26 @@ this.form.put('api/expensecategories/'+this.form.id)
 
 
 
-
-
-            updateRecord(){
-    this.$Progress.start();
-            /// viewing from the sonsole
-            ///console.log('Edidint data');
-/// calling the function to update the data
-this.form.put('api/companyproducts/'+this.form.id)
-  .then(()=> {
-    // on success
-   $('#addNew').modal('hide');
-    swal.fire(
-        'Update!',
-        'Your file has been updated.',
-        'success'
-      )
-      this.$Progress.finish();
-    Fire.$emit('AfterAction');
-
-  })
-
-
-  .catch(()=>{
- this.$Progress.fail();
-  });
-
-            },
-
-////////////////////////////////////////////////////
-
-
-     newModalofficeexpense(){
-                      this.editmode = false;
-                 this.form.clear();
-        this.form.reset();
-$('#addNewofficemadeexpense').modal('show');
-            },
-
-                 editModalofficemadeexpense(mydataObjectofficemadeexpenses){
-                this.editmode = true;
-                this.form.clear();
-                this.form.reset();
-              this.form.fill(mydataObjectofficemadeexpenses);
-              $('#addNewofficemadeexpense').modal('show');
-                          },
-
-
-                                      deleteRecordofficemadeexpense(id){
-                                                      swal.fire({
-                                        title: 'Are you sure?',
-                                        text: "You won't be able to revert this!",
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Yes, delete it!'
-                                                              }).then((result) => {
-                                          if(result.value){
-                                                                        this.form.delete('api/expensetypesdata/'+id).then(()=>{
-
-                                                                                                                      swal.fire(
-                                                                                                                        'Deleted!',
-                                                                                                                        'Your file has been deleted.',
-                                                                                                                        'success'
-                                                                                                                      )
-                                                                                                Fire.$emit('AfterAction');
-                                                                                          axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));                                                                                         
-                                                                                                
-                                                                                            }).cathch(()=>{
-                                                                                              
-                                                                        swal.fire("Failed!", "There was Something Wrong.", "Warning");
-                                                                                            });
-                                          }
-                                                          
-                                      })
-
-                                              
-                                                },
-
-
-
-         
 
 
 
 
 // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  newModalorder(){
+                      this.editmode = false;
+                 this.form.clear();
+        this.form.reset();
+$('#addNeworder1').modal('show');
+  this.form.reset();
+            },
 
-
-     newModalexpensetype(){
+     newModalUnitmeasure(){
                       this.editmode = false;
                  this.form.clear();
         this.form.reset();
 $('#addNewUnitm').modal('show');
             },
-                 editModalexpensetype(mydataObjectProductunitsofmeasurekk){
+                 editModalUnitmeasure(mydataObjectProductunitsofmeasurekk){
                 this.editmode = true;
                 this.form.clear();
                 this.form.reset();
@@ -1331,7 +983,7 @@ $('#addNewUnitm').modal('show');
                           },
 
 
-                                      deleteExpensetype(id){
+                                      deleteUnitmeasure(id){
                                                       swal.fire({
                                         title: 'Are you sure?',
                                         text: "You won't be able to revert this!",
@@ -1342,7 +994,7 @@ $('#addNewUnitm').modal('show');
                                         confirmButtonText: 'Yes, delete it!'
                                                               }).then((result) => {
                                           if(result.value){
-                                                                        this.form.delete('api/expensetypesdata/'+id).then(()=>{
+                                                                        this.form.delete('api/productunits/'+id).then(()=>{
 
                                                                                                                       swal.fire(
                                                                                                                         'Deleted!',
@@ -1350,8 +1002,6 @@ $('#addNewUnitm').modal('show');
                                                                                                                         'success'
                                                                                                                       )
                                                                                                 Fire.$emit('AfterAction');
-                                                                                          axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));                                                                                         
-                                                                                                
                                                                                             }).cathch(()=>{
                                                                                               
                                                                         swal.fire("Failed!", "There was Something Wrong.", "Warning");
@@ -1370,277 +1020,407 @@ $('#addNewUnitm').modal('show');
 
 
 
-
-               newModalbranchexpenses(){
-                      this.editmode = false;
-                 this.form.clear();
-        this.form.reset();
-$('#addNewbranchexpense').modal('show');
-            },
-                 editModalbranchexpenses(mydataObjectbranchexpenses){
-                this.editmode = true;
-                this.form.clear();
-                this.form.reset();
-              this.form.fill(mydataObjectbranchexpenses);
-              $('#addNewbranchexpense').modal('show');
-                          },
-
-
-                                      deleteBranchexpenses(id){
-                                                      swal.fire({
-                                        title: 'Are you sure?',
-                                        text: "You won't be able to revert this!",
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Yes, delete it!'
-                                                              }).then((result) => {
-                                          if(result.value){
-                                                                        this.form.delete('api/makeexpense/'+id).then(()=>{
-
-                                                                                                                      swal.fire(
-                                                                                                                        'Deleted!',
-                                                                                                                        'Your file has been deleted.',
-                                                                                                                        'success'
-                                                                                                                      )
-                                                                                                Fire.$emit('AfterAction');
-                                                                                            }).cathch(()=>{
-                                                                                              
-                                                                        swal.fire("Failed!", "There was Something Wrong.", "Warning");
-                                                                                            });
-                                          }
-                                                          
-                                      })
-
-                                              
-                                                },
-
-
 // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-               newModalcategory(){
-                      this.editmode = false;
-                 this.form.clear();
-        this.form.reset();
-$('#addNewproductcategory').modal('show');
+newModalformfeatures(){
+  this.editmode = false;
+  this.form.clear();
+  this.form.reset();
+$('#addnewformfeaturesModal').modal('show');
             },
-                 editModalproductcategory(mydataObjectProductcategories){
-                this.editmode = true;
-                this.form.clear();
-                this.form.reset();
-              this.form.fill(mydataObjectProductcategories);
-              $('#addNewproductcategory').modal('show');
-                          },
+createnewformfeature(){
+
+  this.$Progress.start();
+this.form.post('api/formcomponents')
+.then(()=>{
 
 
-                                      deleteRecordproductcategory(id){
-                                                      swal.fire({
-                                        title: 'Are you sure?',
-                                        text: "You won't be able to revert this!",
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Yes, delete it!'
-                                                              }).then((result) => {
-                                          if(result.value){
-                                                                        this.form.delete('api/expensecategories/'+id).then(()=>{
+Fire.$emit('AfterAction');
+  axios.get("api/formcomponents").then(({ data }) => (this.mydataObjectFormfeature = data));
+$('#addnewformfeaturesModal').modal('hide');
 
-                                                                                                                      swal.fire(
-                                                                                                                        'Deleted!',
-                                                                                                                        'Your file has been deleted.',
-                                                                                                                        'success'
-                                                                                                                      )
-                                                                                                Fire.$emit('AfterAction');
-                                                                                                 axios.get("api/expensecategories").then(({ data }) => (this.mydataObjectProductcategories = data));
-                                                                                            }).cathch(()=>{
-                                                                                              
-                                                                        swal.fire("Failed!", "There was Something Wrong.", "Warning");
-                                                                                            });
-                                          }
-                                                          
-                                      })
+Toast.fire({
+  icon: 'success',
+  title: 'Record Added Successfully'
+});
 
-                                              
-                                                },
+  this.$Progress.finish();
+})
+.catch(()=>{
 
-// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            loadDatarecords(){
-                    axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                    axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                    axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                    
-                    axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                    axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                  
-               axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-               
-               
-               /// General components Access
-                     axios.get("api/getAddgeneralexpense").then(({ data }) => (this.addnewgeneralexpense = data));
-                     axios.get("api/getviewgeneralexpense").then(({ data }) => (this.viewrecordgeneralexpense = data));
-                     axios.get("api/geteditgeneralexpense").then(({ data }) => (this.editgeneralexpense = data));
-                     axios.get("api/getdeletegeneralexpense").then(({ data }) => (this.deletegeneralexpense = data));
-                  
+})
+        }, 
 
 
-                     ///// 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 axios.get("api/getExpensetypes").then(({ data }) => (this.expensetypes = data));
-                    axios.get("api/getExpensecategories").then(({ data }) => (this.expensecategory = data));
-
-                      axios.get("api/expenses").then(({ data }) => (this.mydataObject = data));
-                   
-                      axios.get("api/getcategories").then(({ data }) => (this.categorieslist = data));
-                      axios.get("api/getunits").then(({ data }) => (this.unitslist = data));
-
-
-
-
-            },
-            
-           
-   loadDatarecordsCategories(){
-                  axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                  axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                  axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  
-                 axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                 axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-               
-
-                    axios.get("api/getAddnewexpensecategory").then(({ data }) => (this.infoaddnewcategory = data));
-                    axios.get("api/getviewexpensecategory").then(({ data }) => (this.infoviewrecordcategory = data));
-                    axios.get("api/geteditexpensecategory").then(({ data }) => (this.infoeditcategory = data));
-                    axios.get("api/getdeleteexpensecategory").then(({ data }) => (this.infodeletecategory = data));
-                    axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-                    // getting the categories
-
-                    axios.get("api/expensecategories").then(({ data }) => (this.mydataObjectProductcategories = data));
-                  
-            },
-           
-             loadDatarecordsExpensetypes(){
-                  axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                  axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                  axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  
-                  axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                  axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                              // /// expense types
-                      axios.get("api/getAddnewexpensetype").then(({ data }) => (this.infoaddexpensetype = data));
-                    axios.get("api/getviewexpensetype").then(({ data }) => (this.infoviewrecordexpensetype= data));
-                    axios.get("api/geteditexpensetype").then(({ data }) => (this.infoeditexpensetype= data));
-                    axios.get("api/getdeleteexpensetype").then(({ data }) => (this.infodeleteexpensetype = data));
-
-                
-                     axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));
-
-
-            },
-              
-            loadDatarecordsbranchexpenses(){
-                   axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                  axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                  axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-                 axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                 axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                /////
-
-                 axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
-                 axios.get("api/getExpensestomake").then(({ data }) => (this.expenseslist = data));
-                       // /// Product brand
-                    axios.get("api/getAddnewproductbrand").then(({ data }) => (this.infoaddproductbrand = data));
-                    axios.get("api/getviewproductbrand").then(({ data }) => (this.infoviewrecordproductbrand= data));
-                    axios.get("api/geteditproductbrand").then(({ data }) => (this.infoeditproductbrand= data));
-                    axios.get("api/getdeleteproductbrand").then(({ data }) => (this.infodeleteproductbrand = data));
- 
-                    axios.get("api/makeexpense").then(({ data }) => (this.mydataObjectbranchexpenses = data));
-
-
-
-
-            },
-               loadDatarecordsofficeexpenses(){
-                   axios.get("api/companyexpensescomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
-                   axios.get("api/branchexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessbranchexpensescomponent = data));
-                   axios.get("api/expensecategoriescomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
-                  
-                 axios.get("api/expensetypescomponentaccess").then(({ data }) => (this.allowedtoaccessexpensetypescomponent = data)); 
-                 axios.get("api/officeexpensescomponentaccess").then(({ data }) => (this.allowedtoaccessofficeexpensescomponent = data));
-                /////
-                               axios.get("api/getExpensestomake").then(({ data }) => (this.expenseslist = data));
-                               
-                               axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
-           
-                ////
-axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
-                 axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
-                 axios.get("api/getExpensestomake").then(({ data }) => (this.expenseslist = data));
-                       // /// Product brand
-                    axios.get("api/getAddnewofficeexpense").then(({ data }) => (this.infoaddnewofficeexpense = data));
-                    axios.get("api/getviewofficeexpense").then(({ data }) => (this.infoviewrecordofficeexpense= data));
-                    axios.get("api/geteditofficeexpense").then(({ data }) => (this.infoeditofficeexpense= data));
-                    axios.get("api/getdeleteofficeexpense").then(({ data }) => (this.infodeleteofficeexpense = data));
- 
-  axios.get("api/getWalletlist").then(({ data }) => (this.walletlist = data));
-                    axios.get("api/getdailytotalexpenses").then(({ data }) => (this.dailyexpensestotal = data));
-                    axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.mydataObjectofficeexpenses = data));
-
-
-
-
-            },
-
-              
-            ///////////////////////////////////Working on the General Expense
-             createNewrecordmakebranchexpense(){
-
-                                this.$Progress.start();
-                                this.form.post('api/makeexpense')
-                                .then(()=>{
-
-
-                                Fire.$emit('AfterAction');
-                                axios.get("api/makeexpense").then(({ data }) => (this.mydataObjectbranchexpenses = data));
-
-                               // $('#addNew').modal('hide');
-
-                                Toast.fire({
-                                icon: 'success',
-                                title: 'Record Added Successfully'
-                                });
-
-                                this.$Progress.finish();
-                                  this.form.clear();
-        this.form.reset();
-                                })
-                                .catch(()=>{
-
-                                })
-
-
-
-
-            },
-
-      updateRecordbranchexpense(){
+   updateformfeature(){
     this.$Progress.start();
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/makeexpense/'+this.form.id)
+this.form.put('api/formcomponents/'+this.form.id)
+  .then(()=> {
+    // on success
+   $('#addnewformfeaturesModal').modal('hide');
+    swal.fire(
+        'Update!',
+        'Your file has been updated.',
+        'success'
+      )
+      this.$Progress.finish();
+    Fire.$emit('AfterAction');
+     axios.get("api/formcomponents").then(({ data }) => (this.mydataObjectFormfeature = data));
+
+  })
+
+
+  .catch(()=>{
+ this.$Progress.fail();
+  });
+
+            },
+         
+         
+         editformfeature(mydataObjectFormfeature){
+        this.editmode = true;
+        this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObjectFormfeature);
+$('#addnewformfeaturesModal').modal('show');
+            },
+               
+               
+             
+            deleteformfeature(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/formcomponents/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                     axios.get("api/formcomponents").then(({ data }) => (this.mydataObjectFormfeature = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  newModalsubmenu(){
+  this.editmode = false;
+  this.form.clear();
+  this.form.reset();
+$('#addnewsubmenuModal').modal('show');
+            },
+createnewsubmenu(){
+
+  this.$Progress.start();
+this.form.post('api/submenus')
+.then(()=>{
+
+
+Fire.$emit('AfterAction');
+axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
+$('#addnewsubmenuModal').modal('hide');
+
+Toast.fire({
+  icon: 'success',
+  title: 'Record Added Successfully'
+});
+
+  this.$Progress.finish();
+})
+.catch(()=>{
+
+})
+        }, 
+
+
+   updatesubmenu(){
+    this.$Progress.start();
+            /// viewing from the sonsole
+            ///console.log('Edidint data');
+/// calling the function to update the data
+this.form.put('api/submenus/'+this.form.id)
+  .then(()=> {
+    // on success
+   $('#addnewsubmenuModal').modal('hide');
+    swal.fire(
+        'Update!',
+        'Your file has been updated.',
+        'success'
+      )
+      this.$Progress.finish();
+    Fire.$emit('AfterAction');
+    axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
+
+  })
+
+
+  .catch(()=>{
+ this.$Progress.fail();
+  });
+
+            },
+         
+         
+         editsubmenu(mydataObjectSubmenus){
+        this.editmode = true;
+        this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObjectSubmenus);
+$('#addnewsubmenuModal').modal('show');
+            },
+               
+               
+             
+            deletesubmenu(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/submenus/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                     axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  newModalformfeatures(){
+//   this.editmode = false;
+//   this.form.clear();
+//   this.form.reset();
+// $('#addnewformfeaturesModal').modal('show');
+//             },
+// createnewformfeature(){
+
+//   this.$Progress.start();
+// this.form.post('api/vuecomponents')
+// .then(()=>{
+
+
+// Fire.$emit('AfterAction');
+// axios.get("api/vuecomponents").then(({ data }) => (this.mydataObjectforvuecomponents = data));
+// $('#addnewformfeaturesModal').modal('hide');
+
+// Toast.fire({
+//   icon: 'success',
+//   title: 'Record Added Successfully'
+// });
+
+//   this.$Progress.finish();
+// })
+// .catch(()=>{
+
+// })
+//         }, 
+
+
+//    updateformfeature(){
+//     this.$Progress.start();
+//             /// viewing from the sonsole
+//             ///console.log('Edidint data');
+// /// calling the function to update the data
+// this.form.put('api/vuecomponents/'+this.form.id)
+//   .then(()=> {
+//     // on success
+//    $('#adnewvuecomponent').modal('hide');
+//     swal.fire(
+//         'Update!',
+//         'Your file has been updated.',
+//         'success'
+//       )
+//       this.$Progress.finish();
+//     Fire.$emit('AfterAction');
+//     axios.get("api/vuecomponents").then(({ data }) => (this.mydataObjectforvuecomponents = data));
+
+//   })
+
+
+//   .catch(()=>{
+//  this.$Progress.fail();
+//   });
+
+//             },
+         
+         
+//          editformfeature(mydataObjectforvuecomponents){
+//         this.editmode = true;
+//         this.form.clear();
+//         this.form.reset();
+//         this.form.fill(mydataObjectforvuecomponents);
+// $('#adnewvuecomponent').modal('show');
+//             },
+               
+               
+             
+//             deleteformfeature(id){
+//                 swal.fire({
+//   title: 'Are you sure?',
+//   text: "You won't be able to revert this!",
+//   icon: 'warning',
+//   showCancelButton: true,
+//   confirmButtonColor: '#3085d6',
+//   cancelButtonColor: '#d33',
+//   confirmButtonText: 'Yes, delete it!'
+// }).then((result) => {
+//     if(result.value){
+//                                   this.form.delete('api/formcomponents/'+id).then(()=>{
+
+//                                                                                 swal.fire(
+//                                                                                   'Deleted!',
+//                                                                                   'Your file has been deleted.',
+//                                                                                   'success'
+//                                                                                 )
+//                                                           Fire.$emit('AfterAction');
+//                                 axios.get("api/vuecomponents").then(({ data }) => (this.mydataObjectforvuecomponents = data));
+//                                                       }).cathch(()=>{
+                                                        
+//                                    swal.fire("Failed!", "There was Something Wrong.", "Warning");
+//                                                       });
+//     }
+                     
+// })
+
+//             },
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ newModalvuecomponent(){
+  this.editmode = false;
+  this.form.clear();
+  this.form.reset();
+$('#adnewvuecomponent').modal('show');
+            },
+createnewsvuecomponent(){
+
+  this.$Progress.start();
+this.form.post('api/vuecomponents')
+.then(()=>{
+
+
+Fire.$emit('AfterAction');
+axios.get("api/vuecomponents").then(({ data }) => (this.mydataObjectforvuecomponents = data));
+$('#adnewvuecomponent').modal('hide');
+
+Toast.fire({
+  icon: 'success',
+  title: 'Record Added Successfully'
+});
+
+  this.$Progress.finish();
+})
+.catch(()=>{
+
+})
+        }, 
+
+
+   updatevuecomponent(){
+    this.$Progress.start();
+            /// viewing from the sonsole
+            ///console.log('Edidint data');
+/// calling the function to update the data
+this.form.put('api/vuecomponents/'+this.form.id)
+  .then(()=> {
+    // on success
+   $('#adnewvuecomponent').modal('hide');
+    swal.fire(
+        'Update!',
+        'Your file has been updated.',
+        'success'
+      )
+      this.$Progress.finish();
+    Fire.$emit('AfterAction');
+    axios.get("api/vuecomponents").then(({ data }) => (this.mydataObjectforvuecomponents = data));
+
+  })
+
+
+  .catch(()=>{
+ this.$Progress.fail();
+  });
+
+            },
+         
+         
+         editvuecomponent(mydataObjectforvuecomponents){
+        this.editmode = true;
+        this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObjectforvuecomponents);
+$('#adnewvuecomponent').modal('show');
+            },
+               
+               
+             
+            deletevuecomponent(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/vuecomponents/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                axios.get("api/vuecomponents").then(({ data }) => (this.mydataObjectforvuecomponents = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      updateRecord(){
+    this.$Progress.start();
+            /// viewing from the sonsole
+            ///console.log('Edidint data');
+/// calling the function to update the data
+this.form.put('api/mainmenucomponents/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNew').modal('hide');
@@ -1651,7 +1431,6 @@ this.form.put('api/makeexpense/'+this.form.id)
       )
       this.$Progress.finish();
     Fire.$emit('AfterAction');
-     axios.get("api/makeexpense").then(({ data }) => (this.mydataObjectbranchexpenses = data));
 
   })
 
@@ -1661,36 +1440,172 @@ this.form.put('api/makeexpense/'+this.form.id)
   });
 
             },
- 
- 
- createNewrecordofficemadeexpense(){
-
-                                this.$Progress.start();
-                                this.form.post('api/makeexpenseofficeuser')
-                                .then(()=>{
 
 
-                                Fire.$emit('AfterAction');
-                                this.loadDatarecordsofficeexpenses();
-           // axios.get("api/makeexpenseofficeuser").then(({ data }) => (this.mydataObjectofficeexpenses = data));
-           // axios.get("api/getdailytotalexpenses").then(({ data }) => (this.dailyexpensestotal = data));
-                               // $('#addNew').modal('hide');
 
-                                Toast.fire({
-                                icon: 'success',
-                                title: 'Record Added Successfully'
-                                });
 
-                                this.$Progress.finish();
-                                  this.form.clear();
+            editModal(mydataObject){
+        this.editmode = true;
+        this.form.clear();
         this.form.reset();
-                                })
-                                .catch(()=>{
+        this.form.fill(mydataObject);
+$('#addNew').modal('show');
+            },
+              
+              
+              
+              newModal(){
+  this.editmode = false;
+  this.form.clear();
+  this.form.reset();
+$('#addNew').modal('show');
+            },
 
-                                })
+
+            deleteRecord(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/mainmenucomponents/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
 
 
+           
+//////////////////////////////////////// submitting thr form by click
 
+  saveordertoview(mydataObject){
+                this.editmode = true;
+                 this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObject);
+$('#confirmordertoview').modal('show');
+  axios.get("api/getselectedordertotal").then(({ data }) => (this. selectedordertotalzz = data));
+            },
+
+////// Select the record to view
+choosetoview(){
+    this.$Progress.start();
+       this.form.post('api/saveordertoviedetails') 
+        
+//this.form.post('api/saveordertoviedetails/'+this.form.id)
+  .then(()=> {
+    // on success
+   $('#confirmordertoview').modal('show');
+   
+  //  Fire.$emit('AfterAction');
+  /// getting the count for existance
+   
+ axios.get("api/checkifarecordexistastovieworderdetails").then(({ data }) => (this.existsordertoview = data));
+ axios.get("api/selectedorderdetailstoview").then(({ data }) => (this.theselectedorderdetails = data));
+ axios.get("api/getselectedordertotal").then(({ data }) => (this. selectedordertotalzz = data));
+  
+  
+  
+  // axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+  // axios.get("api/getordertotal").then(({ data }) => (this. carttotal = data));
+
+  })
+
+
+  .catch(()=>{
+ this.$Progress.fail();
+  });
+
+            },
+            editModalorder(mydataObject){
+                this.editmode = true;
+                 this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObject);
+$('#addNeworder1').modal('show');
+            },
+              
+        
+          removeitemfromOrder(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Remove Item'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/selectedorderdetailstoview/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Item has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+axios.get("api/selectedorderdetailstoview").then(({ data }) => (this.theselectedorderdetails = data));
+axios.get("api/getselectedordertotal").then(({ data }) => (this. carttotal = data));
+  axios.get("api/getselectedordertotal").then(({ data }) => (this. selectedordertotalzz = data));
+
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },  
+        
+        
+        
+        deletethisOrder(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/insertintoorders/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getordertotal").then(({ data }) => (this. carttotal = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
 
             },
 
@@ -1698,12 +1613,241 @@ this.form.put('api/makeexpense/'+this.form.id)
 
 
 
-        
 
-             createNewrecord(){
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+// order making //////////////////////////////////////////////////////
+updateRecordorder(){
+    this.$Progress.start();
+            /// viewing from the sonsole
+            ///console.log('Edidint data');
+/// calling the function to update the data
+this.form.put('api/insertintoorders/'+this.form.id)
+  .then(()=> {
+    // on success
+   $('#addNeworder1').modal('hide');
+    swal.fire(
+        'Update!',
+        'Your file has been updated.',
+        'success'
+      )
+      this.$Progress.finish();
+    Fire.$emit('AfterAction');
+    axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getordertotal").then(({ data }) => (this. carttotal = data));
+
+  })
+
+
+  .catch(()=>{
+ this.$Progress.fail();
+  });
+
+            },
+            editModalorder(mydataObject){
+                this.editmode = true;
+                 this.form.clear();
+        this.form.reset();
+        this.form.fill(mydataObject);
+$('#addNeworder1').modal('show');
+            },
+              
+            deletethisOrder(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/insertintoorders/'+id).then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your file has been deleted.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getordertotal").then(({ data }) => (this. carttotal = data));
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+  emptyorderdetails(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You are about to delete all Records of this Order. Proceed??!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+
+
+
+this.form.delete('api/confirmordersales/'+id).then(()=>{
+                                            swal.fire(
+                                                'Deleted!',
+                                                'Your Order List  has been Emptied.',
+                                                'success'
+                                            )
+                        Fire.$emit('AfterAction');
+                                                          
+axios.get("api/ordermakingdetails").then(({ data }) => (this.mydataObjectordermaking = data));
+axios.get("api/getordertotal").then(({ data }) => (this. carttotal = data));
+
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
+            },
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+              checkAccess(){
+                /// Product
+                 axios.get("api/getAddnewproduct").then(({ data }) => (this.info = data));
+                  axios.get("api/getviewproduct").then(({ data }) => (this.infoviewrecord = data));
+
+                   axios.get("api/geteditproduct").then(({ data }) => (this.infoedit = data));
+                    axios.get("api/getdeleteproduct").then(({ data }) => (this.infodelete = data));
+                    /// product categories
+                     axios.get("api/getAddnewcustomer").then(({ data }) => (this.infoaddnewcategory = data));
+                    axios.get("api/getviewcustomer").then(({ data }) => (this.infoviewrecordcategory = data));
+                    axios.get("api/geteditcustomer").then(({ data }) => (this.infoeditcategory = data));
+                    axios.get("api/getdeletecustomer").then(({ data }) => (this.infodeletecategory = data));
+
+                    // /// Product units of measure
+                      axios.get("api/getAddnewproductunitmeasure").then(({ data }) => (this.infoaddnewunitmeasure = data));
+                    axios.get("api/getviewproductunitmeasure").then(({ data }) => (this.infoviewrecordunitmeasure= data));
+                    axios.get("api/geteditproductunitmeasure").then(({ data }) => (this.infoeditunitmeasure= data));
+                    axios.get("api/getdeleteproductunitmeasure").then(({ data }) => (this.infodeleteunitmeasure = data));
+
+                    
+                    // /// Product brand
+                      axios.get("api/getAddnewproductbrand").then(({ data }) => (this.infoaddproductbrand = data));
+                    axios.get("api/getviewproductbrand").then(({ data }) => (this.infoviewrecordproductbrand= data));
+                    axios.get("api/geteditproductbrand").then(({ data }) => (this.infoeditproductbrand= data));
+                    axios.get("api/getdeleteproductbrand").then(({ data }) => (this.infodeleteproductbrand = data));
+                  
+           },
+            loadDatarecords(){
+                   axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                    axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data)); 
+               
+                   axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
+   ///geting vdata
+        axios.get("api/getsystemroles").then(({ data }) => (this.roleslist = data));
+               
+               
+               
+               /// Product supplier Access
+                     axios.get("api/getAddnewsupplier").then(({ data }) => (this.info = data));
+                     axios.get("api/getviewsupplier").then(({ data }) => (this.infoviewrecord = data));
+                     axios.get("api/geteditsupplier").then(({ data }) => (this.infoedit = data));
+                     axios.get("api/getdeletesupplier").then(({ data }) => (this.infodelete = data));
+                     ///// 
+                   
+
+
+   axios.get("api/getAddnewcustomer").then(({ data }) => (this.infoaddnewcategory = data));
+                    axios.get("api/getviewcustomer").then(({ data }) => (this.infoviewrecordcategory = data));
+                    axios.get("api/geteditcustomer").then(({ data }) => (this.infoeditcategory = data));
+                    axios.get("api/getdeletecustomer").then(({ data }) => (this.infodeletecategory = data));
+
+
+
+
+
+             
+axios.get("api/user").then(({ data }) => (this.mydataObject = data));
+
+
+
+            },
+            
+           
+   loadDatarecordsSubmenus(){
+                   axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                   axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data));
+
+
+                    axios.get("api/getAddnewcustomer").then(({ data }) => (this.infoaddnewcategory = data));
+                    axios.get("api/getviewcustomer").then(({ data }) => (this.infoviewrecordcategory = data));
+                    axios.get("api/geteditcustomer").then(({ data }) => (this.infoeditcategory = data));
+                    axios.get("api/getdeletecustomer").then(({ data }) => (this.infodeletecategory = data));
+               axios.get("api/getMainmenues").then(({ data }) => (this.studentclasses = data));
+
+                    // getting the categories
+                    axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
+                  
+            },
+           
+             loadDatarecordsVuecomponents(){
+                   axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                   axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data));
+                             // /// Product units of measure
+                      axios.get("api/getAddnewproductunitmeasure").then(({ data }) => (this.infoaddnewunitmeasure = data));
+                  axios.get("api/getviewproductunitmeasure").then(({ data }) => (this.infoviewrecordunitmeasure= data));
+                  axios.get("api/geteditproductunitmeasure").then(({ data }) => (this.infoeditunitmeasure= data));
+                  axios.get("api/getdeleteproductunitmeasure").then(({ data }) => (this.infodeleteunitmeasure = data));
+                  axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
+                  axios.get("api/getordertotal").then(({ data }) => (this. carttotal = data));
+                
+                   axios.get("api/vuecomponents").then(({ data }) => (this.mydataObjectforvuecomponents = data));
+
+            },
+            
+            loadDatarecordsforformfeatures(){
+                    axios.get("api/contactscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                    axios.get("api/productbrandscomponentaccess").then(({ data }) => (this.allowedtoaccessbrandscomponent = data));
+                   axios.get("api/customerscomponentaccess").then(({ data }) => (this.allowedtoaccesscategoriescomponent = data));
+                    axios.get("api/productunitscomponentaccess").then(({ data }) => (this.allowedtoaccessproductunitscomponent = data));
+                     axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
+                       // /// Product brand
+                    axios.get("api/getAddnewproductbrand").then(({ data }) => (this.infoaddproductbrand = data));
+                    axios.get("api/getviewproductbrand").then(({ data }) => (this.infoviewrecordproductbrand= data));
+                    axios.get("api/geteditproductbrand").then(({ data }) => (this.infoeditproductbrand= data));
+                    axios.get("api/getdeleteproductbrand").then(({ data }) => (this.infodeleteproductbrand = data));
+ 
+                  
+                    axios.get("api/checkifarecordexistastovieworderdetails").then(({ data }) => (this.existsordertoview = data));
+                    axios.get("api/formcomponents").then(({ data }) => (this.mydataObjectFormfeature = data));
+            },
+           
+  
+//   for the new 
+ createNewrecord(){
 
   this.$Progress.start();
-this.form.post('api/expenses')
+this.form.post('api/user')
 .then(()=>{
 
 
@@ -1721,14 +1865,20 @@ Toast.fire({
 .catch(()=>{
 
 })
- },
 
-    updateRecord(){
+
+
+
+            
+
+        },
+
+         updateRecord(){
     this.$Progress.start();
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/expenses/'+this.form.id)
+this.form.put('api/user/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNew').modal('hide');
@@ -1772,7 +1922,7 @@ $('#addNew').modal('show');
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
     if(result.value){
-                                  this.form.delete('api/expenses/'+id).then(()=>{
+                                  this.form.delete('api/user/'+id).then(()=>{
 
                                                                                 swal.fire(
                                                                                   'Deleted!',
@@ -1791,13 +1941,56 @@ $('#addNew').modal('show');
             },
 
 
-            //////////////////////////////////// Closure of the General Expense
 
 
-              createNewrecordExpensetypename(){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              createNewrecordUnitm(){
 
   this.$Progress.start();
-this.form.post('api/expensetypesdata')
+this.form.post('api/productunits')
 .then(()=>{
 
 
@@ -1809,8 +2002,7 @@ Toast.fire({
   icon: 'success',
   title: 'Record Added Successfully'
 });
- 
-                     axios.get("api/expensetypesdata").then(({ data }) => (this.mydataObjectProductunitsofmeasurekk = data));
+
   this.$Progress.finish();
     this.form.reset();
 })
@@ -1819,108 +2011,46 @@ Toast.fire({
 })
 
 
-
+              }
 
             },
 
 // ///////////////////////////////////// Product Brand 
 
-
-              createNewrecordbrand(){
-
-   this.$Progress.start();
-                                this.form.post('api/expenses')
-                                .then(()=>{
-
-
-                                Fire.$emit('AfterAction');
-
-                                $('#addNew').modal('hide');
-
-                                Toast.fire({
-                                icon: 'success',
-                                title: 'Record Added Successfully'
-                                });
-
-                                this.$Progress.finish();
-                                })
-                                .catch(()=>{
-
-                                })
-
-
-
-
-            },
 // /////////////// closure of brand
 
 
 
-              createNewrecordproductcat(){
-
-  this.$Progress.start();
-this.form.post('api/expensecategories')
-.then(()=>{
-
-
-Fire.$emit('AfterAction');
-
-$('#addNewproductcategory').modal('show');
-
-Toast.fire({
-  icon: 'success',
-  title: 'Category Added Successfully'
-});
-
-  this.$Progress.finish();
-    this.form.reset();
-})
-.catch(()=>{
-
-})
-
-
-
-
-            },
-
+          
            
 
-
-  SaveRecordbranch (){
-
-  
-//this.form.post('api/branchtobalance');
-       //   axios.get("api/branchtobalance").then(({ data }) => (this.clcash = data));
-         // axios.get("api/branchalreadybalanced").then(({ data }) => (this.branchbalancedforthisdate = data));
-       //   axios.get("api/pendingcashin").then(({ data }) => (this.pendingtransfer = data));
-        //  axios.get("api/getbranchopenningb").then(({ data }) => (this.shopopenningbalance = data));
-         // axios.get("api/getbranchnamebalancing").then(({ data }) => (this.shopbalancngname = data));
-        //  axios.get("api/getbranchopenningb").then(({ data }) => (this.shopopenningbalance = data));
-        //  axios.get("api/getdaycashoutbranch").then(({ data }) => (this.totalcashout = data));
-        //  axios.get("api/getdayexpensesbranch").then(({ data }) => (this.totalexpenses = data));
-        //  axios.get("api/getdaypayoutbranch").then(({ data }) => (this.totalpayout = data));
-       //   axios.get("api/getdaycashinbranch").then(({ data }) => (this.totaldayscashin = data));
-
-
-            }
+/////////////////////////////////
+ 
 
 
 
-        }, 
+             
+/////////////////////////////////////////////////
 
+          
            
-
-      
+   
         created() {
           this.loadDatarecords();
                           //      axios.get("api/getbranchnamebalancing").then(({ data }) => (this.shopbalancngname = data));
                                 Fire.$on('AfterAction', () =>{
+                                  
         this.loadDatarecords();
-      });
-        //  setInterval(() =>this.loadDatarecords(),3000);
-//          setInterval(() =>this.checkAccess(),3000);
-          
-        }
+      }
+      
+      
+            
+      
+      
+      );
+     
+        },
+        
+        
     }
 </script>

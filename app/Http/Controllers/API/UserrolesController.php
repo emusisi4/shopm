@@ -140,7 +140,7 @@ $user->update($request->all());
     {
         //
      //   $this->authorize('isAdmin'); 
-        $user = Role::findOrFail($id);
+        $user = User::findOrFail($id);
         $user->delete();
        // return['message' => 'user deleted'];
 

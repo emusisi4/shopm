@@ -1,75 +1,277 @@
-
+<style scoped>
+.bethapa-table-header {
+    font-weight: bold;
+    color: #806104;
+    font-size: 1.1em;
+    border-bottom: 1px solid rgb(3, 46, 10);
+    margin-bottom: 20px;
+    width: 100%;
+}
+.mysalessect {
+    padding: 0rem;
+    float: right;
+}
+</style>
 
 <template>
 <div>
-     <div class="card" v-if="allowedtoaccesscomponent > 0 ">
+
+  <div class="card"  v-if="allowedtoaccesscomponent > 0 ">
               <div class="card-header">
-                <h3 class="card-title"><b>FORM COMPONENTS </b></h3>
+                <h3 class="card-title"><b> My POINT OF SALE </b></h3>
+
 
                 <div class="card-tools">
+ <div v-if="branchbalancedforthisdate < 1 "  >
                    
-                    
-                    <button type="button" class="btn btn-success btn-xs" @click="newModal" >Add New Record </button>
+                 </div>
+                      
+                 
+                  
                 
                       </div>
                
               </div>
               <!-- /.card-header -->
+    <div class="card-body table-responsive p-0">
+                  <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+         
+
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+           
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-12 table-responsive">
 
 
 
+   <div class="mysalessect">              
+<form @submit.prevent="editmode ? updateRecord():createNewrecord()">
 
-
-
-
-
-
-
-
-
-
-
-              
-              <div class="card-body table-responsive p-0">
-                <div class="col-md-6">
           
-            <!-- /.card -->
+  
+ 
+
+
+                  
+                  <label>Product Name / Code</label>
+                    <select name ="productcode" v-model="form.productcode" tabindex="1" id ="select2"   :class="{'is-invalid': form.errors.has('productcode')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
+
+                    </select>
+                
+
+                               
+<label>Qty</label>
+                     <input v-model="form.quantity" type="number" name="quantity" v-on:keyenter="myClickEvent" on:keyenter="focus.productcode"
+                      :class="{ 'is-invalid': form.errors.has('quantity') }">
+                  
+
+
+                                
+                               
 
           
-            <!-- /.card -->
-          </div>
-                <table class="table table-bordered table-striped">
+          
+
+    
+  <button v-show="!editmode" type="submit" hidden="" ref="myBtn"  id="submit" class="btn btn-primary btn-sm">Add</button>
+
+            <button v-show="editmode" hidden="" type="submit" class="btn btn-success btn-sm">Update</button>
+
+   
+  </form>
+                </div>
+
+
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                     <th>ITEM CODE #</th> 
+                      <th>ITEM NAME</th>
+                      <th>Qty</th>
+                      <th>UNIT PRICE</th>
+                      <th>LINE TOTAL</th>
+                       <th> 
+                            <button type="button" v-if="info > 0" class="btn btn-info btn-xs" @click="newModal" >Add Sale </button>
+                            
+                            <button type="button" class="btn btn-danger btn-xs" @click="emptycart" >Empty Cart </button></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                  <tr v-for="mydataObjectinfo in mydataObject.data" :key="mydataObjectinfo.id">
+                      <td>{{mydataObjectinfo.productcode}}</td>
+                        <td> <template v-if="mydataObjectinfo.product_name">	{{mydataObjectinfo.product_name.name}}</template></td>
+
+                      <td>{{mydataObjectinfo.quantity}} </td>
+                     
+                  <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitprice)}}</td>
+                 
+                 <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitprice*mydataObjectinfo.quantity)}}</td>
+                 
+                 
+                    
+                                        
+                   
+                       <!-- <td v-if="infoedit > 0"> -->
+                  <td>
+                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @focus="checkAccess()"   @click="editModal(mydataObjectinfo)">  </button>
+                   
+                    
+                      
+                  
+                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecord(mydataObjectinfo.id)">  </button>
+                 
+                      </td>
+                    
+                    </tr>
+                   
+                    </tbody>
+                  </table>
+                 
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+  <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                 
+                 
+                </div>
+                <!-- /.col -->
+                <div class="col-6">
+                 
+
+                  <div class="table-resiponsve">
+                    <table class="table">
+                      <tbody><tr>
+                        <th style="width:50%">Subtotal:</th>
+                            <td>{{ (currencydetails) }} {{formatPrice(carttotal)}}</td>
+                      
+                      </tr>
+                      <tr>
+                        <th>Tax Vat </th>
+                        <td> {{ (currencydetails) }} 0</td>
+                      </tr>
+                     
+                      <tr>
+                        <th>Total:</th>
+                         <td>{{ (currencydetails) }} {{formatPrice(carttotal)}}</td>
+                      </tr>
+                    </tbody>
+                    
+                    </table>
+                    
+                  </div>
+                  
+                </div>
+                
+                <!-- /.col -->
+              </div>
+
+              <!-- this row will not appear when printing -->
+              <div class="row no-print">
+                <div class="col-12">
+                  <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+               <!-- {{   <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                    Payment
+                  </button>}} -->
+                  
+                  <form @submit.prevent="ConfirmSlip()">
+                                          
+                               
+                 
+                     <button type="submit" id="submit" name= "submit" v-on:click="myClickEvent" ref="myBtn" class="btn btn-primary btn-sm float-right">Confirm Order</button>
+                  
+                  </form>
+                
+                </div>
+                 
+              </div>
+             
+            </div>
+            
+            <!-- /.invoice -->
+
+
+
+
+
+
+
+
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+                 <!-- <input v-model="form.transferdate" type="text" name="transferdate" placeholder="Search"   class=" form-control-sm">
+              <table class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>FORM COMPONENT</th>
-
-                        <th>SYSTEM NAME</th>
-                       <th>Description</th>
-                         <th></th>
+                      <th>#</th>
+                        <th>NAME</th>
+                       <th>CODE</th>
+                      
+                      <th>BRAND</th>
                      
+                      <th>CATEGORY</th>
+                      <th>MEASURE</th>
+                        <th>SUPPLIER</th>
+                      <th>ROL</th>
+                       
+                     
+                      <th v-if="infoviewrecord > 0"></th>
+                       <th v-if="infoedit > 0"></th>
+                        <th v-if="infodelete > 0"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                       <tr v-for="mydataObjectinfo in mydataObject.data" :key="mydataObjectinfo.id">
+                        <tr v-for="mydataObjectinfo in mydataObject.data" :key="mydataObjectinfo.id">
                     <td>{{mydataObjectinfo.id}}</td>
-                     <td>{{mydataObjectinfo.name}}</td>
-                     <td>{{mydataObjectinfo.sysname}}</td>
-                      <td>{{mydataObjectinfo.description}}</td>
-                         <td>     
-                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModal(mydataObjectinfo)"> Edit  </button>
-                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteRecord(mydataObjectinfo.id)"> DEl </button>
+                 
+                 
+                     <td> {{ (mydataObjectinfo.name)}}</td>
+                     <td>{{mydataObjectinfo.productcode}}</td>
+                    
+                     <td> <template v-if="mydataObjectinfo.brand_name">	{{mydataObjectinfo.brand_name.name}}</template></td>
+                    
+                    <td>   <template v-if="mydataObjectinfo.product_category">	{{mydataObjectinfo.product_category.name}}</template></td>
+                    <td>   <template v-if="mydataObjectinfo.unit_measure">	{{mydataObjectinfo.unit_measure.name}}</template></td>
+                    <td>  <template v-if="mydataObjectinfo.product_supplier">	{{mydataObjectinfo.product_supplier.name}}</template></td>  
+                    <td> {{((mydataObjectinfo.rol))}}</td>
+                                         
+                    <td v-if="infoviewrecord > 0">
+                        
+                   <button type="button"   class="btn  bg-gradient-info btn-xs fas fa-eye" @focus="checkAccess()"  @click="editModal(mydataObjectinfo)"> View  </button>
+                 
+                   
+                      </td>
+                       <td v-if="infoedit > 0">
+                  
+                   <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @focus="checkAccess()"   @click="editModal(mydataObjectinfo)"> Edit  </button>
+                   
+                      </td>
+                       <td v-if="infodelete > 0">
+                     
+                  
+                            <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt"  @click="deleteRecord(mydataObjectinfo.id)"> DEl </button>
+                 
                       </td>
                     </tr>
               
                     
                   </tbody>
-                  
-                 <tfoot>
-
-                 </tfoot>
-                                   </table>
+                 <tfoot></tfoot>
+                                   </table> -->
 
                 
               </div>
@@ -81,12 +283,28 @@
                 </ul>
               </div>
               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
             
-              <div class="modal fade" id="addNew">
-        <div class="modal-dialog">
+ <div class="modal fade"  id="addNew">
+        <div class="modal-dialog modal-ml">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
+              <h4 class="modal-title"  v-show="!editmode">NEW SALES</h4>
                    <h4 class="modal-title" v-show="editmode">Update Record</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -96,32 +314,75 @@
 <form @submit.prevent="editmode ? updateRecord():createNewrecord()">
 
             <div class="modal-body">
-            <div class="form-group">
-                    <label for="exampleInputEmail1">Component Name</label>
-                     <input v-model="form.name" type="text" name="name"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('name') }">
-      <has-error :form="form" field="name"></has-error>
+ 
+  
+ 
+
+
+                  <div class="form-group">
+                  <label>Product Name / Code</label>
+                    <select name ="productcode" v-model="form.productcode" id ="productcode"  class="form-control" :class="{'is-invalid': form.errors.has('productcode')}">
+                    <option value=" ">  </option>
+                    <option v-for='data in brancheslist' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
+
+                    </select>
+                
+
+                                <has-error :form="form" field="productcode"></has-error>
+
+
+
+                                
+                                </div>
+
+  
+                   
+  <div class="form-group" v-show="editmode">
+               
+                    <label>UNit Selling Price</label>
+                     <input v-model="form.unitprice" type="number" name="unitprice"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('unitprice') }">
+                       <has-error :form="form" field="unitprice"></has-error>
+                                </div>
+  
+               
+                   
+                   
+                   
+                   <div class="form-group">
+               
+                    <label>Quantity Sold</label>
+                     <input v-model="form.quantity" type="number" name="quantity" v-on:keyenter="myClickEvent"
+                     class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('quantity') }">
+                       <has-error :form="form" field="quantity"></has-error>
+                                </div>
+  
+  
       
-                  </div>
-                     <div class="form-group">
-                    <label for="exampleInputEmail1">System Name </label>
-                     <input v-model="form.sysname" type="text" name="sysname"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('sysname') }">
-      <has-error :form="form" field="sysname"></has-error>
-      
-                  </div>
-                     <div class="form-group">
-                    <label for="exampleInputEmail1">Description</label>
-                     <textarea v-model="form.description" type="text" name="description"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
-      <has-error :form="form" field="description"></has-error>
-      
-                  </div>
-              
+  
+ 
+
+
+
+
+                
+                 
+
+               
+
+
+
+
+
+
+
+
             </div>
             <div class="modal-footer">
 
-  <button v-show="!editmode" type="submit" class="btn btn-primary btn-sm">Create</button>
+    
+  <button v-show="!editmode" type="submit" ref="myBtn"  id="submit" class="btn btn-primary btn-sm">Add</button>
+
             <button v-show="editmode" type="submit" class="btn btn-success btn-sm">Update</button>
 
 
@@ -137,7 +398,9 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-            </div>
+  </div>
+
+
 
 <!--   if not authorised -->
    <div class="container" v-if="allowedtoaccesscomponent < 1 ">
@@ -157,32 +420,61 @@
 
 </div>
 </template>
-
 <script>
     export default {
         data(){
         return {
             editmode: false,
             mydataObject:{},
-               roleslist:{},
+                clcash: null,
+              branchbalancedforthisdate : null,
+                  pendingtransfer : null,
+              totaldayscashin : null,
+              totalcashout: null,
+              currencydetails:null,
+              carttotal:null,
+              userwalletbalance : null,
+              totalexpenses: null,
+              totalpayout:null,
+              shopbalancngname: null,
+                shopopenningbalance: null,
+                 allowedtoaccesscomponent : null,
                 brancheslist:{},
-                componentslist:{},
-                allowedtoaccesscomponent : null,
+///dropdown
+   
+
+
                 form: new Form({
                                     id:'',
-                                    name : '',
-                                    sysname : '',
-                                   
-                                    description : ''
+                                    productcode : '',
+                                    quantity : '',
+                                    unitprice:'',
+                                    contact : '',
+                                    type : '',
+                                    bio : '',
+                                    photo : ''
 
             })
         }
 
         },
         methods:{
+             formatPrice(value) {
+        let val = (value/1).toFixed(0).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    },
+    /// submiting the balancing record date and branch
+  myClickEvent($event) { const elem = this.$refs.myBtn
+            elem.click()
+        },
+
+          ////// drpdown
+          
+
+          /////////////////////////////////////////
 // Our method to GET results from a Laravel endpoint
       getResults(page = 1) {
-                        axios.get('api/formcomponents?page=' + page)
+                        axios.get('api/shopingcartdetails?page=' + page)
                           .then(response => {
                             this.mydataObject = response.data;
                           });
@@ -192,7 +484,7 @@
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/formcomponents/'+this.form.id)
+this.form.put('api/shopingcartdetails/'+this.form.id)
   .then(()=> {
     // on success
    $('#addNew').modal('hide');
@@ -219,12 +511,17 @@ this.form.put('api/formcomponents/'+this.form.id)
         this.form.fill(mydataObject);
 $('#addNew').modal('show');
             },
+
+            
                newModal(){
                       this.editmode = false;
                  this.form.clear();
         this.form.reset();
 $('#addNew').modal('show');
+  this.form.reset();
             },
+
+
             deleteRecord(id){
                 swal.fire({
   title: 'Are you sure?',
@@ -236,7 +533,7 @@ $('#addNew').modal('show');
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
     if(result.value){
-                                  this.form.delete('api/formcomponents/'+id).then(()=>{
+                                  this.form.delete('api/shopingcartdetails/'+id).then(()=>{
 
                                                                                 swal.fire(
                                                                                   'Deleted!',
@@ -253,32 +550,83 @@ $('#addNew').modal('show');
 })
 
             },
-            loadDatarecords(){
-              /// checking if is allowed access
-               axios.get("api/getlistofcomponents").then(({ data }) => (this.componentslist = data));    
- 
-    axios.get("api/userscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
 
+  emptycart(id){
+                swal.fire({
+  title: 'Are you sure?',
+  text: "You are about to delete all Records of this Cart. Proceed??!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+    if(result.value){
+                                  this.form.delete('api/makesalepur/'+id).then(()=>{
 
-   axios.get("api/formcomponents").then(({ data }) => (this.mydataObject = data));
-       axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
-   ///geting vdata
-        axios.get("api/getsystemroles").then(({ data }) => (this.roleslist = data));
+                                                                                swal.fire(
+                                                                                  'Deleted!',
+                                                                                  'Your Cart  has been Emptied.',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+})
+
             },
+
+
+
+
+
+
+
+              checkAccess(){
+                 axios.get("api/getAddnewbalancingrecord").then(({ data }) => (this.info = data));
+                  axios.get("api/getviewbalancingrecord").then(({ data }) => (this.infoviewrecord = data));
+
+                   axios.get("api/geteditbalancingrecord").then(({ data }) => (this.infoedit = data));
+                   axios.get("api/getdeletebalancingrecord").then(({ data }) => (this.infodelete = data));
+                   axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+           },
+            loadDatarecords(){
+               axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
+                 axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+                 axios.get("api/companyproductscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
+                   axios.get("api/getAddnewbalancingrecord").then(({ data }) => (this.info = data));
+                
+                  
+   axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObject = data));
+ 
+axios.get("api/getproductsactive").then(({ data }) => (this.brancheslist = data));
+
+
+
+
+
+
+            },
+
             createNewrecord(){
 
   this.$Progress.start();
-this.form.post('api/formcomponents')
+this.form.post('api/inserintocart')
 .then(()=>{
 
 
 Fire.$emit('AfterAction');
 
 $('#addNew').modal('hide');
-
+  this.form.reset();
+  this.form.restfocus();
 Toast.fire({
   icon: 'success',
-  title: 'Record Added Successfully'
+  title: 'Product  Added to Cart'
 });
 
   this.$Progress.finish();
@@ -290,15 +638,61 @@ Toast.fire({
 
 
 
+            },
+
+
+  ConfirmSlip(){
+
+   swal.fire({
+  title: 'SALES CONFIRMATION',
+  text: "You are about to confirm the Sales on the Shopping Cart. Do you wasnt to proceed??",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Confirm Sale'
+}).then((result) => {
+    if(result.value){
+     // this.form.post('api/confirmordersales');
+                                  this.form.post('api/makesalepur').then(()=>{
+
+                                                                                swal.fire(
+                                                                                  'Confirmed!',
+                                                                                  'Your   Sale has Been Confirmed',
+                                                                                  'success'
+                                                                                )
+                                                          Fire.$emit('AfterAction');
+                                                      }).cathch(()=>{
+                                                        
+                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
+                                                      });
+    }
+                     
+});
+
+      axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+      axios.get("api/shopingcartdetails").then(({ data }) => (this.mydataObject = data));    
+
+
             }
 
+
+
         }, 
+
+           
+
+      
         created() {
           this.loadDatarecords();
- Fire.$on('AfterAction', () =>{
-this.loadDatarecords();
+                                  axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+                                  axios.get("api/getuserbalance").then(({ data }) => (this.userwalletbalance = data));
+                                Fire.$on('AfterAction', () =>{
+        this.loadDatarecords();
       });
-         // setInterval(() =>this.loadDatarecords(),3000);
+        //  setInterval(() =>this.loadDatarecords(),3000);
+        //  setInterval(() =>this.checkAccess(),3000);
+          
         }
     }
 </script>
