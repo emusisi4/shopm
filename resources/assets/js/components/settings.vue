@@ -114,12 +114,18 @@ button.add-newm {
                        <td>    <template v-if="mydataObjectinfo.user_role">	{{mydataObjectinfo.user_role.rolename}}</template></td>
                           <td>    <template v-if="mydataObjectinfo.user_branch">	{{mydataObjectinfo.user_branch.branchname}}</template></td>
                                <td>{{mydataObjectinfo.updated_at}}</td>
-                          <td>     
-                            <a href="#">
-                              <i class="btn fas fa-edit"  @click="editModal(mydataObjectinfo)"></i>
+                          <td>  
+
+
+ <a href="#">
+                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModal(mydataObjectinfo)">Edit</button>
                               </a>
-                               <a href="#" @click="deleteRecord(mydataObjectinfo.id)"> <i class="btn  fas fa-trash-alt"> </i></a>
-                      </td>
+                               <a href="#">
+                                     <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteRecord(mydataObjectinfo.id)"> Del</button></a>
+
+
+                           
+                                                 </td>
                     </tr>
               
                     
