@@ -15,6 +15,7 @@ use App\Cintransfer;
 class ApproveCashinController extends Controller
 {
     /**
+     * nnnnnnnnnnnnnn
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
