@@ -121,7 +121,7 @@ button.add-newm {
                               <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editModal(mydataObjectinfo)">Edit</button>
                               </a>
                                <a href="#">
-                                     <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteRecord(mydataObjectinfo.id)"> Del</button></a>
+                                     <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteRecord(mydataObjectinfo.id)"> Delete</button></a>
 
 
                            
@@ -248,16 +248,15 @@ button.add-newm {
                   </div>
                   <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                     <div class="bethapa-table-header">
-                Sub-Menu Details <button v-if="infoaddnewcategory > 0" type="button" class="add-newm" @click="newModalsubmenu" >Add New </button>
+                Roles Details <button v-if="infoaddnewcategory > 0" type="button" class="add-newm" @click="newModalsubmenu" >Add New </button>
                       </div>
                 <table class="table table-bordered table-striped">
                   <thead>
                     <tr> 
                       <th>#</th>
-                      <th>SUB MENU NAME</th>
-                      <th>MAIN MENU</th>
-                      <th>ORDER</th>
-                      <th>ROUTE</th>
+                      <th>NAME</th>
+                      <th>SHORTCODE</th>
+                     
                           <th>DESCRIPTION</th>
                       <th>CREATED</th>
                       <th>MODIFIED</th>
@@ -268,29 +267,27 @@ button.add-newm {
                  
                   <tbody>
                     <tr>
-                       <tr v-for="mydataObjectinfo in mydataObjectSubmenus.data" :key="mydataObjectinfo.id">
+                       <tr v-for="mydataObjectinfo in mydataObjectRoles.data" :key="mydataObjectinfo.id">
                                                   
-                    <td>{{mydataObjectinfo.shid}}</td>
+                    <td>{{mydataObjectinfo.id}}</td>
                     
-                     <td>{{mydataObjectinfo.submenuname}}</td>
-                     <td>
+                     <td>{{mydataObjectinfo.rolename}}</td>
+                     <!-- <td>
                          <template v-if="mydataObjectinfo.maincomponent_submenus">	{{mydataObjectinfo.maincomponent_submenus.mainmenuname}}</template>
 
                        
-                      </td>
-
-                        <td>{{mydataObjectinfo.dorder}}</td>
-                             <td>{{mydataObjectinfo.linkrouterre  }}</td>
+                      </td> -->
+  <td>{{mydataObjectinfo.sysname  }}</td>
                              <td>{{mydataObjectinfo.description  }}</td>
                              <td>{{mydataObjectinfo.created_at  }}</td>
                              <td>{{mydataObjectinfo.updated_at}}</td>
                         
                           <td>     
                             <a href="#">
-                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editsubmenu(mydataObjectinfo)">Edit</button>
+                              <button type="button"   class="btn  bg-gradient-secondary btn-xs fas fa-edit"  @click="editRole(mydataObjectinfo)">Edit</button>
                               </a>
                                <a href="#">
-                                     <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deletesubmenu(mydataObjectinfo.id)"> Del</button></a>
+                                     <button type="button" class="btn  bg-gradient-danger btn-xs fas fa-trash-alt" @click="deleteuserrole(mydataObjectinfo.id)"> Del</button></a>
                       </td>
                     </tr>
               
@@ -612,59 +609,43 @@ button.add-newm {
 <!-- modalllsn -->
 <!--  -->
 
-<div class="modal fade" id="addnewsubmenuModal">
+<div class="modal fade" id="addnewuserrole">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" v-show="!editmode">Add New Record</h4>
+              <h4 class="modal-title" v-show="!editmode">Add New Role</h4>
                    <h4 class="modal-title" v-show="editmode">Update Record</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
                       
-<form @submit.prevent="editmode ? updatesubmenu():createnewsubmenu()">
+<form @submit.prevent="editmode ? updaterole():createnewrole()">
 
             <div class="modal-body">
             <div class="form-group">
-                    <label for="exampleInputEmail1">Sub-Menu Name</label>
-                     <input v-model="form.submenuname" type="text" name="submenuname"
-                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('submenuname') }">
-                    <has-error :form="form" field="submenuname"></has-error>
+                    <label for="exampleInputEmail1">Role Name</label>
+                     <input v-model="form.rolename" type="text" name="rolename"
+                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('rolename') }">
+                    <has-error :form="form" field="rolename"></has-error>
       
                   </div>
                 
                 
                 
  
-<div class="form-group">
-                  <label>Main Menu</label>
-<select name ="mainheadercategory" v-model="form.mainheadercategory" id ="mainheadercategory" class="form-control form-control-sm" :class="{'is-invalid': form.errors.has('mainheadercategory')}">
-<option value="">  </option>
-<option v-for='data in studentclasses' v-bind:value='data.id'>{{ data.id }}. {{ data.mainmenuname }}</option>
-
-</select>
-            <has-error :form="form" field="mainheadercategory"></has-error>
-            </div>
                 
                 
                 
                    <div class="form-group">
-                    <label>Route</label>
-                     <input v-model="form.linkrouterre" type="text" name="linkrouterre"
-                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('linkrouterre') }">
-                    <has-error :form="form" field="linkrouterre"></has-error>
+                    <label>System Name</label>
+                     <input v-model="form.sysname" type="text" name="sysname"
+                      class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('sysname') }">
+                    <has-error :form="form" field="sysname"></has-error>
       
                   </div>
                 
-                     <div class="form-group">
-                    <label>Order</label>
-                     <input v-model="form.dorder" type="number" name="dorder"
-        class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('dorder') }">
-      <has-error :form="form" field="dorder"></has-error>
-      
-                  </div>
-
+                
    <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
                      <textarea v-model="form.description" type="text" name="description"
@@ -756,7 +737,7 @@ button.add-newm {
             mydataObjectforvuecomponents:{},
             mydataObjectordermaking:{},
             theselectedorderdetails:{},
-                        mydataObjectSubmenus:{},
+                        mydataObjectRoles:{},
                         mydataObjectProductunitsofmeasurekk:{},
              mydataObjectProductbrandskk:{},
             carttotal:null,
@@ -776,6 +757,7 @@ button.add-newm {
 
                 form: new Form({
                                     id:'',
+                  
 
 mainmenuname:'',
 iconclass:'',
@@ -787,6 +769,7 @@ linkrouterre:'',
 sysname:'',
 componentname:'',
 featurename:'',
+rolename:'',
                                         userid:'',
                                         suppname:'',
                                         contact:'',
@@ -948,7 +931,7 @@ this.form.put('api/customerdetails/'+this.form.id)
       this.$Progress.finish();
 
     Fire.$emit('AfterAction');
-axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data)); 
+axios.get("api/userroles").then(({ data }) => (this.mydataObjectRoles = data)); 
   })
 
 
@@ -1129,18 +1112,18 @@ $('#addnewformfeaturesModal').modal('show');
   this.editmode = false;
   this.form.clear();
   this.form.reset();
-$('#addnewsubmenuModal').modal('show');
+$('#addnewuserrole').modal('show');
             },
-createnewsubmenu(){
+createnewrole(){
 
   this.$Progress.start();
-this.form.post('api/submenus')
+this.form.post('api/userroles')
 .then(()=>{
 
 
 Fire.$emit('AfterAction');
-axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
-$('#addnewsubmenuModal').modal('hide');
+axios.get("api/userroles").then(({ data }) => (this.mydataObjectRoles = data));
+$('#addnewuserrole').modal('hide');
 
 Toast.fire({
   icon: 'success',
@@ -1155,15 +1138,15 @@ Toast.fire({
         }, 
 
 
-   updatesubmenu(){
+   updaterole(){
     this.$Progress.start();
             /// viewing from the sonsole
             ///console.log('Edidint data');
 /// calling the function to update the data
-this.form.put('api/submenus/'+this.form.id)
+this.form.put('api/userroles/'+this.form.id)
   .then(()=> {
     // on success
-   $('#addnewsubmenuModal').modal('hide');
+   $('#addnewuserrole').modal('hide');
     swal.fire(
         'Update!',
         'Your file has been updated.',
@@ -1171,7 +1154,7 @@ this.form.put('api/submenus/'+this.form.id)
       )
       this.$Progress.finish();
     Fire.$emit('AfterAction');
-    axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
+    axios.get("api/userroles").then(({ data }) => (this.mydataObjectRoles = data));
 
   })
 
@@ -1183,17 +1166,17 @@ this.form.put('api/submenus/'+this.form.id)
             },
          
          
-         editsubmenu(mydataObjectSubmenus){
+         editRole(mydataObjectRoles){
         this.editmode = true;
         this.form.clear();
         this.form.reset();
-        this.form.fill(mydataObjectSubmenus);
-$('#addnewsubmenuModal').modal('show');
+        this.form.fill(mydataObjectRoles);
+$('#addnewuserrole').modal('show');
             },
                
                
              
-            deletesubmenu(id){
+            deleteuserrole(id){
                 swal.fire({
   title: 'Are you sure?',
   text: "You won't be able to revert this!",
@@ -1204,7 +1187,7 @@ $('#addnewsubmenuModal').modal('show');
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
     if(result.value){
-                                  this.form.delete('api/submenus/'+id).then(()=>{
+                                  this.form.delete('api/userroles/'+id).then(()=>{
 
                                                                                 swal.fire(
                                                                                   'Deleted!',
@@ -1212,7 +1195,7 @@ $('#addnewsubmenuModal').modal('show');
                                                                                   'success'
                                                                                 )
                                                           Fire.$emit('AfterAction');
-                                     axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
+                                     axios.get("api/userroles").then(({ data }) => (this.mydataObjectRoles = data));
                                                       }).cathch(()=>{
                                                         
                                    swal.fire("Failed!", "There was Something Wrong.", "Warning");
@@ -1468,34 +1451,7 @@ $('#addNew').modal('show');
             },
 
 
-            deleteRecord(id){
-                swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-    if(result.value){
-                                  this.form.delete('api/mainmenucomponents/'+id).then(()=>{
-
-                                                                                swal.fire(
-                                                                                  'Deleted!',
-                                                                                  'Your file has been deleted.',
-                                                                                  'success'
-                                                                                )
-                                                          Fire.$emit('AfterAction');
-                                                      }).cathch(()=>{
-                                                        
-                                   swal.fire("Failed!", "There was Something Wrong.", "Warning");
-                                                      });
-    }
-                     
-})
-
-            },
+          
 
 
            
@@ -1810,7 +1766,7 @@ axios.get("api/user").then(({ data }) => (this.mydataObject = data));
                axios.get("api/getMainmenues").then(({ data }) => (this.studentclasses = data));
 
                     // getting the categories
-                    axios.get("api/submenus").then(({ data }) => (this.mydataObjectSubmenus = data));
+                    axios.get("api/userroles").then(({ data }) => (this.mydataObjectRoles = data));
                   
             },
            

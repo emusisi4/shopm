@@ -114,7 +114,7 @@ $user->update($request->all());
     {
         //
       // $this->authorize('isAdmin'); 
-       $this->authorize('isSuperadmin'); 
+     //  $this->authorize('isSuperadmin'); 
 
         $user = User::findOrFail($id);
         $user->delete();

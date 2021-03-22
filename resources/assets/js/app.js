@@ -96,7 +96,8 @@ let routes = [
 
 
 
-  { path: '/fgfdsssdsdsdebts', component: require('./components/ShopCashout.vue')}, /// admin collection center
+  { path: '/fgfdsssdsdsdebts', component: require('./components/ShopCashout.vue')}, 
+  /// admin collection center
   { path: '/componentsandfeatures', component: require('./components/Componentandformfeatures.vue')},
   { path: '/resctrostravsetorics', component: require('./components/Systemsettings.vue')},
   { path: '/resctrostravsetoricsmainmenu', component: require('./components/Systemsettingsmainmenu.vue')},
