@@ -87,7 +87,7 @@ $dateinq =  $request['datedone'];
     
 
       'rolename' => $request['rolename'],
-     
+      'sysname' => $request['sysname'],
       'description' => $request['description'],
       'roleid' => $newroleid,
      
@@ -140,7 +140,7 @@ $user->update($request->all());
     {
         //
      //   $this->authorize('isAdmin'); 
-        $user = User::findOrFail($id);
+        $user = Role::findOrFail($id);
         $user->delete();
        // return['message' => 'user deleted'];
 
