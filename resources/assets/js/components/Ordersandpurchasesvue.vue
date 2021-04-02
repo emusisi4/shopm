@@ -435,6 +435,15 @@ button.add-newm {
                   </tbody>
                  <tfoot></tfoot>
                                    </table>
+
+
+   <div>
+                <pagination :data="mydataObjectProductbrandskk" @pagination-change-page="getResults"></pagination>
+
+              </div>
+
+
+                                  
                   </div>
                 </div>
               </div>
@@ -667,7 +676,8 @@ button.add-newm {
   <div  v-if="existsordertoview > 0 ">
        <div class="bethapa-table-header">
                    Order Details <button hidden="" v-if="infoaddproductbrand > 0" type="button" class="add-newm" @click="newModalBrand" >Add New </button>
-                      </div>
+                     <pagination :data="mydataObject" @pagination-change-page="getResults"></pagination>
+  </div>
     <table class="table table-striped">
                     <thead>
                     <tr>
@@ -723,7 +733,10 @@ button.add-newm {
                     </tr>
                    
                     </tbody>
-                    
+                     <div>
+                <pagination :data="mydataObject" @pagination-change-page="getResults"></pagination>
+
+              </div> 
                     <tfoot> 
 
                      <th>
@@ -1542,9 +1555,9 @@ datemade:'',
           /////////////////////////////////////////
 // Our method to GET results from a Laravel endpoint
       getResults(page = 1) {
-                        axios.get('api/companyproducts?page=' + page)
+                        axios.get('api/purchasessummary?page=' + page)
                           .then(response => {
-                            this.mydataObject = response.data;
+                            this.mydataObjectProductbrandskk = response.data;
                           });
                       },
 

@@ -36,11 +36,11 @@ $ordertovire  = Ordertoview::latest('id')->where('ucret', $userid)->orderBy('id'
     //  if($userrole == '101')
       {
     
-        return   Orderdetail::with(['producttoorderName','brandName','unitMeasure','productSupplier'])->latest('id')
+        return   Orderdetail::with(['producttoorderName','brandName','unitMeasure','productSupplier'])->orderby('orderdeliverystatus', 'ASC')
   ///  return   Product::latest('id')
        //  return   Branchpayout::latest('id')
         ->where('invoiceno', $ordertovire)
-        ->paginate(20);
+        ->paginate(600);
       }
 
 

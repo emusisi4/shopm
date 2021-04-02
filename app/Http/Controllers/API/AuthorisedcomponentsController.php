@@ -37,7 +37,7 @@ class AuthorisedcomponentsController extends Controller
     $roleto  = Roleinaction::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('rolename');
       return   Componentsaccesse::latest('id')
           ->where('mmaderole', $roleto)
-        ->paginate(20);
+        ->paginate(600);
       }
 
       

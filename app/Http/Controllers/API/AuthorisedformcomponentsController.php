@@ -40,7 +40,7 @@ class AuthorisedformcomponentsController extends Controller
       return   Mycomponentfeature::latest('id')
         ->where('rolein', $roleto)
       ->where('component', $componentvue)
-        ->paginate(20);
+        ->paginate(600);
       }
 
       
