@@ -36,7 +36,7 @@ class CompanyproductsController extends Controller
     ///  return   Product::latest('id')
        //  return   Branchpayout::latest('id')
         // ->where('branch', $userbranch)
-        ->paginate(20);
+        ->paginate(800);
       }
 
 
