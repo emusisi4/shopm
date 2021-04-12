@@ -62,7 +62,7 @@
                   <label>Product Name / Code</label>
                     <select name ="productcode" v-model="form.productcode" tabindex="1" id ="select2"   :class="{'is-invalid': form.errors.has('productcode')}">
                     <option value=" ">  </option>
-                    <option v-for='data in brancheslist' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
+                    <option v-for='data in brancheslist' v-bind:value='data.id'> {{ data.name }}</option>
 
                     </select>
                 
@@ -107,11 +107,9 @@
                     <tbody>
                   <tr v-for="mydataObjectinfo in mydataObject.data" :key="mydataObjectinfo.id">
                       <td>{{mydataObjectinfo.productcode}}</td>
-                        <td> <template v-if="mydataObjectinfo.product_name">	{{mydataObjectinfo.product_name.name}}</template></td>
-
+                      <td> <template v-if="mydataObjectinfo.product_name">	{{mydataObjectinfo.product_name.name}}</template></td>
                       <td>{{mydataObjectinfo.quantity}} </td>
-                     
-                  <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitprice)}}</td>
+                     <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitprice)}}</td>
                  
                  <td>{{ (currencydetails) }} {{formatPrice(mydataObjectinfo.unitprice*mydataObjectinfo.quantity)}}</td>
                  
