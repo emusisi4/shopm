@@ -447,7 +447,7 @@ button.add-newm {
                   <label>Product Name / Code</label>
                     <select name ="productcode" v-model="form.productcode" id ="productcode"  class="form-control" :class="{'is-invalid': form.errors.has('productcode')}">
                     <option value=" ">  </option>
-                    <option v-for='data in companyproducts' v-bind:value='data.id'>{{ data.id }} - {{ data.name }}</option>
+                    <option v-for='data in companyproducts' v-bind:value='data.id'>{{ data.name }}</option>
 
                     </select>
                 
