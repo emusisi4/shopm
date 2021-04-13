@@ -40,7 +40,7 @@ $ordertovire  = Saleview::latest('id')->where('ucret', $userid)->orderBy('id', '
   // return   Productsale::latest('id')
        //  return   Branchpayout::latest('id')
         ->where('invoiceno', $ordertovire)
-        ->paginate(20);
+        ->paginate(100);
       }
 
 

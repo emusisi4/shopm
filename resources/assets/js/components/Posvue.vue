@@ -595,6 +595,7 @@ $('#addNew').modal('show');
             loadDatarecords(){
                axios.get("api/getcurrencydetails").then(({ data }) => (this.currencydetails = data));
                  axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
+                 
                  axios.get("api/companyproductscomponentaccess").then(({ data }) => (this.allowedtoaccesscomponent = data));
                    axios.get("api/getAddnewbalancingrecord").then(({ data }) => (this.info = data));
                 
@@ -687,6 +688,7 @@ Toast.fire({
                                   axios.get("api/getuserbalance").then(({ data }) => (this.userwalletbalance = data));
                                 Fire.$on('AfterAction', () =>{
         this.loadDatarecords();
+           axios.get("api/getcattotal").then(({ data }) => (this.carttotal = data));
       });
         //  setInterval(() =>this.loadDatarecords(),3000);
         //  setInterval(() =>this.checkAccess(),3000);
