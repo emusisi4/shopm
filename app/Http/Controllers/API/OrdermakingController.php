@@ -33,26 +33,22 @@ class OrdermakingController extends Controller
       $userbranch =  auth('api')->user()->branch;
       $userrole =  auth('api')->user()->type;
 
-    //  if($userrole == '101')
-      {
+    
+      
     
         return   Ordermaking::with(['producttoorderName','brandName','unitMeasure','productSupplier'])->latest('id')
   ///  return   Product::latest('id')
        //  return   Branchpayout::latest('id')
         // ->where('branch', $userbranch)
         ->paginate(600);
-      }
+      
 
 
       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function store(Request $request)
     {
         //

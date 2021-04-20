@@ -50,7 +50,7 @@ $userrole =  auth('api')->user()->type;
     //  return   Branchpayout::with(['ExpenseTypeconnect','expenseCategory','payingUserdetails'])->latest('id')
        return   Salessummary::latest('id')
        // ->where('del', 0)
-       ->paginate(1);
+       ->paginate(30);
 
        //  return Submheader::latest()
          //  -> where('ucret', $userid)
