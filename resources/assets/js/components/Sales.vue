@@ -148,7 +148,7 @@ button.add-newm {
                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                   <li class="nav-item">
                   <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab"  @click="loadDatarecords()"
-                   aria-controls="custom-tabs-three-home" aria-selected="true">Point Of Sale</a>
+                   aria-controls="custom-tabs-three-home" aria-selected="true">Pos</a>
                   </li>
                  
             
