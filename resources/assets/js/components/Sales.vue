@@ -148,7 +148,7 @@ button.add-newm {
                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                   <li class="nav-item">
                   <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab"  @click="loadDatarecords()"
-                   aria-controls="custom-tabs-three-home" aria-selected="true">Pos</a>
+                   aria-controls="custom-tabs-three-home" aria-selected="true">P.o.s</a>
                   </li>
                  
             
@@ -232,6 +232,7 @@ button.add-newm {
                       <th>ITEM NAME</th>
                       <th>Qty</th>
                       <th>UNIT PRICE</th>
+                      
                       <th>LINE TOTAL</th>
                        <th> 
                             <button type="button" v-if="info > 0" class="btn btn-info btn-xs" @click="newModalproductdsale" >Add Sale </button>
@@ -269,7 +270,11 @@ button.add-newm {
                    
                     </tbody>
                   </table>
-                              
+                     <div class="card-footer">
+                <ul class="pagination pagination-sm m-0 float-right">
+                   <pagination :data="mydataObjectordermaking" @pagination-change-page="getResultspagin"></pagination>
+                </ul>
+              </div>          
                 </div>
                 <!-- /.col -->
               </div>
@@ -1590,6 +1595,13 @@ datemade:'',
                           });
                       },
 
+                      getResultspagin(page = 1) {
+                        axios.get('api/shopingcartdetails?page=' + page)
+                          .then(response => {
+                            this.mydataObjectordermaking = response.data;
+                          });
+                      },
+
 // /////
  updateUnit(){
     this.$Progress.start();
@@ -2726,6 +2738,7 @@ axios.get("api/getcattotal").then(({ data }) => (this. carttotal = data));
    
         created() {
           this.loadDatarecords();
+          axios.get("api/getselectedordertotal").then(({ data }) => (this. carttotal = data));
                           //      axios.get("api/getbranchnamebalancing").then(({ data }) => (this.shopbalancngname = data));
                                 Fire.$on('AfterAction', () =>{
                                   
