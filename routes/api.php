@@ -201,8 +201,11 @@ Route::get('getbranchnamebalancing', 'APIController@Branchnametobalancefunction'
 Route::get('getbranchnametocollectfrom', 'APIController@Branchnametocollectfrom'); 
 Route::get('getthedayscashin', 'APIController@Branchtobalancedayscashin'); 
 Route::get('getrantetotalcollection', 'APIController@Rangecollection');
+/////////
+Route::get('gettotalprofitforrange', 'APIController@gettotalprofitforrange');
+Route::get('totalcostfromrange', 'APIController@totalcostfromrange');
 
-
+Route::get('totalsalesrange', 'APIController@totalsalesrange');
 
 Route::get('gettotalexpensesintherange', 'APIController@Rangeexpensesreport');
 Route::get('getrantetotalcredits', 'APIController@Rangecredits');

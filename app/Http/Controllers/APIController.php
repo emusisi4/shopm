@@ -1750,9 +1750,166 @@ if($branchto = '900')
 
 
 }
+////////////////////////////////////////////////
+
+public function totalsalesrange()
+{
+    //getSinglebranchpayoutdaily
+    $ed = '0';
+
+ /// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+////getting the role system name
+//$rolename = DB::table('roles')->select('userrole');
+//if($rolename = 'admin')
+{
+  $startdat = DB::table('expensereporttoviews')->where('ucret', $userid)->value('startdate');
+  $enddate = DB::table('expensereporttoviews')->where('ucret', $userid)->value('enddate');
+  $branchto = DB::table('expensereporttoviews')->where('ucret', $userid)->value('branch');
+  $reporyttype = DB::table('expensereporttoviews')->where('ucret', $userid)->value('reporttype');
 
 
 
+  //$startdat = Incomereporttoview::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+
+
+  //$enddate = Incomereporttoview::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+
+
+
+
+if($reporyttype ="profitreportbybranch" and $branchto != 900)
+{
+    $dailyrecord = \DB::table('productsales')
+   
+   ->whereBetween('datesold', [$startdat, $enddate])
+//   ->where('approvalstate','=', 1)
+   ->where('branch','=', $branchto)
+    ->sum('linetotal');
+    return $dailyrecord;
+}
+if($reporyttype ="profitreportbybranch" and $branchto = '900')
+{
+    $dailyrecord = \DB::table('productsales')
+   
+   ->whereBetween('datesold', [$startdat, $enddate])
+ 
+   //->where('approvalstate','=', 1)
+    ->sum('linetotal');
+    return $dailyrecord;
+}
+}
+
+
+}
+public function totalcostfromrange()
+{
+    //getSinglebranchpayoutdaily
+    $ed = '0';
+
+ /// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+////getting the role system name
+//$rolename = DB::table('roles')->select('userrole');
+//if($rolename = 'admin')
+{
+  $startdat = DB::table('expensereporttoviews')->where('ucret', $userid)->value('startdate');
+  $enddate = DB::table('expensereporttoviews')->where('ucret', $userid)->value('enddate');
+  $branchto = DB::table('expensereporttoviews')->where('ucret', $userid)->value('branch');
+  $reporyttype = DB::table('expensereporttoviews')->where('ucret', $userid)->value('reporttype');
+
+
+
+  //$startdat = Incomereporttoview::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+
+
+  //$enddate = Incomereporttoview::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+
+
+
+
+if($reporyttype ="profitreportbybranch" and $branchto != 900)
+{
+    $dailyrecord = \DB::table('productsales')
+   
+   ->whereBetween('datesold', [$startdat, $enddate])
+//   ->where('approvalstate','=', 1)
+   ->where('branch','=', $branchto)
+    ->sum('totalcost');
+    return $dailyrecord;
+}
+if($reporyttype ="profitreportbybranch" and $branchto = '900')
+{
+    $dailyrecord = \DB::table('productsales')
+   
+   ->whereBetween('datesold', [$startdat, $enddate])
+ 
+   //->where('approvalstate','=', 1)
+    ->sum('totalcost');
+    return $dailyrecord;
+}
+}
+
+
+}
+public function gettotalprofitforrange()
+{
+    //getSinglebranchpayoutdaily
+    $ed = '0';
+
+ /// Getting the Logged in User details
+ $userid =  auth('api')->user()->id;
+ $userbranch =  auth('api')->user()->branch;
+ $userrole =  auth('api')->user()->type;
+////getting the role system name
+//$rolename = DB::table('roles')->select('userrole');
+//if($rolename = 'admin')
+{
+  $startdat = DB::table('expensereporttoviews')->where('ucret', $userid)->value('startdate');
+  $enddate = DB::table('expensereporttoviews')->where('ucret', $userid)->value('enddate');
+  $branchto = DB::table('expensereporttoviews')->where('ucret', $userid)->value('branch');
+  $reporyttype = DB::table('expensereporttoviews')->where('ucret', $userid)->value('reporttype');
+
+
+
+  //$startdat = Incomereporttoview::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('startdate');
+
+
+  //$enddate = Incomereporttoview::latest('id')->where('ucret', $userid)->orderBy('id', 'Desc')->limit(1)->value('enddate');
+
+
+
+
+if($reporyttype ="profitreportbybranch" and $branchto != 900)
+{
+    $dailyrecord = \DB::table('productsales')
+   
+   ->whereBetween('datesold', [$startdat, $enddate])
+//   ->where('approvalstate','=', 1)
+   ->where('branch','=', $branchto)
+    ->sum('totalcost');
+    return $dailyrecord;
+}
+if($reporyttype ="profitreportbybranch" and $branchto = '900')
+{
+    $dailyrecord = \DB::table('productsales')
+   
+   ->whereBetween('datesold', [$startdat, $enddate])
+ 
+   //->where('approvalstate','=', 1)
+    ->sum('lineprofit');
+    return $dailyrecord;
+}
+}
+
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 public function Expensesrangeonreport()
 {
     //getSinglebranchpayoutdaily

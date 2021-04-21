@@ -194,7 +194,14 @@ img#bgl {
     position: absolute;
 }
 
-
+.bethapa-table-header {
+    font-weight: bold;
+    color: #806104;
+    font-size: 1.1em;
+    border-bottom: 1px solid rgb(3, 46, 10);
+    margin-bottom: 20px;
+    width: 100%;
+}
 
 
 
@@ -315,6 +322,68 @@ th {
 <template>
 <div>
       <div class="card" v-if="allowedtoaccesscomponent > 0 ">
+
+
+<div class="row">
+         
+        
+        <div class="col-lg-4 col-4">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h5><b>Total COST </b></h5>
+
+                <h5><b> Ugx {{ formatPrice(totalcost) }} </b></h5> 
+              </div>
+              <div class="icon">
+                <i class="ion ion-bag"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+    
+          <!-- ./col -->
+          <div class="col-lg-4 col-4">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h5><b>TOTAL SALES</b><sup style="font-size: 20px"></sup></h5>
+
+                <h5><b>Ugx {{ formatPrice(totalsales) }}</b></h5> 
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-4 col-4">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+              <h5><b>TOTAL PROFIT </b><sup style="font-size: 20px"></sup></h5>
+
+                <h5><b>Ugx {{ formatPrice(rangetotalcollection) }}</b></h5> 
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+       
+        
+
+         
+         
+          
+        </div>
+
+
+<div class="bethapa-table-header"> </div>
+
               <div class="card-header">
                 <h3 class="card-title"><b>Profit Report by Date</b></h3>
 
@@ -375,8 +444,9 @@ th {
           </div>
 
                 </form>
+                
 
-
+<div class="bethapa-table-header"> </div>
                                <table style="width:98%"  >
                   <thead>
                     <tr>
@@ -442,7 +512,7 @@ th {
                               <div v-if="(((mydataObjectinfo.lineprofit*mydataObjectinfo.quantity)) < 0 )  ">
                                 <span class="cell" style="color:red ;">  
    
-                    <span style="font-size:1.0em;" center >Total Loss </span></span>
+                    <span style="font-size:1.0em;" center >Complete Loass </span></span>
                               </div>
                                </td>
                                
@@ -450,27 +520,10 @@ th {
               
                     
                   </tbody>
-                 <tfoot> 
-                     <th></th>  
-                       <th></th>  
-                         <th></th>  
-                           
-                         
-                     <th>  
-                    <span class="cell" style="color:maroon ;">  
-   
-                    <span style="font-size:1.0em;" center > TOTAL </span></span>
-                    
-                    </th>
-                
-                
-                 <th>    
-                    <span class="cell" style="color:maroon ;">  
-   
-                    <span style="font-size:1.0em;" center > SSP {{ formatPrice(rangetotalcollection) }}  </span></span>    </th>  
-                     <th colspan='8'>  </th>    </tfoot>
+               
                                    </table>
-                               <div class="card-footer clearfix">
+                
+                <div class="card-footer clearfix">
                 <ul class="pagination pagination-sm m-0 float-right">
                     <pagination :data="mydataObject" @pagination-change-page="getResults"></pagination>
                 </ul>
@@ -576,6 +629,9 @@ th {
           
         return {
           rangetotalcollection: null,
+          totalcost: null,
+          totalsales: null,
+          totalprofit: null,
           rangetotalexpenses: null,
           rangetotalcredits: null,
            info: null,
@@ -713,7 +769,9 @@ $('#addNew').modal('show');
             },
            checkAccess(){
                //  axios.get("api/getMakeexpense").then(({ data }) => (this.info = data));
-                   axios.get("api/gettotalexpensesintherange").then(({ data }) => (this.rangetotalcollection = data));
+                   axios.get("api/gettotalprofitforrange").then(({ data }) => (this.rangetotalcollection = data));
+                    axios.get("api/totalcostfromrange").then(({ data }) => (this.totalcost = data));
+                   axios.get("api/totalsalesrange").then(({ data }) => (this.totalsales = data));
                    axios.get("api/getproductsalesreportdetails").then(({ data }) => (this.mydataObject = data));
            },
             loadDatarecords(){
@@ -724,7 +782,9 @@ $('#addNew').modal('show');
                           // axios.get("api/getBranches").then(({ data }) => (this.brancheslist = data));
                            axios.get("api/getWalletlist").then(({ data }) => (this.brancheslist = data));
                          
-    axios.get("api/gettotalexpensesintherange").then(({ data }) => (this.rangetotalcollection = data));
+    axios.get("api/gettotalprofitforrange").then(({ data }) => (this.rangetotalcollection = data));
+  axios.get("api/totalsalesrange").then(({ data }) => (this.totalsales = data));
+      axios.get("api/totalcostfromrange").then(({ data }) => (this.totalcost = data));
     axios.get("api/getrantetotalcredits").then(({ data }) => (this.rangetotalcredits = data));
     axios.get("api/reportgetrantetotalexpenses").then(({ data }) => (this.rangetotalexpenses = data));
 
