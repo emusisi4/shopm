@@ -426,10 +426,23 @@ th {
                     <span style="font-size:1.0em;" center >No Profit </span></span>
                               </div>
 
-                                 <div v-if="((mydataObjectinfo.lineprofit*mydataObjectinfo.quantity) > 0) && ((mydataObjectinfo.lineprofit*mydataObjectinfo.quantity) < 100) ">
+        <div v-if="((mydataObjectinfo.lineprofit*mydataObjectinfo.quantity) > 0) && ((mydataObjectinfo.lineprofit*mydataObjectinfo.quantity) < 100) ">
                                 <span class="cell" style="color:blue ;">  
    
                     <span style="font-size:1.0em;" center > Margin is small  </span></span>
+                              </div>
+
+  <div v-if="(((mydataObjectinfo.lineprofit*mydataObjectinfo.quantity)) >= 100)  ">
+                                <span class="cell" style="color:green ;">  
+   
+                    <span style="font-size:1.0em;" center >Ok </span></span>
+                              </div>
+
+
+                              <div v-if="(((mydataObjectinfo.lineprofit*mydataObjectinfo.quantity)) < 0 )  ">
+                                <span class="cell" style="color:red ;">  
+   
+                    <span style="font-size:1.0em;" center >Total Loss </span></span>
                               </div>
                                </td>
                                
