@@ -148,6 +148,20 @@ if($reptov == "expreportbywallet")
    
   
 ]);
+}
+
+if($reptov == "profitreportbybranch")
+{
+     return Expensereporttoview::Create([
+    'branch' => $request['branchnametobalance'],
+    'startdate' => $request['startdate'],
+    'reporttype' => $request['actionaid'],
+    'enddate' => $request['enddate'],
+
+    'ucret' => $userid,
+   
+  
+]);
 }///
 
 

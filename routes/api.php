@@ -29,7 +29,7 @@ Route::apiResources(['makeexpense' => 'API\MadeexpensesConroller']);
 Route::apiResources(['makeexpenseofficeuser' => 'API\MadeexpensesofficeConroller']);
 Route::apiResources(['shopbalancingrecord' => 'API\BrachRecordBranchbalacingController']);
 
-
+Route::apiResources(['getsalesdetailsreportdetails' => 'API\ExpensesReportbybranchController']);
 Route::apiResources(['getexpensereportdetails' => 'API\ExpensesReportbybranchController']);
 Route::apiResources(['gamefixtures' => 'API\GamefixturesController']);
 Route::apiResources(['getincomereport' => 'API\Incomereport']);
@@ -37,6 +37,7 @@ Route::apiResources(['getincomereportforcredits' => 'API\Incomereportscredits'])
 Route::apiResources(['getexpensesbycategoryreport' => 'API\ExpensesbycategoryReport']);
 
 ///
+Route::apiResources(['getproductsalesreportdetails' => 'API\ProfitreportController']);
 
 Route::apiResources(['roleandcomponentto' => 'API\RoleandformcomponentController']);
 Route::apiResources(['roletobalance' => 'API\RoleinactionController']);

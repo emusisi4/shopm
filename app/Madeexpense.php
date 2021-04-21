@@ -11,11 +11,7 @@ class Madeexpense extends Authenticatable
     use HasApiTokens, Notifiable;
 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+ 
     protected $fillable = [
         'expense','explevel','walletexpense','category','exptype', 'amount', 'datemade','ucret','branch','description','approvalstate',
     ];

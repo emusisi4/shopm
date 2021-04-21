@@ -92,7 +92,7 @@ let routes = [
   { path: '/ivocatrodesdocompanydecexpendicts', component: require('./components/OfficeMakeexpense.vue')},
   { path: '/shopdescashin', component: require('./components/Branchescashintransactions.vue')},
   { path: '/shopdesdecashout', component: require('./components/Branchescashouttransactions.vue')},
-
+  { path: '/profitreport', component: require('./components/Profitreportbydate.vue')},
 
 
 

@@ -22,7 +22,9 @@ class Product extends Authenticatable
         'productcode','brand', 'name', 'qty','ucret','rol','description','category','suppname','unitname','unitmeasure',
        
     ];
-    
+    public function productName(){
+     return $this->belongsTo(Productsale::class, 'productcode'); 
+        }
     public function brandName(){
         // creating a relationship between the students model 
         return $this->belongsTo(Brand::class, 'brand'); 
